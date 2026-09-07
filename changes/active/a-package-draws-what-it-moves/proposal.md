@@ -87,6 +87,13 @@ Settled in 0.7.0, after finding that "no longer needed" was read both ways in
 the same repository: 14 deltas kept and about 11 deleted on folding. Deleting
 it throws away the only property that makes it worth more than a diff.
 
+### The context ceiling rises to 34,000
+
+30,000 was a drift alarm, not a product requirement, and the skill has grown a
+capability since the number was set. It rises once, in group 1, and group 5
+confirms it against the finished size and names the margin in the comment
+rather than leaving it implied.
+
 ## Scope
 
 - `change.md`: the merged template, its drawing, and its `Cost`, `Decided`
@@ -114,13 +121,7 @@ Out of scope:
 
 ## Open decisions
 
-- **The context ceiling.** `skill/` sits at 28,529 of 30,000 characters, and
-  every route this package edits grows before the merge gives space back.
-  Either the ceiling rises at 1.0.0, because the skill has grown a capability
-  and the number was never a product requirement; or it holds at 30,000 and the
-  merge has to pay for itself, which is a real constraint on how much guidance
-  `change.md` may carry. Not blocking: group 1 raises it either way, and group
-  5 sets the final number. **Blocking group 5 only.**
+None.
 
 ## Success criteria
 

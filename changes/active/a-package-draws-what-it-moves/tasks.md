@@ -5,13 +5,13 @@ One group at a time. Check an item only after its validation passes.
 Group 1 comes first: every group after it grows `skill/` before the merge gives
 space back. Group 2 comes next, because 3 and 4 both edit files it rewrites.
 Groups 3 and 4 need only 2 and may run beside each other. Group 5 needs all of
-them, and answers the open decision before it sets a number.
+them.
 
 ## 1. There is room to land this
 
-Status: not started
+Status: completed
 
-- [ ] `scripts/check.mjs`: raise `TOTAL_MAX` to 34000, with a comment naming
+- [x] `scripts/check.mjs`: raise `TOTAL_MAX` to 34000, with a comment naming
       group 5 of this package as what sets the real number.
 
 Validation:
@@ -82,11 +82,10 @@ Validation:
 
 ## 5. It is 1.0.0, and the ceiling is set on purpose
 
-Status: not started, and blocked on the open decision about the ceiling.
+Status: not started.
 
-- [ ] Answer the open decision, and record it under `Decided`.
-- [ ] `scripts/check.mjs`: set `TOTAL_MAX` to the answer, with the margin
-      named in the comment rather than implied.
+- [ ] `scripts/check.mjs`: confirm `TOTAL_MAX` at 34000 against the finished
+      size, and name the margin in the comment rather than leaving it implied.
 - [ ] `package.json`, the marker at the end of `skill/SKILL.md` and
       `CHANGEKIT.md`: 1.0.0.
 - [ ] `CHANGELOG.md`: what changed, and that updating costs a hand edit of any
