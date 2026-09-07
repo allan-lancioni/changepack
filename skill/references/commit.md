@@ -13,7 +13,8 @@ Three moments commit, and each one commits alone:
 
 ## Validate
 
-Run the project's validation command. Add, in proportion to what changed:
+Run the project's validation command, where `validate:` names one. Add, in
+proportion to what changed:
 
 - targeted tests for the contract you touched and for its consumers;
 - the full suite before an activation or a closure;
@@ -21,8 +22,15 @@ Run the project's validation command. Add, in proportion to what changed:
 - a search for TODOs, scaffolds, open decisions and references to anything
   you removed.
 
-If a check cannot run at all, say which one and why. Never present a check
-that did not run as a check that passed.
+A check behaves three ways, and only one of them stops the run:
+
+- it runs and passes: report it;
+- it runs and fails: stop, commit nothing, mark nothing;
+- there is none, or it could not run: one line saying which check and why, and
+  the run continues.
+
+An empty `validate:` is a project with no command, not a project that failed.
+Never present a check that did not run as a check that passed.
 
 ## Report
 

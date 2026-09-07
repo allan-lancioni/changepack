@@ -16,7 +16,8 @@ Close a package only when every task is checked and every dependency is done.
    still reads it.
 6. Confirm the excluded behavior was not built anyway.
 7. Run the project's validation command, and the full suite before anything
-   activates.
+   activates. Where `validate:` names none, the closure still closes: the
+   report says no command ran, and the audit above is what carries it.
 
 ## Archive
 

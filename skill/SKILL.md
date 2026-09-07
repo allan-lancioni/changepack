@@ -32,6 +32,7 @@ in one line before continuing, so the project can refresh it.
 | Looking without changing | `references/review.md` |
 | Every task checked and validated | `references/close.md` |
 | Updating the skill itself | `references/update.md` |
+| Explaining or changing the project file | `references/init.md` |
 
 Do not open a package because the work touches behavior. Open one because a
 single pass cannot land it. If direct work runs into an unapproved decision,

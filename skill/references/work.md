@@ -57,7 +57,7 @@ Stop the run, leaving completed tasks checked, when any of these is true:
 - the group is done and the user chose to stop after each group;
 - the package has no group left;
 - the next task is not approved, or implementing it exposes an open decision;
-- implementation or validation failed;
+- implementation failed, or a validation ran and failed;
 - another agent's work now blocks the path;
 - the user asked to stop or to review first.
 

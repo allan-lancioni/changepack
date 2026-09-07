@@ -7,25 +7,34 @@ all, and 2 builds the check every later group runs. Nothing here is parallel.
 
 ## 1. The three states of `validate:`
 
-Status: not started
+Status: completed
 
-- [ ] `skill/references/commit.md`: separate a check that failed, which stops
+- [x] `skill/references/commit.md`: separate a check that failed, which stops
       the run, from one that is absent or could not run, which reports a line
       and continues. The existing rule against presenting an unrun check as
       passed stays as it is.
-- [ ] `skill/references/close.md`: step 7 stops reading as mandatory. A
+- [x] `skill/references/close.md`: step 7 stops reading as mandatory. A
       closure with no validation command still closes, and the report says so.
-- [ ] `skill/references/run.md`: the stop condition covers a validation that
+- [x] `skill/references/run.md`: the stop condition covers a validation that
       failed, not one that does not exist.
-- [ ] `skill/references/init.md`: the `validate` row admits "there is none" as
+- [x] `skill/references/init.md`: the `validate` row admits "there is none" as
       an outcome rather than asking until it gets a command.
-- [ ] `skill/templates/changekit.md`: the `validate:` line documents all three
+- [x] `skill/templates/changekit.md`: the `validate:` line documents all three
       states, so a project reads them without opening the skill.
+- [x] One place states every `CHANGEKIT.md` field: what it accepts, its
+      default, and what absent means. Today that contract is split between the
+      template's inline comments and the inference table in `init.md`, and
+      this package changes three fields at once. Whether it lands as a section
+      of `skill/templates/changekit.md` or as `skill/references/config.md` is
+      settled while writing it, against the context budget.
 
 Validation:
 
 - No route stops on an absent validation. Read the four files and follow each
   path that mentions validation to its end.
+- The contract names every field that exists today, and each stated default
+  matches what the references do when the field is absent. Groups 3 and 4
+  extend it, with the attribution phrase and with `version:`.
 - This group has no command to run: `validate:` is empty here, which is the
   state being defined. The report says exactly that.
 
@@ -36,7 +45,13 @@ Status: not started
 - [ ] Write `scripts/check.mjs` with the four invariants from `design.md`,
       node only, no dependencies, outside `files:` and outside `bin/`.
 - [ ] Invariant 1 exempts the case where `changes/active/` holds a package
-      touching `skill/`, and says which package when it does.
+      touching `skill/`, and says which package when it does. It also ignores
+      what `.gitignore` ignores: group 1 tripped over a `.DS_Store` that only
+      exists on one side.
+- [ ] Invariant 3 asserts a ceiling the script owns, not the figure the README
+      happens to state. Group 1 took the total from 24.2k to 25.9k, so a check
+      written against the README's prose would fail on arrival and stay
+      hostage to group 5. The README quotes the ceiling; the script holds it.
 - [ ] `package.json`: add `scripts.check`.
 - [ ] `CHANGEKIT.md`: `validate:` becomes the command.
 
@@ -61,6 +76,8 @@ Status: not started
       the exception for projects that must disclose.
 - [ ] `skill/templates/changekit.md`: the `commit:` line carries the
       attribution phrase and says how to turn it on.
+- [ ] `skill/references/init.md`: the field contract's `commit` row gains the
+      attribution, so the one place stays the one place.
 
 Validation:
 
@@ -82,6 +99,8 @@ Status: not started
       `pyproject.toml`, `Cargo.toml`, a `VERSION` file or a git tag, and
       accept that there is none.
 - [ ] `skill/templates/changekit.md`: the `version:` field.
+- [ ] `skill/references/init.md`: `version:` joins the field contract and the
+      inference table.
 - [ ] `CHANGEKIT.md`: `version:` points at `package.json`.
 - [ ] Retrofit this package's own `proposal.md` header, which was written
       under 0.5.0 without one. This is the compatibility case being lived.

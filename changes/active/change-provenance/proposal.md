@@ -43,6 +43,10 @@ A missing or unrunnable validation command never blocks a commit, a group, or
 a closure. It produces one line in the report saying which check did not run
 and why. A validation that runs and fails still stops everything.
 
+The fields of `CHANGEKIT.md` have one place that states them: what each field
+accepts, what it defaults to, and what absent means. A project reads that
+without opening the skill's internals.
+
 ## Scope
 
 - `skill/references/commit.md`, `close.md`, `run.md`, `init.md`, `plan.md`
@@ -59,6 +63,13 @@ Out of scope:
 - **Several validation commands per moment.** `commit.md` already asks for
   targeted tests mid-run and the full suite before closure, while `validate:`
   holds one line. That is configuration modelling, not provenance.
+- **Specs for this repository.** The spec-delta routes in `plan.md`,
+  `close.md` and `work.md` have never been executed anywhere: no repository has
+  ever run with `specs:` set, so a third of the procedure is unexercised and
+  the first to find out will be a user. Worth fixing, and it cannot happen
+  here, because turning `specs:` on mid-package would owe this package a delta
+  it was not planned with. Its own package, after closure, and it may conclude
+  that `bin/install.mjs` alone does not justify the folder.
 
 ## Open decisions
 
@@ -91,6 +102,8 @@ should not depend on what a later session happens to find.
   date, and its shipped version after closure.
 - A repository whose `validate:` is empty runs a package start to finish, and
   every report says plainly that no command ran.
+- The legal values, defaults and absent behavior of every `CHANGEKIT.md` field
+  are stated in one place, and that place agrees with what the references do.
 - `node scripts/check.mjs` passes, and fails when any one of its invariants is
   broken on purpose.
 - `diff -r skill/ .claude/skills/changekit/` is empty after the archive commit.
