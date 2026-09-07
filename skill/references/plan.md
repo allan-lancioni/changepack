@@ -31,26 +31,26 @@ the work needs said, never to fill the page.
 
 | File | When | Holds |
 |---|---|---|
-| `proposal.md` | always | problem, goal, scope, out of scope, success criteria |
+| `change.md` | always | problem, goal, decisions, scope, the drawing, cost, success criteria |
 | `tasks.md` | always | groups of work, each with one verifiable outcome |
-| `design.md` | when the approach, compatibility or rollback is not obvious | how it is built, and how it is undone |
 | `spec-delta.md` | only where the project has specs | what becomes normative, under the spec it lands in |
 
-Stamp the header of `proposal.md` as you write it: the changekit version from
+Stamp the header of `change.md` as you write it: the changekit version from
 the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open
 until closure.
 
-Without specs, the intended behavior goes in `proposal.md` under Goal, and
+Without specs, the intended behavior goes in `change.md` under Goal, and
 there is no delta. Proposed behavior lives in the package either way. Never
 write it into an active spec before closure.
 
 ## Decision gates
 
 List every open decision about domain, schema, persistence, compatibility,
-authorization or observable behavior. They go in `proposal.md`, under Open
+authorization or observable behavior. They go in `change.md`, under Open
 decisions. A task group that waits on one says so in its `Status`. Give each one its alternatives and
 their consequences. A package with an unanswered gate is not approvable, so
-either get the answer now and record it, or write it down as blocking.
+either get the answer now and record it, or write it down as blocking. An
+answered gate moves to `Decided`, and is not deleted.
 
 ## Task groups
 

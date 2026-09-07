@@ -20,23 +20,27 @@ Validation:
 
 ## 2. A package is one change, one delta and the tasks
 
-Status: not started
+Status: completed, with one deviation of my own making. The second validation
+line was written for the wrong group: `run.md` and `close.md` still name
+`proposal.md`, and group 4 owns both files. The grep it asks for is already
+group 4's, and is left there.
 
-- [ ] `skill/templates/change.md`: the merged template. `Context`, `Goal`,
+- [x] `skill/templates/change.md`: the merged template. `Context`, `Goal`,
       `Decided`, `Open decisions`, `Scope`, `Changes`, `Cost`,
       `Success criteria`, `Outcome`, `Surprises`, and the 0.6.0 header.
-- [ ] `Changes` names the four notations, the tree and the table as the
+- [x] `Changes` names the four notations, the tree and the table as the
       default, and says to draw and not to restate the drawing.
-- [ ] `Cost` carries two lines, each deleted when it has nothing to say.
-- [ ] Delete `skill/templates/proposal.md` and `skill/templates/design.md`.
-- [ ] `skill/references/plan.md`: the file table names `change.md`,
+- [x] `Cost` carries two lines, each deleted when it has nothing to say.
+- [x] Delete `skill/templates/proposal.md` and `skill/templates/design.md`.
+- [x] `skill/references/plan.md`: the file table names `change.md`,
       `tasks.md` and `spec-delta.md`; the stamping line names `change.md`;
       the paragraph about where intended behavior goes without specs follows.
 
 Validation:
 
 - `npm run check` passes, which proves `plan.md` names no template that is gone.
-- `grep -rn 'proposal\.md\|design\.md' skill/` returns nothing.
+- `ls skill/templates/` holds `change.md`, `tasks.md` and `spec-delta.md`,
+  and neither file this group deleted.
 
 ## 3. The delta is asked for by what the change edits
 
