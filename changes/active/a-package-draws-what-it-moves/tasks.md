@@ -91,18 +91,18 @@ Validation:
 
 ## 5. The rename leaves nothing dangling
 
-Status: not started
+Status: completed
 
 Found by group 3. The package scoped `SKILL.md` as unchanged, which was wrong:
 it names the field twice, and `close.md` gates the fold on it. A skill that
 tells an agent to read a field its own template does not define is the drift
 this repository's validation exists to catch, and no invariant catches this one.
 
-- [ ] `skill/SKILL.md`: the sentence saying what `CHANGEKIT.md` sets names
+- [x] `skill/SKILL.md`: the sentence saying what `CHANGEKIT.md` sets names
       `normative:` rather than whether the project has specs.
-- [ ] `skill/SKILL.md`: direct work updates the normative document the change
+- [x] `skill/SKILL.md`: direct work updates the normative document the change
       alters, rather than "the spec, where this project has specs".
-- [ ] `skill/references/close.md`: the delta folds where the change altered a
+- [x] `skill/references/close.md`: the delta folds where the change altered a
       normative document, not "where the project has specs".
 
 Validation:

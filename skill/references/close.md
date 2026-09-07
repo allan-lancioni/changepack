@@ -8,10 +8,10 @@ Close a package only when every task is checked and every dependency is done.
    tasks that are checked.
 2. Confirm no task is pending, in progress, or blocked without a follow-up
    that owns it.
-3. Where the project has specs, move the delta into them, one heading at a
-   time: the spec now states the new behavior as current. The delta stays in
-   the package, as the record of what became normative; where a rule landed
-   differently from how it was declared, its line says so.
+3. Where the change altered a normative document, move the delta into it, one
+   heading at a time: the document now states the new behavior as current. The
+   delta stays in the package, as the record of what became normative; where a
+   rule landed differently from how it was declared, its line says so.
 4. Confirm code, consumers, scripts, templates, tests and documents agree.
 5. Search the scope for drafts, scaffolds, TODOs, open decisions and dead
    references. Remove only what this change made dead, and only where nothing
