@@ -13,6 +13,7 @@ what you could not find.
 | changes | An existing directory of change packages, proposals or RFCs | `changes/` |
 | specs | A directory of normative behavior documents: `specs/`, `docs/specs/`, `.kiro/specs/` | none |
 | language | English, unless the README and the documents are not: then ask | English |
+| version | `package.json`, `pyproject.toml`, `Cargo.toml`, a `VERSION` file, the latest git tag | none |
 | validate | Test script in `package.json`, `Makefile`, `pyproject.toml`, CI workflow | ask, and take none for an answer |
 | commit | `git log --oneline -20` | conventional |
 | protect | Real user data, secrets, generated output, a sibling checkout | none |
@@ -33,6 +34,7 @@ contract every route reads back, and the only place that states it.
 | `changes` | a path, in this repository or outside it | `changes/` |
 | `specs` | a path to normative documents | no delta, and the behavior lives in the proposal |
 | `language` | what gets written into the repository | English |
+| `version` | where this project's own version lives | none, and a package records no shipped version |
 | `validate` | one command, or none | no command: the routes report it and continue |
 | `commit` | the convention, `ask first`, and `co-author` where the project must disclose | conventional, without asking, and no agent co-author |
 | `protect` | paths nothing may write | nothing is protected |

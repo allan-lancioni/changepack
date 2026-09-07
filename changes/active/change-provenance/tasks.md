@@ -94,22 +94,22 @@ Validation:
 
 ## 4. The version inside the change
 
-Status: not started
+Status: completed
 
-- [ ] `skill/templates/proposal.md`: a header holding the changekit version
+- [x] `skill/templates/proposal.md`: a header holding the changekit version
       and the open date, and the shipped version left blank until closure.
-- [ ] `skill/references/plan.md`: stamp the version and date when the package
+- [x] `skill/references/plan.md`: stamp the version and date when the package
       is written.
-- [ ] `skill/references/close.md`: fill the shipped version at closure, and
+- [x] `skill/references/close.md`: fill the shipped version at closure, and
       leave it blank where the project exposes none.
-- [ ] `skill/references/init.md`: infer `version:` from `package.json`,
+- [x] `skill/references/init.md`: infer `version:` from `package.json`,
       `pyproject.toml`, `Cargo.toml`, a `VERSION` file or a git tag, and
       accept that there is none.
-- [ ] `skill/templates/changekit.md`: the `version:` field.
-- [ ] `skill/references/init.md`: `version:` joins the field contract and the
+- [x] `skill/templates/changekit.md`: the `version:` field.
+- [x] `skill/references/init.md`: `version:` joins the field contract and the
       inference table.
-- [ ] `CHANGEKIT.md`: `version:` points at `package.json`.
-- [ ] Retrofit this package's own `proposal.md` header, which was written
+- [x] `CHANGEKIT.md`: `version:` points at `package.json`.
+- [x] Retrofit this package's own `proposal.md` header, which was written
       under 0.5.0 without one. This is the compatibility case being lived.
 
 Validation:

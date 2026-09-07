@@ -22,7 +22,9 @@ Close a package only when every task is checked and every dependency is done.
 ## Archive
 
 Record the outcome in `proposal.md`: what shipped, what changed on the way,
-and what was left for later.
+and what was left for later. Fill `shipped:` in its header with the version
+`version:` points at, or none where the project exposes none. A package opened
+before the header existed gets what can be filled and nothing more.
 
 End the report with the package's own history:
 

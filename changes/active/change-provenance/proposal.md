@@ -1,5 +1,9 @@
 # Change provenance
 
+- **changekit:** 0.5.0
+- **opened:** 2026-09-07
+- **shipped:** <filled at closure>
+
 ## Context
 
 Nothing in the git history points back to a change package. An archived

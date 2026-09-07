@@ -7,6 +7,7 @@ How change packages work in this repository.
 - **specs:** none
 - **language:** English. Everything changekit writes here follows it; what it
   says to you follows your message.
+- **version:** `package.json`.
 - **validate:** `npm run check`. Four invariants: the loaded copy matches
   `skill/`, the version agrees with itself across three files, the context
   budget holds, and nothing names a file that is not there.
