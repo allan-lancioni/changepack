@@ -7,8 +7,9 @@ How change packages work in this repository.
 - **specs:** none
 - **language:** English. Everything changekit writes here follows it; what it
   says to you follows your message.
-- **validate:** none yet. This repository has no command, and the procedure has
-  no defined behavior for that. The `change-provenance` package settles both.
+- **validate:** `npm run check`. Four invariants: the loaded copy matches
+  `skill/`, the version agrees with itself across three files, the context
+  budget holds, and nothing names a file that is not there.
 - **commit:** conventional, no agent co-author, one per commit point, without
   asking. Write "ask first" here instead to be asked every time.
 - **protect:** `.claude/skills/changekit/`. Written by `bin/install.mjs` alone,

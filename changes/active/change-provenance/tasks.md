@@ -40,20 +40,20 @@ Validation:
 
 ## 2. This repository's validation
 
-Status: not started
+Status: completed
 
-- [ ] Write `scripts/check.mjs` with the four invariants from `design.md`,
+- [x] Write `scripts/check.mjs` with the four invariants from `design.md`,
       node only, no dependencies, outside `files:` and outside `bin/`.
-- [ ] Invariant 1 exempts the case where `changes/active/` holds a package
+- [x] Invariant 1 exempts the case where `changes/active/` holds a package
       touching `skill/`, and says which package when it does. It also ignores
       what `.gitignore` ignores: group 1 tripped over a `.DS_Store` that only
       exists on one side.
-- [ ] Invariant 3 asserts a ceiling the script owns, not the figure the README
+- [x] Invariant 3 asserts a ceiling the script owns, not the figure the README
       happens to state. Group 1 took the total from 24.2k to 25.9k, so a check
       written against the README's prose would fail on arrival and stay
       hostage to group 5. The README quotes the ceiling; the script holds it.
-- [ ] `package.json`: add `scripts.check`.
-- [ ] `CHANGEKIT.md`: `validate:` becomes the command.
+- [x] `package.json`: add `scripts.check`.
+- [x] `CHANGEKIT.md`: `validate:` becomes the command.
 
 Validation:
 
