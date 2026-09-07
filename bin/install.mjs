@@ -3,7 +3,7 @@
 // No dependencies, no network, no config: the skill configures itself
 // on its first run.
 
-import { cpSync, existsSync, readFileSync, mkdirSync } from 'node:fs';
+import { cpSync, existsSync, readFileSync, mkdirSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,6 +36,9 @@ if (existsSync(target) && !force) {
 }
 
 mkdirSync(dirname(target), { recursive: true });
+// The copy is replaced, not merged. A file removed from skill/ has to leave
+// every installation, and copying over the top would keep it there forever.
+rmSync(target, { recursive: true, force: true });
 cpSync(source, target, { recursive: true });
 
 say(`changekit ${version} installed at .claude/skills/changekit`);

@@ -1,6 +1,6 @@
 {
   "name": "changekit",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Change packages for Claude Code. A skill you copy into your repo, not a framework you install.",
   "license": "MIT",
   "author": "Allan Lancioni",

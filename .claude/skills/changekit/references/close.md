@@ -8,10 +8,10 @@ Close a package only when every task is checked and every dependency is done.
    tasks that are checked.
 2. Confirm no task is pending, in progress, or blocked without a follow-up
    that owns it.
-3. Where the project has specs, move the delta into them, one heading at a
-   time: the spec now states the new behavior as current. The delta stays in
-   the package, as the record of what became normative; where a rule landed
-   differently from how it was declared, its line says so.
+3. Where the change altered a normative document, move the delta into it, one
+   heading at a time: the document now states the new behavior as current. The
+   delta stays in the package, as the record of what became normative; where a
+   rule landed differently from how it was declared, its line says so.
 4. Confirm code, consumers, scripts, templates, tests and documents agree.
 5. Search the scope for drafts, scaffolds, TODOs, open decisions and dead
    references. Remove only what this change made dead, and only where nothing
@@ -23,10 +23,12 @@ Close a package only when every task is checked and every dependency is done.
 
 ## Archive
 
-Record the outcome in `proposal.md`: what shipped, what changed on the way,
-and what was left for later. Fill `shipped:` in its header with the version
-`version:` points at, or none where the project exposes none. A package opened
-before the header existed gets what can be filled and nothing more.
+Record the outcome in `change.md`: what shipped, what changed on the way, and
+what was left for later. Delete `Surprises` where nothing was written under it;
+where lines stand, they stay as part of the record. Fill `shipped:` in its
+header with the version `version:` points at, or none where the project exposes
+none. A package opened before the header existed gets what can be filled and
+nothing more.
 
 End the report with the package's own history:
 

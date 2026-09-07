@@ -69,4 +69,4 @@ form.
   exceptions.
 - Never write a protected path.
 
-<!-- changekit 0.7.0 -->
+<!-- changekit 1.0.0 -->

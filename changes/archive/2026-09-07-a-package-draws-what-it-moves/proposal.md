@@ -2,7 +2,7 @@
 
 - **changekit:** 0.7.0
 - **opened:** 2026-09-07
-- **shipped:** <filled at closure>
+- **shipped:** 1.0.0
 
 ## Context
 
@@ -94,8 +94,20 @@ capability since the number was set. It rises once, in group 1, and group 5
 confirms it against the finished size and names the margin in the comment
 rather than leaving it implied.
 
+### The installer replaces rather than copies over
+
+Taken at closure, when the reinstall left `proposal.md` and `design.md` in the
+loaded copy and `npm run check` refused the closure. `bin/install.mjs` copied
+with `cpSync` and deleted nothing, so a file removed from a release would have
+survived in every installation. `CHANGEKIT.md` already claimed the reinstall
+was destructive; the code was not. Shipping 1.0.0 without this would have made
+every project's loaded skill hold two templates the procedure no longer names.
+The alternative, asking each project to delete them by hand, charges everyone
+for a defect in the tool.
+
 ## Scope
 
+- `bin/install.mjs`: the reinstall clears the target before copying.
 - `change.md`: the merged template, its drawing, and its `Cost`, `Decided`
   and `Surprises` sections. `proposal.md` and `design.md` are removed.
 - `spec-delta.md`: what earns a delta, stated without reference to specs alone.
@@ -142,4 +154,58 @@ None.
 
 ## Outcome
 
-<Written at closure.>
+A package is `change.md`, `tasks.md` and, where the change alters something a
+later change is held to, `spec-delta.md`. `change.md` requires a drawing of
+what moves and carries the prose the drawing cannot; `Compatibility` and
+`Rollback` are two lines of `Cost`, written only when they have something to
+say; `Decided` sits above `Open decisions` and an answered gate migrates rather
+than disappearing; `Surprises` records a group whose diff did not match the
+drawing. `normative:` replaces `specs:` and discovers its own default. Shipped
+as 1.0.0, the first major, and it costs every project a hand edit of
+`CHANGEKIT.md` and of any open package.
+
+### What changed on the way
+
+**A sixth group, found by the fifth agent rather than by the plan.** The
+package scoped `SKILL.md` as unchanged because it names no template. It names
+the *field*: twice, plus once in `close.md`. Renaming `specs:` to `normative:`
+would have left the skill telling an agent to read a configuration key its own
+template no longer defines, and no invariant in `npm run check` catches that.
+Group 3 reported it instead of deciding, which is what the return contract asks
+for and what made the repair a group rather than a silent edit.
+
+**The brief carried `design.md`, against the procedure it was running under.**
+`run.md` at 0.7.0 inlines `CHANGEKIT.md`, `proposal.md` and `tasks.md` — the
+defect group 4 repaired. Withholding the drawing from the agent writing the
+file that carries the drawing would have been following the letter against the
+sense, so every brief in this run included it. The run therefore proved the fix
+before landing it.
+
+**Two of six groups carried a validation another group had to satisfy.** Group
+2's `grep proposal` needed group 4; group 4's needed group 3. Both were true
+statements about the package and neither was provable by the group that owned
+it, so both went unmet at the moment their group closed. A group's validation
+has to be provable by that group, or it proves nothing when the box is checked.
+That is a lesson about writing task groups, and nothing in the procedure says
+it yet.
+
+**This repository's `normative:` is `skill/`.** Set at closure, and it means
+this package would have carried a spec delta under its own new rule — the one
+thing it argued for and could not do for itself, because it planned under
+`specs: none`. The next package here carries one.
+
+**The installer never deleted anything, and nothing had ever asked it to.**
+This is the first package to remove a file from `skill/`, so the defect was
+nine versions old and had never fired. `npm run check` caught it at closure, in
+the reverse direction of invariant 1: a file in the loaded copy and not in the
+source. The validation earned its keep.
+
+### Left for later
+
+- **`scripts/check.mjs` says the README quotes its numbers.** The README quotes
+  none of them. The comment is stale, predates this package and was left alone.
+- **No invariant catches a dangling configuration field.** `npm run check`
+  proves that a named file exists; nothing proves that a named field does. That
+  is what made group 5 necessary and a person is still what finds it.
+- **The archived `change-provenance` keeps `proposal.md` and `design.md`.**
+  Deliberate: an archive is history.

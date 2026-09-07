@@ -11,7 +11,7 @@ what you could not find.
 | Field | Where to look | Fallback |
 |---|---|---|
 | changes | An existing directory of change packages, proposals or RFCs | `changes/` |
-| specs | A directory of normative behavior documents: `specs/`, `docs/specs/`, `.kiro/specs/` | none |
+| normative | `CLAUDE.md`, `AGENTS.md`, `.claude/`, found by looking. Ask only where the behavior specs are, if anywhere | the three you found |
 | language | English, unless the README and the documents are not: then ask | English |
 | version | `package.json`, `pyproject.toml`, `Cargo.toml`, a `VERSION` file, the latest git tag | none |
 | validate | Test script in `package.json`, `Makefile`, `pyproject.toml`, CI workflow | ask, and take none for an answer |
@@ -32,7 +32,7 @@ contract every route reads back, and the only place that states it.
 |---|---|---|
 | `changekit` | the version this project runs | stamp it from the marker |
 | `changes` | a path, in this repository or outside it | `changes/` |
-| `specs` | a path to normative documents | no delta, and the behavior lives in the proposal |
+| `normative` | the documents a later change is held to, or none | `CLAUDE.md`, `AGENTS.md`, `.claude/` |
 | `language` | what gets written into the repository | English |
 | `version` | where this project's own version lives | none, and a package records no shipped version |
 | `validate` | one command, or none | no command: the routes report it and continue |

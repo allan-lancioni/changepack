@@ -18,8 +18,8 @@ const ACTIVE = 'changes/active';
 // drift alarm. This file owns the numbers and the README quotes them.
 const SKILL_MAX = 3600;
 const FILE_MAX = 3600;
-// Raised from 30000 to make room for a-package-draws-what-it-moves; group 5 of
-// that package sets the real number against the finished size.
+// 34000 against 31047 today: about 2950 characters, or roughly 9% of the
+// current size, before the alarm sounds.
 const TOTAL_MAX = 34000;
 
 const failures = [];

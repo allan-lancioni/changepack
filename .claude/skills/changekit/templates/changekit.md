@@ -4,7 +4,9 @@ How change packages work in this repository.
 
 - **changekit:** <version from the marker at the end of SKILL.md>
 - **changes:** changes/
-- **specs:** none
+- **normative:** `CLAUDE.md`, `AGENTS.md`, `.claude/`, and <where this
+  project's behavior specs live, when it has any. A change that alters one of
+  these carries a spec delta. Write "none" if nothing here is held to.>
 - **language:** English. Everything changekit writes here follows it; what it
   says to you follows your message.
 - **version:** <where this project's own version lives, or "none". A package

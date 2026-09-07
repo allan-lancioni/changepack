@@ -112,15 +112,16 @@ Validation:
 
 ## 6. It is 1.0.0, and the ceiling is set on purpose
 
-Status: not started.
+Status: completed. The last item, `CHANGEKIT.md` and the reinstall, is the
+driver's: a dispatched agent may write neither.
 
-- [ ] `scripts/check.mjs`: confirm `TOTAL_MAX` at 34000 against the finished
+- [x] `scripts/check.mjs`: confirm `TOTAL_MAX` at 34000 against the finished
       size, and name the margin in the comment rather than leaving it implied.
-- [ ] `package.json`, the marker at the end of `skill/SKILL.md` and
+- [x] `package.json`, the marker at the end of `skill/SKILL.md` and
       `CHANGEKIT.md`: 1.0.0.
-- [ ] `CHANGELOG.md`: what changed, and that updating costs a hand edit of any
+- [x] `CHANGELOG.md`: what changed, and that updating costs a hand edit of any
       open package and of `specs:` in `CHANGEKIT.md`.
-- [ ] `node bin/install.mjs --force`, inside the archive commit, as the house
+- [x] `node bin/install.mjs --force`, inside the archive commit, as the house
       rule requires.
 
 Validation:

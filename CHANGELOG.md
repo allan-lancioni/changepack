@@ -16,6 +16,53 @@ The numbers are read against the procedure, not against an API. **Major**: your
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
+## 1.0.0
+
+A package is one change, one delta and the tasks, and the change draws what it
+moves.
+
+`proposal.md` and `design.md` become `change.md`. They were approved together,
+amended together at every stop and archived together; the seam between them was
+inherited from tools where each file is a separate approval gate, and this
+procedure presents the package as a whole. `tasks.md` is untouched.
+
+**A change draws what it moves.** `change.md` carries a `Changes` section that
+requires a drawing: a tree for files and modules, a table for collections,
+fields and states, a sequence for order in time, a flow for services and
+routing. The tree and the table are the default because they read in a
+terminal, on a forge and in an editor with nothing installed. The prose that
+follows carries only what the drawing cannot.
+
+**`Compatibility` and `Rollback` become two lines of `Cost`**, each written
+only when it has something to say. A rollback line is written only where the
+revert is not the inverse of the drawing.
+
+**A settled decision has somewhere to go.** `Decided` sits directly above
+`Open decisions`, and an answered gate moves between them rather than being
+deleted.
+
+**`Surprises`** records a group whose diff did not match the drawing. Silence
+is the ordinary outcome, and an empty section is deleted at closure.
+
+**A delta is earned by what the change edits**, not by whether the project has
+specs. `normative:` replaces `specs:` and defaults to what can be discovered
+without configuration: `CLAUDE.md`, `AGENTS.md` and `.claude/`. The condition
+is whether this change alters something a later change will be held to.
+
+**The brief a dispatched agent receives now inlines `change.md`**, so it
+arrives with the drawing. It previously received the proposal alone.
+
+**The installer replaces the skill directory rather than copying over it.** A
+file removed from a release used to survive in every installation, because
+`--force` overwrote what it found and deleted nothing. This is the first
+release that removes files, and it is the release that found it.
+
+Updating: by hand, in two places. An open package: rename `proposal.md` to
+`change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete
+`design.md`. `CHANGEKIT.md`: rename the `specs:` field to `normative:` and give
+it the documents a change is held to, or `none`. Nothing else. Archived
+packages are history and are not migrated.
+
 ## 0.7.0
 
 The spec delta is grouped by the spec it lands in.

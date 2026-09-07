@@ -32,7 +32,8 @@ The brief is the interface. Write it in this order, identical every time except
 the last part:
 
 1. the repository path, and that nothing outside it may be touched;
-2. `CHANGEKIT.md`, `proposal.md` and `tasks.md`, inline and in full;
+2. `CHANGEKIT.md`, `change.md` and `tasks.md`, inline and in full, the drawing
+   included;
 3. the rules and the return contract below;
 4. last, the one group it owns, and the commits that already landed.
 
@@ -63,10 +64,13 @@ has to survive every group.
 1. Run the validation command yourself, where there is one. The agent's word
    is a claim, and a checked box is a fact.
 2. Read the diff. Confirm it touched only what the group owns.
-3. Check the items and set the group's `Status` to `completed`. You are the
+3. Read the same diff against the drawing under `Changes`. Where they
+   disagree, write one line under `Surprises` in `change.md`. Where they
+   agree, write nothing: silence is the ordinary outcome.
+4. Check the items and set the group's `Status` to `completed`. You are the
    only writer of `tasks.md`.
-4. Show the group's items as a table, one row per item with what proved it.
-5. Commit that group alone, without asking. Start the next group when the user
+5. Show the group's items as a table, one row per item with what proved it.
+6. Commit that group alone, without asking. Start the next group when the user
    chose to run to the end; otherwise stop and hand it over.
 
 Stop and bring it to the user when a group returns blocked, when your own

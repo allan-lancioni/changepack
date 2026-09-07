@@ -20,7 +20,7 @@ Ask once, before the first task. Do not ask again between groups.
 
 ## Resolve the item
 
-1. Read the package: proposal, tasks, and design or delta where they exist.
+1. Read the package: `change.md`, `tasks.md`, and the delta where it exists.
 2. Read the current authority for the behavior you are about to change: the
    spec where the project has one, the code where it does not.
 3. Confirm the item, what it depends on, and how it is validated.
