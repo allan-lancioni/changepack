@@ -33,15 +33,15 @@ the work needs said, never to fill the page.
 |---|---|---|
 | `change.md` | always | problem, goal, decisions, scope, the drawing, cost, success criteria |
 | `tasks.md` | always | groups of work, each with one verifiable outcome |
-| `spec-delta.md` | only where the project has specs | what becomes normative, under the spec it lands in |
+| `spec-delta.md` | when the change alters something a later change is held to | what becomes normative, under the document it lands in |
 
 Stamp the header of `change.md` as you write it: the changekit version from
 the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open
 until closure.
 
-Without specs, the intended behavior goes in `change.md` under Goal, and
-there is no delta. Proposed behavior lives in the package either way. Never
-write it into an active spec before closure.
+Where nothing normative changes, the intended behavior goes in `change.md`
+under Goal, and there is no delta. Proposed behavior lives in the package
+either way. Never write it into a normative document before closure.
 
 ## Decision gates
 

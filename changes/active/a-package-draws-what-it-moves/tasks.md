@@ -4,8 +4,8 @@ One group at a time. Check an item only after its validation passes.
 
 Group 1 comes first: every group after it grows `skill/` before the merge gives
 space back. Group 2 comes next, because 3 and 4 both edit files it rewrites.
-Groups 3 and 4 need only 2 and may run beside each other. Group 5 needs all of
-them.
+Groups 3 and 4 need only 2 and may run beside each other. Group 5 was opened
+by group 3. Group 6 needs all of them.
 
 ## 1. There is room to land this
 
@@ -44,18 +44,20 @@ Validation:
 
 ## 3. The delta is asked for by what the change edits
 
-Status: not started
+Status: completed. It reported, rather than decided, that renaming the field
+leaves `SKILL.md` and `close.md` naming one that no longer exists. Group 5 is
+opened for it.
 
-- [ ] `skill/templates/spec-delta.md`: what earns a delta is that a later
+- [x] `skill/templates/spec-delta.md`: what earns a delta is that a later
       change is held to the document, not that the project has behaviour specs.
       The heading-per-document and the `+ ~ -` markers stay as 0.7.0 left them.
-- [ ] `skill/templates/changekit.md`: `specs:` becomes `normative:`, with the
+- [x] `skill/templates/changekit.md`: `specs:` becomes `normative:`, with the
       discovered default written out and behaviour specs as the part a project
       adds.
-- [ ] `skill/references/init.md`: the inference table row, discovering
+- [x] `skill/references/init.md`: the inference table row, discovering
       `CLAUDE.md`, `AGENTS.md` and `.claude/` and asking only about specs.
-- [ ] `skill/references/plan.md`: the delta's row states the same condition.
-- [ ] `README.md`: the sentence describing what a package carries.
+- [x] `skill/references/plan.md`: the delta's row states the same condition.
+- [x] `README.md`: the sentence describing what a package carries.
 
 Validation:
 
@@ -87,7 +89,28 @@ Validation:
 - Each of `plan.md`, `run.md`, `work.md`, `close.md` names `change.md` and none
   names a file that is not in `templates/`.
 
-## 5. It is 1.0.0, and the ceiling is set on purpose
+## 5. The rename leaves nothing dangling
+
+Status: not started
+
+Found by group 3. The package scoped `SKILL.md` as unchanged, which was wrong:
+it names the field twice, and `close.md` gates the fold on it. A skill that
+tells an agent to read a field its own template does not define is the drift
+this repository's validation exists to catch, and no invariant catches this one.
+
+- [ ] `skill/SKILL.md`: the sentence saying what `CHANGEKIT.md` sets names
+      `normative:` rather than whether the project has specs.
+- [ ] `skill/SKILL.md`: direct work updates the normative document the change
+      alters, rather than "the spec, where this project has specs".
+- [ ] `skill/references/close.md`: the delta folds where the change altered a
+      normative document, not "where the project has specs".
+
+Validation:
+
+- `npm run check` passes, with `SKILL.md` under 3600 and `close.md` under 3600.
+- `grep -rn 'has specs' skill/` returns nothing.
+
+## 6. It is 1.0.0, and the ceiling is set on purpose
 
 Status: not started.
 

@@ -67,9 +67,9 @@ to stop after each group or run to the end.
 ## The one file you own
 
 `CHANGEKIT.md`, at the root of your repository, holds where the packages
-live, whether the project has specs, the language for written artifacts, the
-validation command, whether commits land on their own, and the paths nothing
-may write. It is yours, it sits
+live, which documents a change is held to, the language for written artifacts,
+the validation command, whether commits land on their own, and the paths
+nothing may write. It is yours, it sits
 outside the skill directory, and updates never touch it. It reads as plain
 documentation, so a new colleague learns the process from it without
 installing anything.
@@ -90,12 +90,14 @@ open, because a package planned under one procedure keeps it until it closes.
 
 ## Specs are optional
 
-If your repository keeps normative behavior documents, point the config at
-them and packages carry a `spec-delta.md` that lands in the specs at closure.
+A package carries a `spec-delta.md` when the change alters something a later
+change is held to: a behavior spec, `CLAUDE.md`, `AGENTS.md`, anything under
+`.claude/`. It names each rule added, changed or removed, and folds into the
+document at closure.
 
-If it does not, nothing is missing. The intended behavior is written in the
-proposal and read from there. Adopting this does not start with writing specs
-for a system you already built.
+If your repository keeps no normative documents at all, nothing is missing.
+The intended behavior is written in the package and read from there. Adopting
+this does not start with writing specs for a system you already built.
 
 ## What is in the box
 
