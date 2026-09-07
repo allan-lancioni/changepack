@@ -65,16 +65,19 @@ Validation:
 
 ## 4. Every route reads the new package
 
-Status: not started
+Status: completed, and the same deviation as group 2, which is now a pattern
+worth naming: the `grep -rn 'proposal' skill/` line needs group 3's `init.md`
+to land before it can go clean. Two of five groups carried a validation another
+group had to satisfy.
 
-- [ ] `skill/references/run.md`: the brief inlines `CHANGEKIT.md`, `change.md`
+- [x] `skill/references/run.md`: the brief inlines `CHANGEKIT.md`, `change.md`
       and `tasks.md`, so the agent implementing a group receives the drawing.
-- [ ] `skill/references/work.md`: reads `change.md`, `tasks.md`, and the delta
+- [x] `skill/references/work.md`: reads `change.md`, `tasks.md`, and the delta
       where it exists.
-- [ ] `skill/references/close.md`: the outcome goes in `change.md`; `Surprises`
+- [x] `skill/references/close.md`: the outcome goes in `change.md`; `Surprises`
       is written per group whose diff did not match the drawing, and silence is
       the ordinary outcome.
-- [ ] `skill/references/run.md`: after a group returns, the diff is read
+- [x] `skill/references/run.md`: after a group returns, the diff is read
       against the drawing, and only a mismatch is written down.
 
 Validation:
