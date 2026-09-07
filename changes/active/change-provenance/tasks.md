@@ -65,19 +65,26 @@ Validation:
 
 ## 3. The shape of the commit
 
-Status: not started
+Status: completed
 
-- [ ] `skill/references/commit.md`: a section on the message. Subject of 72
+- [x] `skill/references/commit.md`: a section on the message. Subject of 72
       characters or fewer saying what is true now; body optional, short, and
       about what behaves differently; the reasoning stays in the package.
-- [ ] Same file: trailers. `Change: <slug>` only where a package produced the
+- [x] Same file: trailers. `Change: <slug>` only where a package produced the
       commit, `Changekit: <version>` per the open decision once it is answered.
-- [ ] Same file: no agent co-author by default, with `CHANGEKIT.md` carrying
+- [x] Same file: no agent co-author by default, with `CHANGEKIT.md` carrying
       the exception for projects that must disclose.
-- [ ] `skill/templates/changekit.md`: the `commit:` line carries the
+- [x] `skill/templates/changekit.md`: the `commit:` line carries the
       attribution phrase and says how to turn it on.
-- [ ] `skill/references/init.md`: the field contract's `commit` row gains the
+- [x] `skill/references/init.md`: the field contract's `commit` row gains the
       attribution, so the one place stays the one place.
+- [x] `skill/references/close.md`: the closure report ends with the package's
+      own history, `git log --grep='Change: <slug>' --reverse`. The trailer is
+      what makes that query possible, and closure is where it pays.
+- [x] Recalibrate invariant 3, which this group's own growth exposed as badly
+      designed: a single total says nothing about what a turn loads. It
+      becomes three, `SKILL.md` and the widest route being the ones that bind
+      and the total being a drift alarm.
 
 Validation:
 

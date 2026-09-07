@@ -13,10 +13,12 @@ const SOURCE = 'skill';
 const LOADED = '.claude/skills/changekit';
 const ACTIVE = 'changes/active';
 
-// The context budget is the product: SKILL.md loads on every turn. These are
-// ceilings this file owns, and the README quotes them.
+// The context budget is the product. What a turn actually loads is SKILL.md
+// plus one reference, so those two are the ceilings that bind; the total is a
+// drift alarm. This file owns the numbers and the README quotes them.
 const SKILL_MAX = 3600;
-const TOTAL_MAX = 28000;
+const FILE_MAX = 3600;
+const TOTAL_MAX = 30000;
 
 const failures = [];
 const notes = [];
@@ -99,7 +101,18 @@ if (skillText.length > SKILL_MAX)
   fail(`SKILL.md is ${skillText.length} characters, over its ${SKILL_MAX} ceiling`);
 if (total > TOTAL_MAX)
   fail(`${SOURCE}/ is ${total} characters, over its ${TOTAL_MAX} ceiling`);
-note(`SKILL.md ${skillText.length}/${SKILL_MAX}, ${SOURCE}/ ${total}/${TOTAL_MAX}`);
+
+let widest = ['', 0];
+for (const f of files.filter((f) => f.includes('/references/'))) {
+  const n = read(f)?.length ?? 0;
+  if (n > widest[1]) widest = [f, n];
+  if (n > FILE_MAX)
+    fail(`${f} is ${n} characters, over the ${FILE_MAX} a single route may load`);
+}
+note(
+  `SKILL.md ${skillText.length}/${SKILL_MAX}, widest route ${widest[0].split('/').pop()} ` +
+    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ ${total}/${TOTAL_MAX}`
+);
 
 // 4. Nothing names a file that is not there.
 const named = (text, dir) => [...text.matchAll(new RegExp(`${dir}/([\\w.-]+\\.md)`, 'g'))]

@@ -9,8 +9,9 @@ How change packages work in this repository.
   says to you follows your message.
 - **validate:** <the one command that says whether the tree is healthy, or
   "none". A missing command is reported at every commit point, never a stop.>
-- **commit:** conventional, one per commit point, without asking. Write
-  "ask first" here instead to be asked every time.
+- **commit:** conventional, no agent co-author, one per commit point, without
+  asking. Write "ask first" to be asked every time, or "co-author" where this
+  project has to disclose machine assistance.
 - **protect:** <paths this skill must never write, or delete this line>
 - **updates:** ask at closure. Write "off" here to never check, or
   "hold <version>" to skip one.

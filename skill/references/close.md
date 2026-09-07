@@ -24,6 +24,14 @@ Close a package only when every task is checked and every dependency is done.
 Record the outcome in `proposal.md`: what shipped, what changed on the way,
 and what was left for later.
 
+End the report with the package's own history:
+
+    git log --grep='Change: <slug>' --reverse --oneline
+
+That is every commit the package produced, from the opening to the group that
+just landed. The archive commit is not in it, being the one you are about to
+make.
+
 Present the closure report, then move the directory to
 `changes/archive/<YYYY-MM-DD>-<slug>/`, dated the day it closed. Closure is a
 commit point: it lands without asking, like the others.

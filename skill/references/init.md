@@ -34,7 +34,7 @@ contract every route reads back, and the only place that states it.
 | `specs` | a path to normative documents | no delta, and the behavior lives in the proposal |
 | `language` | what gets written into the repository | English |
 | `validate` | one command, or none | no command: the routes report it and continue |
-| `commit` | the convention, and `ask first` to be asked every time | conventional, landing without asking |
+| `commit` | the convention, `ask first`, and `co-author` where the project must disclose | conventional, without asking, and no agent co-author |
 | `protect` | paths nothing may write | nothing is protected |
 | `updates` | `ask at closure`, `hold <version>`, `off` | `ask at closure` |
 
