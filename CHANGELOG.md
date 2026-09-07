@@ -16,6 +16,23 @@ The numbers are read against the procedure, not against an API. **Major**: your
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
+## 0.7.0
+
+The spec delta is grouped by the spec it lands in.
+
+`Added`, `Changed` and `Removed` sorted a delta by what kind of edit each rule
+was, which is not how one is applied: folding a delta at closure means opening
+one spec and making every change it asks for. The delta now carries a heading
+per spec path, and each rule under it is marked `+` added, `~` changed, `-`
+removed, so a path is written once instead of once per rule.
+
+Closure also says what becomes of the delta. It stays in the package, as the
+record of what became normative, and a rule that landed differently from how
+it was declared says so on its own line.
+
+Updating: nothing. A delta already written in the old shape folds the same way;
+rewrite it only if you want to.
+
 ## 0.6.0
 
 Commits name the package that produced them, and stop restating it.

@@ -34,7 +34,7 @@ the work needs said, never to fill the page.
 | `proposal.md` | always | problem, goal, scope, out of scope, success criteria |
 | `tasks.md` | always | groups of work, each with one verifiable outcome |
 | `design.md` | when the approach, compatibility or rollback is not obvious | how it is built, and how it is undone |
-| `spec-delta.md` | only where the project has specs | what becomes normative: added, changed, removed |
+| `spec-delta.md` | only where the project has specs | what becomes normative, under the spec it lands in |
 
 Stamp the header of `proposal.md` as you write it: the changekit version from
 the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open

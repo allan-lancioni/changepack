@@ -3,14 +3,11 @@
 Normative behavior this change makes true. It lives here until closure, never
 in an active spec.
 
-## Added
+One heading per spec, so folding it at closure is one file at a time. Under
+each, one line per rule, marked `+` added, `~` changed, `-` removed.
 
-- <spec path: the rule, written as current behavior.>
+## `<spec path>`
 
-## Changed
-
-- <spec path: from, to.>
-
-## Removed
-
-- <spec path: the rule, and what replaces it.>
+- `+` **<rule>** — <the rule, written as current behavior.>
+- `~` **<rule>** — <what changes, and what stays.>
+- `-` **<rule>** — <what replaces it, or that nothing does.>
