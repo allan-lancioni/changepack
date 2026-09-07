@@ -36,6 +36,10 @@ the work needs said, never to fill the page.
 | `design.md` | when the approach, compatibility or rollback is not obvious | how it is built, and how it is undone |
 | `spec-delta.md` | only where the project has specs | what becomes normative: added, changed, removed |
 
+Stamp the header of `proposal.md` as you write it: the changekit version from
+the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open
+until closure.
+
 Without specs, the intended behavior goes in `proposal.md` under Goal, and
 there is no delta. Proposed behavior lives in the package either way. Never
 write it into an active spec before closure.

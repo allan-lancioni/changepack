@@ -48,6 +48,12 @@ Everything runs through `/changekit`, in plain language:
 | "update changekit" | Reads the changelog between your version and the latest, says what it costs, then replaces the skill |
 | "rename this variable" | Tells you it does not need a package, and does it |
 
+Every commit it makes names the package that produced it, in trailers rather
+than in prose, so `git log --grep='Change: <slug>'` returns a whole change in
+order. The subject says what is true now, the body stays under 300 characters,
+and the reasoning lives in the package, which is archived. No agent is
+credited as co-author unless your configuration asks for one.
+
 It stops on its own when a decision needs you: schema, persistence,
 compatibility, observable behavior. Everything else runs without a checkpoint.
 It commits at three moments, the package when it opens, each group as it lands,
@@ -108,11 +114,15 @@ skill/                  what gets copied into your repository
   templates/            the package files, and the config file
 ```
 
-About 24k characters of procedure. Only SKILL.md is always loaded, at 3k;
-a turn loads between 4k and 10k depending on the route it takes.
-There is still nothing to run: no scripts, no dependencies, no state outside
-your repository. The update check is one `git ls-remote`, run at one moment,
-and what it remembers is a line in the file you own.
+About 28k characters of procedure, held to ceilings that are checked: 3.6k for
+SKILL.md, which is always loaded, and 3.6k for the widest single route, so a
+turn loads between 4k and 8k depending on where it goes.
+
+There is still nothing to run in your repository: no scripts, no dependencies,
+no state outside it. The update check is one `git ls-remote`, run at one
+moment, and what it remembers is a line in the file you own. This repository
+keeps a `scripts/check.mjs` for its own invariants, which the installer never
+copies and npm never ships.
 
 ## License
 

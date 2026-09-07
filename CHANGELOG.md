@@ -16,6 +16,44 @@ The numbers are read against the procedure, not against an API. **Major**: your
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
+## 0.6.0
+
+Commits name the package that produced them, and stop restating it.
+
+The message has a shape. A subject of 72 characters or fewer saying what is
+true now, and a body that is optional and never longer than 300, carrying what
+behaves differently and never the reasoning. The reasoning is the package's,
+and the package is archived. Two trailers point at it:
+
+    Change: <slug>
+    Changekit: <the version that governed the run>
+
+Both or neither, on the three moments a package commits, so
+`git log --grep='Change: <slug>'` returns a whole change in order from the
+opening to the archive. A closure report now ends with exactly that query.
+Direct work carries no trailers and stays indistinguishable from a commit made
+by hand, which is the cost of keeping short messages short.
+
+**No agent is credited as co-author.** A project that has to disclose machine
+assistance writes `co-author` in `commit:`, and only then is the trailer added.
+
+**A change records its versions.** `proposal.md` carries the changekit version
+that planned it and the date it opened, and at closure the release its work
+shipped in. A new field, `version:`, says where that number lives.
+
+**An absent validation reports instead of stopping.** `validate:` had three
+states and defined one. A check that runs and fails still stops everything; one
+that is absent or could not run costs a line in the report and the run goes on.
+A repository with no validation command is ordinary, not incomplete.
+
+**The fields have a contract.** `init.md` states all nine: what each one
+accepts, and what it means when it is absent.
+
+Updating: nothing. Every new field is optional and every default is what you
+already have. Your commits change shape from the session after you update, and
+packages opened under 0.5.0 close without a version header rather than asking
+to be edited by hand.
+
 ## 0.5.0
 
 The skill checks for a newer version when a package closes, and updates itself

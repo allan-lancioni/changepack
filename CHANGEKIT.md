@@ -2,7 +2,7 @@
 
 How change packages work in this repository.
 
-- **changekit:** 0.5.0
+- **changekit:** 0.6.0
 - **changes:** changes/
 - **specs:** none
 - **language:** English. Everything changekit writes here follows it; what it

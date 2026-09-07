@@ -2,7 +2,7 @@
 
 - **changekit:** 0.5.0
 - **opened:** 2026-09-07
-- **shipped:** <filled at closure>
+- **shipped:** 0.6.0
 
 ## Context
 
@@ -115,4 +115,39 @@ should not depend on what a later session happens to find.
 
 ## Outcome
 
-<Written at closure.>
+Shipped as 0.6.0. Commits carry `Change:` and `Changekit:` on the three
+moments a package commits, the subject is held to 72 characters and the body
+to 300, no agent is credited as co-author, `proposal.md` records the version
+that planned it and the release it shipped in, and an absent validation
+reports instead of stopping.
+
+Four things changed on the way.
+
+The field contract landed in `init.md` rather than in the template or a new
+`config.md`. In the template it would have followed into every project's
+`CHANGEKIT.md` forever; as its own reference it would cost a file read almost
+never. `init.md` already held the inference table and is the route that writes
+the file.
+
+The context ceiling was recalibrated mid-package, because this package's own
+growth showed it was badly designed: one total says nothing about what a turn
+loads. It became three, and what binds is `SKILL.md` and the widest single
+route, with the total left as a drift alarm.
+
+`git log --grep` did not find the whole package, since the opening and the
+first two groups predate the rule the third group wrote. The three were
+rewritten to carry the trailers and nothing else, both being facts about them:
+the package did produce them, and 0.5.0 did govern them. Their bodies were
+left alone, so the log shows 403, 440 and 460 characters falling to 224 and
+190 across the change that caused it.
+
+The `protect:` question answered itself. `bin/install.mjs --force` wrote
+`.claude/skills/changekit/` at closure with no ambiguity, because the
+exception is written into the field's own line rather than left to be
+inferred.
+
+Left for later, both named as out of scope when this opened: an install path
+that does not need node, and several validation commands per moment. A third
+came up while this ran, and is the one worth doing next: no repository has
+ever run with `specs:` set, so the spec-delta routes in `plan.md`, `close.md`
+and `work.md` have never been executed by anyone.

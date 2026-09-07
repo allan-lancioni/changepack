@@ -16,12 +16,23 @@ Close a package only when every task is checked and every dependency is done.
    still reads it.
 6. Confirm the excluded behavior was not built anyway.
 7. Run the project's validation command, and the full suite before anything
-   activates.
+   activates. Where `validate:` names none, the closure still closes: the
+   report says no command ran, and the audit above is what carries it.
 
 ## Archive
 
 Record the outcome in `proposal.md`: what shipped, what changed on the way,
-and what was left for later.
+and what was left for later. Fill `shipped:` in its header with the version
+`version:` points at, or none where the project exposes none. A package opened
+before the header existed gets what can be filled and nothing more.
+
+End the report with the package's own history:
+
+    git log --grep='Change: <slug>' --reverse --oneline
+
+That is every commit the package produced, from the opening to the group that
+just landed. The archive commit is not in it, being the one you are about to
+make.
 
 Present the closure report, then move the directory to
 `changes/archive/<YYYY-MM-DD>-<slug>/`, dated the day it closed. Closure is a

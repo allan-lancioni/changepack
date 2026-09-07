@@ -20,7 +20,8 @@ Then ask with AskUserQuestion, a single question, three options:
 - cancel, and do nothing.
 
 Whatever the answer, you stop unconditionally when a group comes back blocked
-and when a validation fails.
+and when a validation runs and fails. A validation that does not exist is not
+a failure.
 
 ## Dispatch a group
 
@@ -42,7 +43,7 @@ The rules it gets:
   brief is the plan, never the code;
 - never write anything under `changes/`, never write `CHANGEKIT.md`, never run
   a command that writes git state;
-- run the validation command before reporting;
+- run the validation command before reporting, where the project has one;
 - report blocked rather than deciding anything the package did not approve.
 
 The return contract, four lines and nothing else:
@@ -59,8 +60,8 @@ has to survive every group.
 
 ## After a group returns
 
-1. Run the validation command yourself. The agent's word is a claim, and a
-   checked box is a fact.
+1. Run the validation command yourself, where there is one. The agent's word
+   is a claim, and a checked box is a fact.
 2. Read the diff. Confirm it touched only what the group owns.
 3. Check the items and set the group's `Status` to `completed`. You are the
    only writer of `tasks.md`.
@@ -69,8 +70,8 @@ has to survive every group.
    chose to run to the end; otherwise stop and hand it over.
 
 Stop and bring it to the user when a group returns blocked, when your own
-validation fails, or when the diff leaves the group's scope. Mark nothing and
-commit nothing in those cases.
+validation runs and fails, or when the diff leaves the group's scope. Mark
+nothing and commit nothing in those cases.
 
 ## The last group
 

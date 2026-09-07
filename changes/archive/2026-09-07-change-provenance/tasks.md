@@ -119,18 +119,18 @@ Validation:
 
 ## 5. Cleanup and closure
 
-Status: not started
+Status: completed
 
-- [ ] `CHANGELOG.md`: the 0.6.0 entry, each item ending with what updating
+- [x] `CHANGELOG.md`: the 0.6.0 entry, each item ending with what updating
       costs, and the answer to the `Changekit:` trailer decision recorded.
-- [ ] `README.md`: distinguish what this repository maintains from what a
+- [x] `README.md`: distinguish what this repository maintains from what a
       consumer installs, so `scripts/check.mjs` does not contradict "nothing
       to run". Say that commits name their package.
-- [ ] `package.json` and the marker at the end of `skill/SKILL.md` go to
+- [x] `package.json` and the marker at the end of `skill/SKILL.md` go to
       0.6.0.
-- [ ] `node bin/install.mjs --force`, refreshing the loaded copy.
-- [ ] `CHANGEKIT.md`: stamp `changekit: 0.6.0`.
-- [ ] Audit against `proposal.md`, write the Outcome, archive to
+- [x] `node bin/install.mjs --force`, refreshing the loaded copy.
+- [x] `CHANGEKIT.md`: stamp `changekit: 0.6.0`.
+- [x] Audit against `proposal.md`, write the Outcome, archive to
       `changes/archive/<date>-change-provenance/`.
 
 Validation:

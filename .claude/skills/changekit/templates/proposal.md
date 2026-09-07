@@ -1,5 +1,9 @@
 # <Title>
 
+- **changekit:** <the version that planned this>
+- **opened:** <YYYY-MM-DD>
+- **shipped:** <filled at closure>
+
 ## Context
 
 <What is true today, and why that is a problem. Two or three paragraphs, no
