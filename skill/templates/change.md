@@ -1,44 +1,42 @@
-# <Title>
+---
+title: <Title>
+description: <One line saying what the change is, so a listing of archived
+  packages reads without opening any of them.>
+changekit: <the version that planned this>
+opened: <YYYY-MM-DD>
+opened-by: <the git identity that signs the opening commit, as name and email>
+issue: <the issue or discussion this came from; omit the key when there is
+  none>
+shipped: <the release this shipped in, filled at closure; omit the key until
+  then>
+---
 
-- **changekit:** <the version that planned this>
-- **opened:** <YYYY-MM-DD>
-- **shipped:** <filled at closure>
+# <Title>
 
 ## Context
 
-<What is true today, and why that is a problem. Two or three paragraphs, no
+<Why now, in one paragraph: what is true today and why that is a problem. The
+description already said what the change is, so never repeat it here. No
 history and no options.>
 
 ## Goal
 
-<The behavior that should be true when this closes. Where the project has no
-specs, this is the normative part of the package: write it as a contract.>
+<The contract: the behavior that should be true when this closes, and no more
+of it than the change needs. Where the project has no specs, this is the
+normative part of the package, so write it as a contract.>
 
 <A line that names a file, a collection or a transaction belongs under Changes.
 A line about what keeps working belongs under Cost.>
 
-## Decided
-
-<What this package settled: the question, what was chosen, and what the
-alternative would have cost. A decision moves here from Open decisions when it
-is answered.>
-
-## Open decisions
-
-- <The question, its alternatives, and what each one costs. Mark it blocking
-  when no task can start without the answer.>
-
-## Scope
-
-- <What this change touches.>
-
-Out of scope:
-
-- <What was considered and deliberately left out, and why.>
-
 ## Changes
 
-<Draw what moves, and nothing it does not. Pick the notation by what moves:>
+<This section is written last and read first: the drawing is the last thing
+known at plan time and the first thing a reader wants. Understand the change,
+then draw it here.>
+
+<A line above each drawing, saying what it shows, so the drawing is read rather
+than decoded. Then draw what moves, and nothing it does not. Pick the notation
+by what moves:>
 
 - <files, modules, packages: a tree, marked `+` added, `-` removed,
   `~` changed;>
@@ -53,6 +51,32 @@ terminal, on a forge and in an editor alike, with nothing installed.>
 the other one. Never restate the drawing.>
 
 <If nothing structural moves, there is no drawing, and probably no package.>
+
+## Open decisions
+
+**<The question.>**
+
+| Alternative | Cost |
+|---|---|
+| <one> | <what it costs.> |
+| <the other> | <what it costs.> |
+
+<The recommendation, in prose under the table: which one, and why. Say it is
+blocking when no task can start without the answer.>
+
+## Decided
+
+<What this package settled: the question, what was chosen, and what the
+alternative would have cost. A decision moves here from Open decisions when it
+is answered.>
+
+## Scope
+
+- <What this change touches.>
+
+Out of scope:
+
+- <What was considered and deliberately left out, and why.>
 
 ## Cost
 

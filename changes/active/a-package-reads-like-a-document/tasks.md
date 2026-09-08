@@ -7,17 +7,17 @@ needs both. Group 4 needs 1. Group 5 needs all of them.
 
 ## 1. `change.md` opens with what the change is
 
-Status: not started
+Status: completed
 
-- [ ] Frontmatter: `title`, `description`, `changekit`, `opened`, `opened-by`,
+- [x] Frontmatter: `title`, `description`, `changekit`, `opened`, `opened-by`,
       and `issue` and `shipped` written only when they have a value.
-- [ ] The order becomes `Context`, `Goal`, `Changes`, `Open decisions`,
+- [x] The order becomes `Context`, `Goal`, `Changes`, `Open decisions`,
       `Decided`, `Scope`, `Cost`, `Success criteria`, `Outcome`, `Surprises`.
-- [ ] `Context` asks for one paragraph. `Goal` asks for the contract and no
+- [x] `Context` asks for one paragraph. `Goal` asks for the contract and no
       more. Neither leaves its length to the change.
-- [ ] `Changes` asks for a line above each drawing saying what it shows, and
+- [x] `Changes` asks for a line above each drawing saying what it shows, and
       says the drawing is written last and read first.
-- [ ] `Open decisions` asks for alternative and cost as a table, with the
+- [x] `Open decisions` asks for alternative and cost as a table, with the
       recommendation in prose beneath it.
 
 Validation:
