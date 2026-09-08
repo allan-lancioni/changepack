@@ -130,7 +130,7 @@ Validation:
 
 ## 5. Closure, and the two acts that leave this machine
 
-Status: not started
+Status: in progress
 
 **Stop here for confirmation before either outward act.** Renaming the
 repository and publishing to the registry are the two steps this package
@@ -140,8 +140,9 @@ cannot take back, and the second one holds the name from the moment it lands.
       `.claude/skills/changepack/`.
 - [ ] `git rm -r .claude/skills/changekit/`, so the old loaded copy leaves the
       tree with the release that replaces it.
-- [ ] Rename the repository on GitHub to `changepack`, and confirm
-      `check-update.mjs` resolves against the new URL.
+- [x] Rename the repository on GitHub to `changepack`. `changekit` answers
+      301 to `changepack`, the remote reaches origin, and `check-update.mjs`
+      no longer names a URL at all: it resolves against the registry.
 - [ ] Merge to `main` and let `release.yml` tag `v1.0.0` and publish
       `changepack@1.0.0`.
 - [ ] Confirm `npx changepack` in a scratch repository installs the skill and
