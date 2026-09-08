@@ -42,19 +42,19 @@ Validation:
 
 ## 2. The channel
 
-Status: not started
+Status: completed
 
-- [ ] `package.json`: `name` is `changepack`, `bin` maps `changepack` to
+- [x] `package.json`: `name` is `changepack`, `bin` maps `changepack` to
       `bin/install.mjs`, `repository` points at the renamed repository, and
       `publishConfig.access` is `public`.
-- [ ] `.github/workflows/tag.yml` becomes `release.yml`: on a push to `main`
+- [x] `.github/workflows/tag.yml` becomes `release.yml`: on a push to `main`
       it tags the version where no tag carries it, then publishes to npm where
       the registry does not already hold that version. Publishing is guarded by
       a registry lookup, not by the tag it just wrote.
-- [ ] The workflow requests `id-token: write` and publishes with provenance.
-- [ ] The npm token is read from a repository secret, and the workflow fails
+- [x] The workflow requests `id-token: write` and publishes with provenance.
+- [x] The npm token is read from a repository secret, and the workflow fails
       loudly rather than silently skipping when it is absent.
-- [ ] `skill/references/commit.md`: the trailer a package's commits carry is
+- [x] `skill/references/commit.md`: the trailer a package's commits carry is
       `Changepack:`, and the sentence about closure naming the old version
       follows. Group 1 surfaced this and did not own it.
 

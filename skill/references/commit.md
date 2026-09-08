@@ -60,10 +60,10 @@ fit is telling you the work needed a package.
 Where a package produced the commit, two trailers close it:
 
     Change: <slug>
-    Changekit: <the version that governed the run>
+    Changepack: <the version that governed the run>
 
 Both or neither, on all three of the package's moments. At closure
-`Changekit:` still names the old version where the package is what ships the
+`Changepack:` still names the old version where the package is what ships the
 new one: that is what ran. Direct work carries no trailers.
 
 The opening and archive commits name the package in the subject and say which

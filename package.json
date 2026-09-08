@@ -1,5 +1,5 @@
 {
-  "name": "changekit",
+  "name": "changepack",
   "version": "1.0.0",
   "description": "Change packages for Claude Code. A skill you copy into your repo, not a framework you install.",
   "license": "MIT",
@@ -10,15 +10,18 @@
     "lint": "markdownlint-cli2"
   },
   "bin": {
-    "changekit": "bin/install.mjs"
+    "changepack": "bin/install.mjs"
   },
   "files": [
     "skill",
     "bin"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allan-lancioni/changekit.git"
+    "url": "git+https://github.com/allan-lancioni/changepack.git"
   },
   "keywords": [
     "claude-code",
