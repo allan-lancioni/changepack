@@ -67,26 +67,26 @@ Validation:
 
 ## 3. The check reads the registry
 
-Status: not started
+Status: completed
 
-- [ ] `package.json` gains `changepack.updating`, the one line of cost for
+- [x] `package.json` gains `changepack.updating`, the one line of cost for
       this version, taken from the `Updating:` paragraph of the matching
       `CHANGELOG.md` entry.
-- [ ] `scripts/check.mjs` gains a fifth invariant: `changepack.updating`
+- [x] `scripts/check.mjs` gains a fifth invariant: `changepack.updating`
       equals the `Updating:` paragraph of the changelog entry for the version
       in `package.json`, joined into one line.
-- [ ] `skill/check-update.mjs`: one `GET https://registry.npmjs.org/changepack`
+- [x] `skill/check-update.mjs`: one `GET https://registry.npmjs.org/changepack`
       replaces `git ls-remote`, the `raw.githubusercontent` fallback and the
       changelog fetch. The latest version comes from `dist-tags.latest`, and
       each intermediate version's cost from its own `changepack.updating`.
-- [ ] The script reads `CHANGEPACK.md` and its `changepack:` field, and drops
+- [x] The script reads `CHANGEPACK.md` and its `changepack:` field, and drops
       `spawnSync` and the `node:child_process` import with the git call.
-- [ ] Silence still covers every failure: offline, a non-200, a malformed
+- [x] Silence still covers every failure: offline, a non-200, a malformed
       document, `updates: off`, a held version, and an installed version that
       is current.
-- [ ] A version published without an `updating` field reports
+- [x] A version published without an `updating` field reports
       `Updating: not stated.` rather than failing.
-- [ ] `skill/references/update.md` step 4 installs `npx changepack@<version>
+- [x] `skill/references/update.md` step 4 installs `npx changepack@<version>
       --force`, and the step no longer speaks of a ref. Group 1 renamed the
       URL it could not yet replace.
 

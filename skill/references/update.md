@@ -35,9 +35,9 @@ package.
    entry ends with that. Name any that asks for an edit by hand, and say what
    it is before anything is written.
 3. Wait for confirmation. Nothing is written before it.
-4. Install at the ref the check reported, so what was compared is what lands:
+4. Install the version the check reported, so what was compared is what lands:
 
-       npx github:allan-lancioni/changepack#<ref> --force
+       npx changepack@<version> --force
 
 5. Stamp `changepack: <new version>` in `CHANGEPACK.md`. Where `updates:` was
    holding a version, return it to `ask at closure`: what it held is behind

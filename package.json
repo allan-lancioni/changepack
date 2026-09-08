@@ -28,5 +28,8 @@
     "skill",
     "change-management",
     "spec-driven"
-  ]
+  ],
+  "changepack": {
+    "updating": "Updating: by hand, in two places. An open package: rename `proposal.md` to `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete `design.md`. `CHANGEKIT.md`: rename the `specs:` field to `normative:` and give it the documents a change is held to, or `none`. Nothing else. Archived packages are history and are not migrated. The check and the tagging cost you nothing: the script arrives with the skill directory on this install, and the workflow is this repository's own."
+  }
 }

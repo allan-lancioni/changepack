@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// This repository's validation. Four invariants, no dependencies.
+// This repository's validation. Five invariants, no dependencies.
 //
 // It exists because changepack is the only repository where the skill is both
 // the thing maintained and the thing running, and that arrangement is safe
@@ -86,8 +86,10 @@ if (drift.length && openPackages.length) {
 // 2. One version, said in three places.
 const skillText = readOrFlag(join(SOURCE, 'SKILL.md')) ?? '';
 const marker = skillText.match(/<!--\s*changepack\s+([^\s]+)\s*-->/)?.[1];
-const pkg = JSON.parse(readFileSync('package.json', 'utf8')).version;
-const changelog = readFileSync('CHANGELOG.md', 'utf8').match(/^##\s+(\S+)/m)?.[1];
+const manifest = JSON.parse(readFileSync('package.json', 'utf8'));
+const pkg = manifest.version;
+const changelogText = readFileSync('CHANGELOG.md', 'utf8');
+const changelog = changelogText.match(/^##\s+(\S+)/m)?.[1];
 
 if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
   fail(
@@ -138,6 +140,45 @@ const orphans = readdirSync(join(SOURCE, 'references')).filter(
   (f) => !skillText.includes(`references/${f}`)
 );
 if (orphans.length) note(`not named in SKILL.md: ${orphans.join(', ')}`);
+
+// 5. The cost of updating, said the same way twice. CHANGELOG.md is the
+//    document a person reads and is deliberately not in the published
+//    tarball, so `changepack.updating` in package.json carries the same
+//    paragraph to the registry, where the check finds it. The comparison is
+//    on the joined text: the changelog wraps the paragraph across lines and
+//    the field is one line, and they are the same sentence either way.
+const entry = changelogText
+  .split(/^##\s+/m)
+  .slice(1)
+  .find((section) => section.split(/\s/)[0] === pkg);
+
+const paragraph = [];
+if (entry) {
+  let collecting = false;
+  for (const line of entry.split('\n')) {
+    if (collecting) {
+      if (line.trim() === '') break;
+      paragraph.push(line.trim());
+      continue;
+    }
+    if (line.startsWith('Updating:')) {
+      paragraph.push(line.trim());
+      collecting = true;
+    }
+  }
+}
+
+const written = manifest.changepack?.updating;
+if (!entry) fail(`CHANGELOG.md has no entry for ${pkg}`);
+else if (!paragraph.length)
+  fail(`the CHANGELOG.md entry for ${pkg} has no paragraph opening \`Updating:\``);
+else if (!written) fail(`package.json carries no changepack.updating for ${pkg}`);
+else if (written !== paragraph.join(' '))
+  fail(
+    `changepack.updating disagrees with the CHANGELOG.md entry for ${pkg}:\n` +
+      `      package.json: ${written}\n` +
+      `      CHANGELOG.md: ${paragraph.join(' ')}`
+  );
 
 if (gone.length)
   fail(`tracked by git and missing from disk: ${[...new Set(gone)].join(', ')}`);
