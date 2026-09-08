@@ -77,11 +77,11 @@ Validation:
 
 ## 5. It is still 1.0.0
 
-Status: not started
+Status: completed
 
-- [ ] `CHANGELOG.md`: the unreleased 1.0.0 entry gains what this changed. No
+- [x] `CHANGELOG.md`: the unreleased 1.0.0 entry gains what this changed. No
       new version: 1.0.0 has no tag and has not shipped.
-- [ ] `node bin/install.mjs --force`, inside the archive commit.
+- [x] `node bin/install.mjs --force`, inside the archive commit.
 
 Validation:
 

@@ -2,7 +2,7 @@
 
 - **changekit:** 1.0.0
 - **opened:** 2026-09-07
-- **shipped:**
+- **shipped:** 1.0.0
 
 ## Context
 
@@ -152,4 +152,18 @@ A nested list runs in parallel.
 
 ## Outcome
 
-<Written at closure.>
+Shipped in 1.0.0, which had not been tagged, so the changelog entry was
+amended rather than added to.
+
+A package's metadata is frontmatter in all three templates, and `change.md`
+reaches its drawing in the first screen: `Changes` is the third heading, and
+Context and Goal carry their lengths rather than growing with the change.
+Planning stamps every key, omits one with no value, reads `opened-by` from the
+package's own repository, and says the count out loud past two blocking gates.
+`init.md` now carries what earns a place under `normative:`, so the field is
+decidable from the route that asks for it, and `close.md` fills `shipped` in
+whichever form it finds.
+
+Left for later: nothing reads `order:` yet, which was the plan. `run.md` still
+decides the ordering from the prose beside it, and the field is written for the
+tool that will.

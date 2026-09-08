@@ -52,6 +52,35 @@ is whether this change alters something a later change will be held to.
 **The brief a dispatched agent receives now inlines `change.md`**, so it
 arrives with the drawing. It previously received the proposal alone.
 
+**A package's metadata is frontmatter.** `change.md`, `tasks.md` and
+`spec-delta.md` open with a block a machine can read instead of a header
+formatted as prose: the title, a one-line description, the changekit version,
+the date, who opened it, the issue it came from and what it shipped in. A key
+with no value is omitted, so `issue:` and `shipped:` are written when they have
+something to say. `tasks.md` states its groups and their execution order there,
+and `spec-delta.md` the documents it edits, so an archived package says what it
+touched without being opened. Closure fills `shipped:` in the frontmatter, or
+in the prose header of a package written before it.
+
+**`change.md` reads like a document.** One paragraph of Context saying why now,
+a Goal that is the contract and nothing more, then the drawing. The description
+carries what the change is, so nothing below repeats it. Every drawing is
+introduced by a line saying what it shows, so it is read rather than decoded.
+Alternatives and their costs are a table, and the recommendation stays prose
+beneath it.
+
+**More than two blocking gates is said out loud.** One open decision is
+ordinary and two is a fork; past that the shape of the work is not settled and
+the package is carrying a conversation instead of recording one. Planning says
+so with the count before it writes, and offers to settle them first. The
+package is not refused.
+
+**A generated file is not normative.** A document earns `normative:` when
+something is held to it and it has named units you can name before and find
+after. A generated `README.md` has neither, and the rule now sits in `init.md`,
+where the field is filled, rather than in a document the init route never
+loads.
+
 **The installer replaces the skill directory rather than copying over it.** A
 file removed from a release used to survive in every installation, because
 `--force` overwrote what it found and deleted nothing. This is the first
