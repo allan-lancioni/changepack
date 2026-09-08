@@ -6,6 +6,11 @@ name: Release
 # not, so each step asks whether its own outcome already holds: the tag, of the
 # remote, and the version, of the registry. The publish never reads the tag,
 # because a tag written seconds ago proves nothing about what the registry has.
+#
+# Nothing here holds a credential. The registry trusts this workflow by name,
+# through OIDC, and mints a token that lives for the length of the publish. An
+# absent trust relationship fails at the publish with an authentication error,
+# which is as loud as the token check it replaced.
 
 on:
   push:
@@ -23,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
       - name: Read the version once
@@ -42,18 +47,14 @@ jobs:
           git push origin "refs/tags/$tag"
           echo "Tagged $tag."
 
-      # An absent token is a broken release, not a release with nothing to do.
-      # Skipping quietly is how a version reaches main and never reaches the
-      # registry, which is the failure this workflow exists to end.
-      - name: Require the npm token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Trusted publishing wants npm 11.5.1 or later. Node 24 carries a new
+      # enough npm today, and this says so rather than trusting what the
+      # runtime image happens to bundle next month.
+      - name: Use an npm that can publish over OIDC
         run: |
           set -euo pipefail
-          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
-            echo "::error::NPM_TOKEN is not set. Add it as a repository secret; the version cannot be published without it."
-            exit 1
-          fi
+          npm install -g npm@latest
+          npm --version
 
       - name: Ask the registry whether it already holds this version
         id: published
@@ -68,8 +69,9 @@ jobs:
             *) echo "::error::The registry answered $code for $name/$version. Refusing to guess."; exit 1 ;;
           esac
 
+      # `--provenance` is documented as automatic under trusted publishing and
+      # is passed anyway: it is inert where that holds and required where it
+      # does not, and a release is the wrong place to find out which.
       - name: Publish where the registry does not hold it
         if: steps.published.outputs.held == 'false'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --provenance --access public

@@ -5,6 +5,7 @@ description: The skill takes a name it can hold, the npm registry becomes the
 changekit: 1.0.0
 opened: 2026-09-08
 opened-by: Allan C Lancioni <allan@allanlancioni.com>
+shipped: 1.0.0
 ---
 
 ## Context
@@ -200,4 +201,29 @@ Out of scope:
 
 ## Outcome
 
-## Surprises
+Shipped in 1.0.0, the first version of this project published to a registry.
+`changepack@1.0.0` carries an SLSA provenance attestation, `v1.0.0` tags the
+merge commit, and `npx changepack` in an empty repository writes
+`.claude/skills/changepack/` and nothing else. Against the live registry the
+check is silent at 1.0.0, prints the version and the published cost line at
+0.7.0, and is silent again with `updates: off`.
+
+Four things changed on the way, all of them found by the work rather than by
+the plan. The commit trailer became `Changepack:`, which the drawing had not
+reached. `update.md` could only be half renamed in the first group, because
+the install command could not stop naming a ref until the check stopped
+reporting one, so it moved to the group that made that true. The `validate:`
+line of `CHANGEPACK.md` had to say five invariants and belonged to no group,
+being the dispatcher's file. The repository rename was recorded in its own
+commit, outside the package's three commit points, because it is a change to
+the world rather than to the tree and a handoff should not leave it only in a
+dirty file.
+
+One thing is left, and it is follow-up rather than debt. The publish used a
+granular token with a seven day life, because npm cannot configure a trusted
+publisher for a package that does not exist yet. Now that `changepack` exists,
+the trusted publisher can be registered, the token revoked and the secret
+deleted, after which the workflow publishes over OIDC with no stored
+credential and provenance becomes automatic. That change also has to install
+npm 11.5.1 or later in the workflow, because trusted publishing requires it
+and Node 22 carries npm 10.

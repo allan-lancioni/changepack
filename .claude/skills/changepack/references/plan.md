@@ -36,7 +36,7 @@ carries something the work needs said, never to fill the page.
 | `spec-delta.md` | when the change alters something a later change is held to | what becomes normative, under the document it lands in |
 
 Stamp the frontmatter as you write each file. `change.md` carries `title`,
-`description`, `changekit` (the version from the marker at the end of
+`description`, `changepack` (the version from the marker at the end of
 `SKILL.md`), `opened` (today), `opened-by`, and `issue`; `shipped` is filled at
 closure. `tasks.md` carries `title`, `groups`, `order` and `blocked`.
 `spec-delta.md` carries `title` and `documents`. A key with no value is omitted

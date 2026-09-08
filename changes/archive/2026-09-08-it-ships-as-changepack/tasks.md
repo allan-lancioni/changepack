@@ -130,24 +130,24 @@ Validation:
 
 ## 5. Closure, and the two acts that leave this machine
 
-Status: in progress
+Status: completed
 
 **Stop here for confirmation before either outward act.** Renaming the
 repository and publishing to the registry are the two steps this package
 cannot take back, and the second one holds the name from the moment it lands.
 
-- [ ] `node bin/install.mjs --force`, which writes
+- [x] `node bin/install.mjs --force`, which writes
       `.claude/skills/changepack/`.
-- [ ] `git rm -r .claude/skills/changekit/`, so the old loaded copy leaves the
+- [x] `git rm -r .claude/skills/changekit/`, so the old loaded copy leaves the
       tree with the release that replaces it.
 - [x] Rename the repository on GitHub to `changepack`. `changekit` answers
       301 to `changepack`, the remote reaches origin, and `check-update.mjs`
       no longer names a URL at all: it resolves against the registry.
-- [ ] Merge to `main` and let `release.yml` tag `v1.0.0` and publish
+- [x] Merge to `main` and let `release.yml` tag `v1.0.0` and publish
       `changepack@1.0.0`.
-- [ ] Confirm `npx changepack` in a scratch repository installs the skill and
+- [x] Confirm `npx changepack` in a scratch repository installs the skill and
       prints the next step.
-- [ ] Confirm `check-update.mjs` against the live registry prints nothing at
+- [x] Confirm `check-update.mjs` against the live registry prints nothing at
       1.0.0, and prints the version and cost when `CHANGEPACK.md` is stamped
       lower.
 

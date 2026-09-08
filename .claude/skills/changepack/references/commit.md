@@ -60,10 +60,10 @@ fit is telling you the work needed a package.
 Where a package produced the commit, two trailers close it:
 
     Change: <slug>
-    Changekit: <the version that governed the run>
+    Changepack: <the version that governed the run>
 
 Both or neither, on all three of the package's moments. At closure
-`Changekit:` still names the old version where the package is what ships the
+`Changepack:` still names the old version where the package is what ships the
 new one: that is what ran. Direct work carries no trailers.
 
 The opening and archive commits name the package in the subject and say which
@@ -76,7 +76,7 @@ assistance says so in `commit:`, and only then is the trailer added.
 ## Commit
 
 Commit without asking. The report is the record, not a request for permission.
-Ask first only when the user said to in this conversation, when `CHANGEKIT.md`
+Ask first only when the user said to in this conversation, when `CHANGEPACK.md`
 says to, when a check ran and failed, or when the tree holds work that is not
 yours and partial staging cannot separate it.
 
