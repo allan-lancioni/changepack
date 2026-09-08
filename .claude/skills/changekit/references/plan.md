@@ -25,32 +25,44 @@ back to `SKILL.md` and take that route.
 ## Write the package
 
 Create `changes/active/<slug>/`, kebab-case, named for the outcome and not
-for the component. Copy each one from `templates/`, same name, and create only the files the
-work needs. A template is a floor: add a section when it carries something
-the work needs said, never to fill the page.
+for the component. Copy each one from `templates/`, same name, and create
+only the files the work needs. A template is a floor: add a section when it
+carries something the work needs said, never to fill the page.
 
 | File | When | Holds |
 |---|---|---|
-| `proposal.md` | always | problem, goal, scope, out of scope, success criteria |
+| `change.md` | always | problem, goal, decisions, scope, the drawing, cost, success criteria |
 | `tasks.md` | always | groups of work, each with one verifiable outcome |
-| `design.md` | when the approach, compatibility or rollback is not obvious | how it is built, and how it is undone |
-| `spec-delta.md` | only where the project has specs | what becomes normative, under the spec it lands in |
+| `spec-delta.md` | when the change alters something a later change is held to | what becomes normative, under the document it lands in |
 
-Stamp the header of `proposal.md` as you write it: the changekit version from
-the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open
-until closure.
+Stamp the frontmatter as you write each file. `change.md` carries `title`,
+`description`, `changekit` (the version from the marker at the end of
+`SKILL.md`), `opened` (today), `opened-by`, and `issue`; `shipped` is filled at
+closure. `tasks.md` carries `title`, `groups`, `order` and `blocked`.
+`spec-delta.md` carries `title` and `documents`. A key with no value is omitted
+rather than written empty.
 
-Without specs, the intended behavior goes in `proposal.md` under Goal, and
-there is no delta. Proposed behavior lives in the package either way. Never
-write it into an active spec before closure.
+`opened-by` is `git config user.name` and `user.email` resolved in the
+package's own repository, local before global. It is the identity that signs
+the opening commit, and the two have to agree.
+
+Where nothing normative changes, the intended behavior goes in `change.md`
+under Goal, and there is no delta. Proposed behavior lives in the package
+either way. Never write it into a normative document before closure.
 
 ## Decision gates
 
 List every open decision about domain, schema, persistence, compatibility,
-authorization or observable behavior. They go in `proposal.md`, under Open
-decisions. A task group that waits on one says so in its `Status`. Give each one its alternatives and
-their consequences. A package with an unanswered gate is not approvable, so
-either get the answer now and record it, or write it down as blocking.
+authorization or observable behavior. They go in `change.md`, under Open
+decisions: the alternatives and their costs in a table, the recommendation in
+prose under it. A task group that waits on one says so in its `Status`, and in
+`blocked`. A package with an unanswered gate is not approvable, so either get
+the answer now and record it, or write it down as blocking. An answered gate
+moves to `Decided`, and is not deleted.
+
+Past two blocking gates the shape of the work is not settled. Say so before
+writing, with the count, and offer to settle them first. The package is not
+refused.
 
 ## Task groups
 

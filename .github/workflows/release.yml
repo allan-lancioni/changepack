@@ -1,0 +1,75 @@
+name: Release
+
+# The release is a consequence of merging. changepack is installed from the npm
+# registry, and three versions shipped untagged because tagging depended on
+# somebody remembering. Tagging is idempotent and safe to repeat; publishing is
+# not, so each step asks whether its own outcome already holds: the tag, of the
+# remote, and the version, of the registry. The publish never reads the tag,
+# because a tag written seconds ago proves nothing about what the registry has.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Read the version once
+        id: version
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Tag the version where no tag carries it
+        run: |
+          set -euo pipefail
+          tag="v${{ steps.version.outputs.value }}"
+          if [ -n "$(git ls-remote --tags --refs origin "refs/tags/$tag")" ]; then
+            echo "$tag already exists; nothing to do."
+            exit 0
+          fi
+          git tag "$tag"
+          git push origin "refs/tags/$tag"
+          echo "Tagged $tag."
+
+      # An absent token is a broken release, not a release with nothing to do.
+      # Skipping quietly is how a version reaches main and never reaches the
+      # registry, which is the failure this workflow exists to end.
+      - name: Require the npm token
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
+            echo "::error::NPM_TOKEN is not set. Add it as a repository secret; the version cannot be published without it."
+            exit 1
+          fi
+
+      - name: Ask the registry whether it already holds this version
+        id: published
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.value }}"
+          name="$(node -p "require('./package.json').name")"
+          code="$(curl -sS -o /dev/null -w '%{http_code}' "https://registry.npmjs.org/$name/$version")"
+          case "$code" in
+            200) echo "held=true" >> "$GITHUB_OUTPUT"; echo "$name@$version is already published." ;;
+            404) echo "held=false" >> "$GITHUB_OUTPUT"; echo "$name@$version is not on the registry." ;;
+            *) echo "::error::The registry answered $code for $name/$version. Refusing to guess."; exit 1 ;;
+          esac
+
+      - name: Publish where the registry does not hold it
+        if: steps.published.outputs.held == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public

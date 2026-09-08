@@ -1,6 +1,6 @@
 # Init
 
-Write `CHANGEKIT.md`, then stop. Do not plan or implement in the same
+Write `CHANGEPACK.md`, then stop. Do not plan or implement in the same
 turn, even if the user asked for both.
 
 ## Infer, do not interrogate
@@ -8,31 +8,32 @@ turn, even if the user asked for both.
 Inspect the repository and propose a value for every field. Ask only about
 what you could not find.
 
-| Field | Where to look | Fallback |
-|---|---|---|
-| changes | An existing directory of change packages, proposals or RFCs | `changes/` |
-| specs | A directory of normative behavior documents: `specs/`, `docs/specs/`, `.kiro/specs/` | none |
-| language | English, unless the README and the documents are not: then ask | English |
-| version | `package.json`, `pyproject.toml`, `Cargo.toml`, a `VERSION` file, the latest git tag | none |
-| validate | Test script in `package.json`, `Makefile`, `pyproject.toml`, CI workflow | ask, and take none for an answer |
-| commit | `git log --oneline -20` | conventional |
-| protect | Real user data, secrets, generated output, a sibling checkout | none |
-| updates | Nothing to look for. Keep the default | ask at closure |
-| house rules | `CLAUDE.md`, `CONTRIBUTING.md`, the specs themselves | delete the section |
+| Field | Where to look |
+|---|---|
+| changes | a directory of change packages, proposals or RFCs |
+| normative | `CLAUDE.md`, `AGENTS.md`, `.claude/`, found by looking. Ask only where the behavior specs are, if anywhere |
+| language | English, unless the README and the documents are not: then ask |
+| version | `package.json`, `pyproject.toml`, `Cargo.toml`, a `VERSION` file, the latest tag |
+| validate | a test script in `package.json`, `Makefile`, `pyproject.toml`, a CI workflow; else ask, and take none for an answer |
+| commit | `git log --oneline -20` |
+| protect | real user data, secrets, generated output, a sibling checkout |
+| updates | nothing to look for; keep the default |
+| house rules | `CLAUDE.md`, `CONTRIBUTING.md`, the normative documents themselves. Delete the section where there is nothing |
+
+Where a field is not found, the `Absent means` column below is the value.
 
 A path may point outside this repository. `../process/changes` is a valid
 changes path and needs no special handling.
 
 ## The fields
 
-What each one accepts, and what it means when it is absent. This is the
-contract every route reads back, and the only place that states it.
+The contract every route reads back, and the only place that states it.
 
 | Field | Accepts | Absent means |
 |---|---|---|
-| `changekit` | the version this project runs | stamp it from the marker |
+| `changepack` | the version this project runs | stamp it from the marker |
 | `changes` | a path, in this repository or outside it | `changes/` |
-| `specs` | a path to normative documents | no delta, and the behavior lives in the proposal |
+| `normative` | the documents a later change is held to, or none | `CLAUDE.md`, `AGENTS.md`, `.claude/` |
 | `language` | what gets written into the repository | English |
 | `version` | where this project's own version lives | none, and a package records no shipped version |
 | `validate` | one command, or none | no command: the routes report it and continue |
@@ -40,16 +41,18 @@ contract every route reads back, and the only place that states it.
 | `protect` | paths nothing may write | nothing is protected |
 | `updates` | `ask at closure`, `hold <version>`, `off` | `ask at closure` |
 
-A project with no validation command is ordinary, not incomplete. Write none
-and every route reports it instead of stopping.
+A document earns `normative:` when something is held to it and it has named
+units you can name before and find after. A generated file has neither, and a
+README fails the first test.
+
+A project with no validation command is ordinary, not incomplete.
 
 ## Write
 
-Copy `templates/changekit.md` to `CHANGEKIT.md`, at the root of the
-repository, and write it in the language you settled on, keeping the field
-keys in English: they are what this skill reads back. Say where each value
-came from, and mark the ones you guessed. Stamp the version from the marker
-at the end of `SKILL.md`.
+Copy `templates/changepack.md` to `CHANGEPACK.md`, at the repository root, in
+the language you settled on. The field keys stay English: they are what this
+skill reads back. Stamp the version from the marker at the end of `SKILL.md`,
+say where each value came from, and mark the ones you guessed.
 
 Create the changes directory, with a `.gitkeep`, since git does not track an
 empty one.
@@ -59,10 +62,9 @@ the project owns. Then commit them alone, touching nothing else.
 
 ## Say what happens next
 
-State in one line that planning, implementing, reviewing and closing all run
-through `/changekit`, and that the file you just wrote is the only one the
-project owns: everything else under `.claude/skills/changekit/` is replaced
-wholesale on update.
+Say in one line that planning, implementing, reviewing and closing all run
+through `/changepack`, and that `CHANGEPACK.md` is the only file the project
+owns: the skill directory is replaced wholesale on update.
 
 If the same message asked for something else, name it and say it runs next,
 once the configuration is approved. Do not do it now, and do not make the

@@ -10,6 +10,10 @@ Read the package and summarise it in a few lines: the goal, the groups with
 their status, and the one you are about to start. Say what is left to do, not
 how the procedure works.
 
+Run `node .claude/skills/changepack/check-update.mjs` and add what it says to
+that summary, in its own line. Silence is the ordinary outcome. A package that
+nobody closes is the one place the closure check never reaches.
+
 Then ask with AskUserQuestion, a single question, three options:
 
 - stop after each group, so the user validates before the next one starts;
@@ -20,7 +24,7 @@ Ask once, before the first task. Do not ask again between groups.
 
 ## Resolve the item
 
-1. Read the package: proposal, tasks, and design or delta where they exist.
+1. Read the package: `change.md`, `tasks.md`, and the delta where it exists.
 2. Read the current authority for the behavior you are about to change: the
    spec where the project has one, the code where it does not.
 3. Confirm the item, what it depends on, and how it is validated.

@@ -12,9 +12,8 @@ A change package is one unit of planned work. It lives in
 ## Read the project file first
 
 Read `CHANGEKIT.md`, at the root of the repository. It sets the changes path,
-whether this project
-has specs, the language for written artifacts, the validation command,
-and the paths you must never write.
+the documents `normative:` names, the language for written artifacts, the
+validation command, and the paths you must never write.
 
 If it does not exist, load `references/init.md` and follow it. Do not plan
 or implement in the same turn.
@@ -46,9 +45,9 @@ form.
 ## Direct work
 
 1. Name the intended behavior before editing.
-2. In one pass, change the implementation, its consumers, its tests, and,
-   where this project has specs, the spec.
-3. Leave no spec ahead of the code that implements it.
+2. In one pass, change the implementation, its consumers, its tests, and any
+   normative document the change alters.
+3. Leave no document ahead of the code that implements it.
 4. Load `references/commit.md` to finish.
 
 ## Always
@@ -70,4 +69,4 @@ form.
   exceptions.
 - Never write a protected path.
 
-<!-- changekit 0.7.0 -->
+<!-- changekit 1.0.0 -->

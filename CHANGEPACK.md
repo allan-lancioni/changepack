@@ -1,28 +1,35 @@
-# Changekit
+# Changepack
 
 How change packages work in this repository.
 
-- **changekit:** 0.7.0
+- **changepack:** 1.0.0
 - **changes:** changes/
-- **specs:** none
-- **language:** English. Everything changekit writes here follows it; what it
+- **normative:** `skill/`. The procedure is the product here, so a change that
+  alters what a route obliges carries a spec delta.
+  `.claude/skills/changepack/` is the generated copy and is never the target.
+- **language:** English. Everything changepack writes here follows it; what it
   says to you follows your message.
 - **version:** `package.json`.
-- **validate:** `npm run check`. Four invariants: the loaded copy matches
+- **validate:** `npm run check`. Five invariants: the loaded copy matches
   `skill/`, the version agrees with itself across three files, the context
-  budget holds, and nothing names a file that is not there.
+  budget holds, nothing names a file that is not there, and the cost of
+  updating is said the same way in `CHANGELOG.md` and in `package.json`.
 - **commit:** conventional, no agent co-author, one per commit point, without
   asking. Write "ask first" here instead to be asked every time.
-- **protect:** `.claude/skills/changekit/`. Written by `bin/install.mjs` alone,
-  never by hand.
+- **protect:** `.claude/skills/changepack/`. Written by `bin/install.mjs`
+  alone, never by hand.
 - **updates:** off. This repository is the upstream, and has nothing to check
   itself against.
 
 ## House rules
 
-This is the only repository where changekit is both the thing maintained and
+**No dashes in prose.** Not the em dash, not the en dash, not a hyphen standing
+in for one. A comma, a colon, a full stop or a new sentence says it. This was
+the practice before it was written down, which is how five of them got in.
+
+This is the only repository where changepack is both the thing maintained and
 the thing running. `skill/` is the source and the object of maintenance.
-`.claude/skills/changekit/` is the copy Claude Code loads, committed so that a
+`.claude/skills/changepack/` is the copy Claude Code loads, committed so that a
 fresh clone runs the procedure with nothing to install.
 
 The copy is refreshed with `node bin/install.mjs --force` at closure, inside

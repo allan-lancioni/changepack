@@ -4,8 +4,11 @@ The skill directory is replaced wholesale. Nothing the project owns lives in
 it, so an update is a copy and never a merge. `CHANGEKIT.md` sits outside it
 and is only ever stamped.
 
-Two ways in. `close.md` arrives at **Ask**, having already found a newer
-version. A user asking for an update in so many words starts at **Update**.
+Two ways in. `close.md` arrives at **Ask**, having already run the check. A
+user asking for an update in so many words runs it first, from the repository
+root, and starts at **Update** with what it printed:
+
+    node .claude/skills/changekit/check-update.mjs
 
 ## Ask
 
@@ -28,28 +31,18 @@ package.
 
 1. Stop where `changes/active/` holds a package. Say the update runs once it
    closes, and write nothing. Arriving from a closure this never fires.
-2. Resolve the latest tag, unless the check already did:
+2. Present the entries the check printed, and what each one costs: every
+   entry ends with that. Name any that asks for an edit by hand, and say what
+   it is before anything is written.
+3. Wait for confirmation. Nothing is written before it.
+4. Install at the ref the check reported, so what was compared is what lands:
 
-       git ls-remote --tags --refs --sort=-v:refname \
-         https://github.com/allan-lancioni/changekit
+       npx github:allan-lancioni/changekit#<ref> --force
 
-3. Read the upstream changelog at that tag:
-
-       https://raw.githubusercontent.com/allan-lancioni/changekit/<tag>/CHANGELOG.md
-
-4. Present the entries between the installed version and the latest, and what
-   each one costs: every entry ends with that. Name any that asks for an edit
-   by hand, and say what it is before anything is written.
-5. Wait for confirmation. Nothing is written before it.
-6. Install at the tag, so the result is reproducible:
-
-       npx github:allan-lancioni/changekit#<tag> --force
-
-   Where the upstream had no tag, `#main` is the only ref there is.
-7. Stamp `changekit: <new version>` in `CHANGEKIT.md`. Where `updates:` was
+5. Stamp `changekit: <new version>` in `CHANGEKIT.md`. Where `updates:` was
    holding a version, return it to `ask at closure`: what it held is behind
-   you now. Where step 4 named a migration, apply it now.
-8. Commit `.claude/skills/changekit/` and `CHANGEKIT.md`, and nothing else.
+   you now. Where step 2 named a migration, apply it now.
+6. Commit `.claude/skills/changekit/` and `CHANGEKIT.md`, and nothing else.
    The rest of the tree is not part of this and is left as it stands.
-9. Say the procedure that just landed applies from the next session. This one
+7. Say the procedure that just landed applies from the next session. This one
    loaded the old one and finishes on it.

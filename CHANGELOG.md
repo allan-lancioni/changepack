@@ -1,20 +1,136 @@
 # Changelog
 
-What changes for a repository that already installed the skill. Ask changekit
+What changes for a repository that already installed the skill. Ask changepack
 to update itself, or run the command yourself:
 
 ```bash
-npx github:allan-lancioni/changekit --force
+npx changepack --force
 ```
 
 Every entry ends with what updating costs you. Where that is more than the
-command above, it says so. Your `CHANGEKIT.md` is never replaced: an update
+command above, it says so. Your `CHANGEPACK.md` is never replaced: an update
 stamps the version into it and leaves the rest alone.
 
 The numbers are read against the procedure, not against an API. **Major**: your
-`CHANGEKIT.md` or an open package has to be edited by hand. **Minor**: a new
+`CHANGEPACK.md` or an open package has to be edited by hand. **Minor**: a new
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
+
+## 1.0.0
+
+A package is one change, one delta and the tasks, and the change draws what it
+moves.
+
+`proposal.md` and `design.md` become `change.md`. They were approved together,
+amended together at every stop and archived together; the seam between them was
+inherited from tools where each file is a separate approval gate, and this
+procedure presents the package as a whole. `tasks.md` is untouched.
+
+**A change draws what it moves.** `change.md` carries a `Changes` section that
+requires a drawing: a tree for files and modules, a table for collections,
+fields and states, a sequence for order in time, a flow for services and
+routing. The tree and the table are the default because they read in a
+terminal, on a forge and in an editor with nothing installed. The prose that
+follows carries only what the drawing cannot.
+
+**`Compatibility` and `Rollback` become two lines of `Cost`**, each written
+only when it has something to say. A rollback line is written only where the
+revert is not the inverse of the drawing.
+
+**A settled decision has somewhere to go.** `Decided` sits directly above
+`Open decisions`, and an answered gate moves between them rather than being
+deleted.
+
+**`Surprises`** records a group whose diff did not match the drawing. Silence
+is the ordinary outcome, and an empty section is deleted at closure.
+
+**A delta is earned by what the change edits**, not by whether the project has
+specs. `normative:` replaces `specs:` and defaults to what can be discovered
+without configuration: `CLAUDE.md`, `AGENTS.md` and `.claude/`. The condition
+is whether this change alters something a later change will be held to.
+
+**The brief a dispatched agent receives now inlines `change.md`**, so it
+arrives with the drawing. It previously received the proposal alone.
+
+**A package's metadata is frontmatter.** `change.md`, `tasks.md` and
+`spec-delta.md` open with a block a machine can read instead of a header
+formatted as prose: the title, a one-line description, the changepack version,
+the date, who opened it, the issue it came from and what it shipped in. A key
+with no value is omitted, so `issue:` and `shipped:` are written when they have
+something to say. `tasks.md` states its groups and their execution order there,
+and `spec-delta.md` the documents it edits, so an archived package says what it
+touched without being opened. Closure fills `shipped:` in the frontmatter, or
+in the prose header of a package written before it.
+
+**`change.md` reads like a document.** One paragraph of Context saying why now,
+a Goal that is the contract and nothing more, then the drawing. The description
+carries what the change is, so nothing below repeats it. Every drawing is
+introduced by a line saying what it shows, so it is read rather than decoded.
+Alternatives and their costs are a table, and the recommendation stays prose
+beneath it.
+
+**More than two blocking gates is said out loud.** One open decision is
+ordinary and two is a fork; past that the shape of the work is not settled and
+the package is carrying a conversation instead of recording one. Planning says
+so with the count before it writes, and offers to settle them first. The
+package is not refused.
+
+**A generated file is not normative.** A document earns `normative:` when
+something is held to it and it has named units you can name before and find
+after. A generated `README.md` has neither, and the rule now sits in `init.md`,
+where the field is filled, rather than in a document the init route never
+loads.
+
+**The installer replaces the skill directory rather than copying over it.** A
+file removed from a release used to survive in every installation, because
+`--force` overwrote what it found and deleted nothing. This is the first
+release that removes files, and it is the release that found it.
+
+**The update check is one command.** Closing a package runs `check-update.mjs`
+and reads what it prints, instead of resolving a tag and comparing two version
+strings in prose. Silence means nothing is newer, which is the ordinary
+outcome. The script ships inside the skill directory, and it is the only place
+that states how the comparison is made, what `off` and `hold` do, and where the
+answer is read from.
+
+**A tag is a consequence of merging.** A push to `main` tags the version in
+`package.json` where no tag carries it. 0.6.0, 0.7.0 and 1.0.0 shipped untagged
+because tagging depended on somebody remembering, and the check has therefore
+reported nothing since 0.6.0.
+
+**The context budget counts markdown alone**, because markdown alone is what a
+turn loads.
+
+**It ships as changepack.** The skill directory, the file you own, the command,
+the frontmatter key, the marker and the commit trailer all read `changepack`.
+`changekit` on npm belongs to an unrelated package last published in 2022, and
+a name that cannot carry the package is not a name to keep. The repository is
+`allan-lancioni/changepack`, and GitHub redirects the old path, so existing
+clones keep resolving.
+
+**The registry is the channel.** `npx changepack` installs the skill, with no
+owner and no repository to know first, and `npx changepack@<version> --force`
+installs a stated version. A push to `main` publishes as well as tagging, which
+is why the workflow that tagged is now the one that releases: tagging is
+idempotent and publishing is not.
+
+**The check reads the registry too.** `check-update.mjs` makes one request, to
+`registry.npmjs.org/changepack`, and that document answers the whole question:
+the latest version, and what every release between yours and it costs. The cost
+line travels with the package, as `changepack.updating` in each published
+manifest, because `CHANGELOG.md` is deliberately not in the tarball npm ships.
+
+Updating: `npx changepack --force`, then by hand. Rename `CHANGEKIT.md` to
+`CHANGEPACK.md` and its `changekit:` field to `changepack:`, rename the `specs:`
+field in it to `normative:` and give it the documents a change is held to, or
+`none`, and delete `.claude/skills/changekit/`. An open package: rename
+`proposal.md` to `change.md`, merge `design.md` into it under `Changes` and
+`Cost`, and delete `design.md`. The installer neither renames the file nor
+deletes the old skill directory: it writes the directory it owns and never the
+file you own, so a repository that installed changekit carries two skill
+directories until you remove one. Nothing else. Archived packages are history
+and are not migrated. The check costs you nothing beyond this, because the
+script arrives with the skill directory on this install.
 
 ## 0.7.0
 
@@ -42,8 +158,10 @@ true now, and a body that is optional and never longer than 300, carrying what
 behaves differently and never the reasoning. The reasoning is the package's,
 and the package is archived. Two trailers point at it:
 
-    Change: <slug>
-    Changekit: <the version that governed the run>
+```text
+Change: <slug>
+Changekit: <the version that governed the run>
+```
 
 Both or neither, on the three moments a package commits, so
 `git log --grep='Change: <slug>'` returns a whole change in order from the

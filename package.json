@@ -1,13 +1,35 @@
 {
-  "name": "changekit",
-  "version": "0.7.0",
+  "name": "changepack",
+  "version": "1.0.0",
   "description": "Change packages for Claude Code. A skill you copy into your repo, not a framework you install.",
   "license": "MIT",
   "author": "Allan Lancioni",
   "type": "module",
-  "scripts": { "check": "node scripts/check.mjs" },
-  "bin": { "changekit": "bin/install.mjs" },
-  "files": ["skill", "bin"],
-  "repository": { "type": "git", "url": "git+https://github.com/allan-lancioni/changekit.git" },
-  "keywords": ["claude-code", "skill", "change-management", "spec-driven"]
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "lint": "markdownlint-cli2"
+  },
+  "bin": {
+    "changepack": "bin/install.mjs"
+  },
+  "files": [
+    "skill",
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allan-lancioni/changepack.git"
+  },
+  "keywords": [
+    "claude-code",
+    "skill",
+    "change-management",
+    "spec-driven"
+  ],
+  "changepack": {
+    "updating": "Updating: `npx changepack --force`, then by hand. Rename `CHANGEKIT.md` to `CHANGEPACK.md` and its `changekit:` field to `changepack:`, rename the `specs:` field in it to `normative:` and give it the documents a change is held to, or `none`, and delete `.claude/skills/changekit/`. An open package: rename `proposal.md` to `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete `design.md`. The installer neither renames the file nor deletes the old skill directory: it writes the directory it owns and never the file you own, so a repository that installed changekit carries two skill directories until you remove one. Nothing else. Archived packages are history and are not migrated. The check costs you nothing beyond this, because the script arrives with the skill directory on this install."
+  }
 }

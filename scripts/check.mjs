@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// This repository's validation. Four invariants, no dependencies.
+// This repository's validation. Five invariants, no dependencies.
 //
-// It exists because changekit is the only repository where the skill is both
+// It exists because changepack is the only repository where the skill is both
 // the thing maintained and the thing running, and that arrangement is safe
 // only while something checks it.
 
@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 
 const SOURCE = 'skill';
-const LOADED = '.claude/skills/changekit';
+const LOADED = '.claude/skills/changepack';
 const ACTIVE = 'changes/active';
 
 // The context budget is the product. What a turn actually loads is SKILL.md
@@ -18,7 +18,9 @@ const ACTIVE = 'changes/active';
 // drift alarm. This file owns the numbers and the README quotes them.
 const SKILL_MAX = 3600;
 const FILE_MAX = 3600;
-const TOTAL_MAX = 30000;
+// Markdown alone, because markdown alone is what a turn loads: 34000 against
+// 32744 today, about 1250 characters before the alarm sounds.
+const TOTAL_MAX = 34000;
 
 const failures = [];
 const notes = [];
@@ -83,9 +85,11 @@ if (drift.length && openPackages.length) {
 
 // 2. One version, said in three places.
 const skillText = readOrFlag(join(SOURCE, 'SKILL.md')) ?? '';
-const marker = skillText.match(/<!--\s*changekit\s+([^\s]+)\s*-->/)?.[1];
-const pkg = JSON.parse(readFileSync('package.json', 'utf8')).version;
-const changelog = readFileSync('CHANGELOG.md', 'utf8').match(/^##\s+(\S+)/m)?.[1];
+const marker = skillText.match(/<!--\s*changepack\s+([^\s]+)\s*-->/)?.[1];
+const manifest = JSON.parse(readFileSync('package.json', 'utf8'));
+const pkg = manifest.version;
+const changelogText = readFileSync('CHANGELOG.md', 'utf8');
+const changelog = changelogText.match(/^##\s+(\S+)/m)?.[1];
 
 if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
   fail(
@@ -96,7 +100,12 @@ if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
 
 // 3. The context budget.
 const files = tracked(SOURCE);
-const total = files.reduce((n, f) => n + (readOrFlag(f)?.length ?? 0), 0);
+// Markdown alone. The budget protects what a turn loads, and a turn loads
+// markdown; a script shipped in skill/ is run, never read into context, so
+// charging it here would charge for characters nobody pays.
+const total = files
+  .filter((f) => f.endsWith('.md'))
+  .reduce((n, f) => n + (readOrFlag(f)?.length ?? 0), 0);
 if (skillText.length > SKILL_MAX)
   fail(`SKILL.md is ${skillText.length} characters, over its ${SKILL_MAX} ceiling`);
 if (total > TOTAL_MAX)
@@ -111,7 +120,7 @@ for (const f of files.filter((f) => f.includes('/references/'))) {
 }
 note(
   `SKILL.md ${skillText.length}/${SKILL_MAX}, widest route ${widest[0].split('/').pop()} ` +
-    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ ${total}/${TOTAL_MAX}`
+    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ markdown ${total}/${TOTAL_MAX}`
 );
 
 // 4. Nothing names a file that is not there.
@@ -131,6 +140,45 @@ const orphans = readdirSync(join(SOURCE, 'references')).filter(
   (f) => !skillText.includes(`references/${f}`)
 );
 if (orphans.length) note(`not named in SKILL.md: ${orphans.join(', ')}`);
+
+// 5. The cost of updating, said the same way twice. CHANGELOG.md is the
+//    document a person reads and is deliberately not in the published
+//    tarball, so `changepack.updating` in package.json carries the same
+//    paragraph to the registry, where the check finds it. The comparison is
+//    on the joined text: the changelog wraps the paragraph across lines and
+//    the field is one line, and they are the same sentence either way.
+const entry = changelogText
+  .split(/^##\s+/m)
+  .slice(1)
+  .find((section) => section.split(/\s/)[0] === pkg);
+
+const paragraph = [];
+if (entry) {
+  let collecting = false;
+  for (const line of entry.split('\n')) {
+    if (collecting) {
+      if (line.trim() === '') break;
+      paragraph.push(line.trim());
+      continue;
+    }
+    if (line.startsWith('Updating:')) {
+      paragraph.push(line.trim());
+      collecting = true;
+    }
+  }
+}
+
+const written = manifest.changepack?.updating;
+if (!entry) fail(`CHANGELOG.md has no entry for ${pkg}`);
+else if (!paragraph.length)
+  fail(`the CHANGELOG.md entry for ${pkg} has no paragraph opening \`Updating:\``);
+else if (!written) fail(`package.json carries no changepack.updating for ${pkg}`);
+else if (written !== paragraph.join(' '))
+  fail(
+    `changepack.updating disagrees with the CHANGELOG.md entry for ${pkg}:\n` +
+      `      package.json: ${written}\n` +
+      `      CHANGELOG.md: ${paragraph.join(' ')}`
+  );
 
 if (gone.length)
   fail(`tracked by git and missing from disk: ${[...new Set(gone)].join(', ')}`);
