@@ -1,0 +1,27 @@
+// Markdown lint for this repository. It is a pre-PR concern and not part of
+// `npm run check`: validation runs after every task group, and a check that
+// reaches the network on each one would be a worse trade than the lint is a
+// gain. Run it with `npm run lint`.
+{
+  "globs": ["**/*.md"],
+  "ignores": [
+    "node_modules",
+    "eval",
+    // The copy Claude Code loads. Written by bin/install.mjs alone, so a
+    // finding here is a finding in skill/ and is fixed there.
+    ".claude/skills/changekit",
+    // Archived packages are history and are not edited.
+    "changes/archive"
+  ],
+  "config": {
+    // Templates are written to be filled in: `<Title>`, `<rule>`, `<one>`.
+    // The angle brackets are the template language, not HTML.
+    "MD033": false,
+    // Table pipes are written `|---|---|` throughout. A style, applied.
+    "MD060": false,
+    // Prose wraps; a table row cannot.
+    "MD013": { "line_length": 80, "tables": false, "code_blocks": false },
+    // `# Update` and `## Update` are the route and its phase, not a duplicate.
+    "MD024": { "siblings_only": true }
+  }
+}

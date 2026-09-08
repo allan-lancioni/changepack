@@ -25,9 +25,9 @@ back to `SKILL.md` and take that route.
 ## Write the package
 
 Create `changes/active/<slug>/`, kebab-case, named for the outcome and not
-for the component. Copy each one from `templates/`, same name, and create only the files the
-work needs. A template is a floor: add a section when it carries something
-the work needs said, never to fill the page.
+for the component. Copy each one from `templates/`, same name, and create
+only the files the work needs. A template is a floor: add a section when it
+carries something the work needs said, never to fill the page.
 
 | File | When | Holds |
 |---|---|---|

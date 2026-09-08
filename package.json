@@ -5,9 +5,25 @@
   "license": "MIT",
   "author": "Allan Lancioni",
   "type": "module",
-  "scripts": { "check": "node scripts/check.mjs" },
-  "bin": { "changekit": "bin/install.mjs" },
-  "files": ["skill", "bin"],
-  "repository": { "type": "git", "url": "git+https://github.com/allan-lancioni/changekit.git" },
-  "keywords": ["claude-code", "skill", "change-management", "spec-driven"]
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "lint": "markdownlint-cli2"
+  },
+  "bin": {
+    "changekit": "bin/install.mjs"
+  },
+  "files": [
+    "skill",
+    "bin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allan-lancioni/changekit.git"
+  },
+  "keywords": [
+    "claude-code",
+    "skill",
+    "change-management",
+    "spec-driven"
+  ]
 }

@@ -135,8 +135,10 @@ true now, and a body that is optional and never longer than 300, carrying what
 behaves differently and never the reasoning. The reasoning is the package's,
 and the package is archived. Two trailers point at it:
 
-    Change: <slug>
-    Changekit: <the version that governed the run>
+```text
+Change: <slug>
+Changekit: <the version that governed the run>
+```
 
 Both or neither, on the three moments a package commits, so
 `git log --grep='Change: <slug>'` returns a whole change in order from the

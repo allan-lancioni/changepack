@@ -101,7 +101,7 @@ this does not start with writing specs for a system you already built.
 
 ## What is in the box
 
-```
+```text
 skill/                  what gets copied into your repository
   SKILL.md              the gate, the routes, and direct work
   references/

@@ -49,7 +49,7 @@ The rules it gets:
 
 The return contract, four lines and nothing else:
 
-```
+```text
 FILES: <repository-relative paths, comma separated>
 VALIDATION: <the command, and pass or fail with counts>
 FOR NEXT GROUP: <at most two sentences, or omit>
