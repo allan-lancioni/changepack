@@ -1,3 +1,10 @@
+---
+title: <Title>
+documents:
+  - <one path per heading below, in the same order, so an archived package
+    says what it touched without being opened>
+---
+
 # <Title>: spec delta
 
 Normative behavior this change makes true. It lives here until closure, never

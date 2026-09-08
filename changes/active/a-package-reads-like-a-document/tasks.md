@@ -27,12 +27,12 @@ Validation:
 
 ## 2. The other two templates carry their metadata
 
-Status: not started
+Status: completed
 
-- [ ] `skill/templates/tasks.md`: frontmatter with `title`, `groups`, `order:`
+- [x] `skill/templates/tasks.md`: frontmatter with `title`, `groups`, `order:`
       as a list where a nested list runs in parallel, and `blocked:` written
       only when a group is.
-- [ ] `skill/templates/spec-delta.md`: frontmatter with `title` and
+- [x] `skill/templates/spec-delta.md`: frontmatter with `title` and
       `documents:`, so an archived package says what it touched without being
       opened.
 
