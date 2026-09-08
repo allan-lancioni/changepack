@@ -35,9 +35,16 @@ the work needs said, never to fill the page.
 | `tasks.md` | always | groups of work, each with one verifiable outcome |
 | `spec-delta.md` | when the change alters something a later change is held to | what becomes normative, under the document it lands in |
 
-Stamp the header of `change.md` as you write it: the changekit version from
-the marker at the end of `SKILL.md`, and today's date. `shipped:` stays open
-until closure.
+Stamp the frontmatter as you write each file. `change.md` carries `title`,
+`description`, `changekit` (the version from the marker at the end of
+`SKILL.md`), `opened` (today), `opened-by`, and `issue`; `shipped` is filled at
+closure. `tasks.md` carries `title`, `groups`, `order` and `blocked`.
+`spec-delta.md` carries `title` and `documents`. A key with no value is omitted
+rather than written empty.
+
+`opened-by` is `git config user.name` and `user.email` resolved in the
+package's own repository, local before global. It is the identity that signs
+the opening commit, and the two have to agree.
 
 Where nothing normative changes, the intended behavior goes in `change.md`
 under Goal, and there is no delta. Proposed behavior lives in the package
@@ -47,10 +54,15 @@ either way. Never write it into a normative document before closure.
 
 List every open decision about domain, schema, persistence, compatibility,
 authorization or observable behavior. They go in `change.md`, under Open
-decisions. A task group that waits on one says so in its `Status`. Give each one its alternatives and
-their consequences. A package with an unanswered gate is not approvable, so
-either get the answer now and record it, or write it down as blocking. An
-answered gate moves to `Decided`, and is not deleted.
+decisions: the alternatives and their costs in a table, the recommendation in
+prose under it. A task group that waits on one says so in its `Status`, and in
+`blocked`. A package with an unanswered gate is not approvable, so either get
+the answer now and record it, or write it down as blocking. An answered gate
+moves to `Decided`, and is not deleted.
+
+Past two blocking gates the shape of the work is not settled. Say so before
+writing, with the count, and offer to settle them first. The package is not
+refused.
 
 ## Task groups
 

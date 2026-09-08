@@ -44,15 +44,15 @@ Validation:
 
 ## 3. `plan.md` stamps the frontmatter and counts the gates
 
-Status: not started
+Status: completed
 
-- [ ] The stamping paragraph names the frontmatter keys, and says `opened-by`
+- [x] The stamping paragraph names the frontmatter keys, and says `opened-by`
       is `git config user.name` and `user.email` resolved in the package's
       repository, local before global.
-- [ ] A key with no value is omitted rather than written empty.
-- [ ] More than two blocking gates: say so before writing, and offer to settle
+- [x] A key with no value is omitted rather than written empty.
+- [x] More than two blocking gates: say so before writing, and offer to settle
       them first. The package is not refused, and the count is what is said.
-- [ ] The decision-gates paragraph points at the table form.
+- [x] The decision-gates paragraph points at the table form.
 
 Validation:
 
