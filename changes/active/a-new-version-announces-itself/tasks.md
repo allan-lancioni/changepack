@@ -2,7 +2,6 @@
 title: A new version announces itself
 groups: 4
 order: [[1, 3], 2, 4]
-blocked: [1]
 ---
 
 One group at a time. Check an item only after its validation passes.
@@ -13,7 +12,7 @@ needs all of them.
 
 ## 1. The arithmetic is a script
 
-Status: blocked on the open decision about what it is written in.
+Status: not started
 
 - [ ] `skill/check-update.mjs`: reads `updates:` and `changekit:` from
       `CHANGEKIT.md`; `off` returns before any network call. Resolves the
@@ -51,11 +50,11 @@ Validation:
 
 ## 3. A tag is a consequence of merging
 
-Status: not started
+Status: completed
 
-- [ ] `.github/workflows/tag.yml`: on push to `main`, tag
+- [x] `.github/workflows/tag.yml`: on push to `main`, tag
       `v<package.json version>` where no tag carries it, and push the tag.
-- [ ] It writes nothing else: no release notes, no changelog, no version bump.
+- [x] It writes nothing else: no release notes, no changelog, no version bump.
 
 Validation:
 

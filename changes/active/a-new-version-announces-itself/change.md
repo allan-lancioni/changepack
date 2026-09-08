@@ -64,19 +64,14 @@ a turn's context would charge for something no turn reads.
 
 ## Open decisions
 
-**What the check is written in.** Blocking group 1.
-
-| Alternative | Cost |
-|---|---|
-| Node, like `bin/install.mjs` | needs `node` at check time, where the four steps today need only `git`. Works on Windows. |
-| POSIX shell, `git` and `sort -V` | no new runtime, and `git` is already required. Breaks on Windows, where `install.mjs` works today. |
-
-Recommendation: Node. changekit installs through `npx`, so every project had
-node at least once, and Claude Code is itself commonly installed through npm.
-Where it is missing the script fails and the check says nothing, which is the
-rule `close.md` already carries for a command that could not run.
+None.
 
 ## Decided
+
+**The check is written in Node.** Claude Code is itself a Node application, so
+node is present wherever the check runs; the dependency is free rather than
+tolerated. POSIX shell would have avoided it and broken on Windows, where
+`install.mjs` works today.
 
 **This is still 1.0.0.** No tag exists and `main` is at 0.7.0, so the release
 has not happened and the changelog entry is amended rather than added to.

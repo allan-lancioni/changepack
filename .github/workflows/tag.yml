@@ -1,0 +1,31 @@
+name: Tag
+
+# The tag is a consequence of merging. changekit is installed from a tag, and
+# three versions shipped without one because tagging depended on somebody
+# remembering. This runs on every push to main and does nothing where the
+# version is already tagged.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag the version where no tag carries it
+        run: |
+          set -euo pipefail
+          tag="v$(node -p "require('./package.json').version")"
+          if [ -n "$(git ls-remote --tags --refs origin "refs/tags/$tag")" ]; then
+            echo "$tag already exists; nothing to do."
+            exit 0
+          fi
+          git tag "$tag"
+          git push origin "refs/tags/$tag"
+          echo "Tagged $tag."
