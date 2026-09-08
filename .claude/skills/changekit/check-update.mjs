@@ -54,8 +54,9 @@ const installed = (field(text, 'changekit') ?? '').split(/\s+/)[0];
 if (!SEMVER.test(installed)) silence();
 
 // 2. Resolve the upstream. Its latest tag, or `version` on `main` where the
-//    upstream carries no tag at all. Where neither answers — offline, or the
-//    command was not permitted — there is nothing to say.
+//    upstream carries no tag at all. Where neither answers, because the
+//    machine is offline or the command was not permitted, there is nothing
+//    to say.
 let latest = null;
 let ref = null;
 

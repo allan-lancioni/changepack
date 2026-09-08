@@ -21,6 +21,6 @@ Under each, one line per rule, marked `+` added, `~` changed, `-` removed.
 
 ## `<document path>`
 
-- `+` **<rule>** — <the rule, written as current behavior.>
-- `~` **<rule>** — <what changes, and what stays.>
-- `-` **<rule>** — <what replaces it, or that nothing does.>
+- `+` **<rule>**: <the rule, written as current behavior.>
+- `~` **<rule>**: <what changes, and what stays.>
+- `-` **<rule>**: <what replaces it, or that nothing does.>

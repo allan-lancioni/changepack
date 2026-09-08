@@ -22,6 +22,10 @@ How change packages work in this repository.
 
 ## House rules
 
+**No dashes in prose.** Not the em dash, not the en dash, not a hyphen standing
+in for one. A comma, a colon, a full stop or a new sentence says it. This was
+the practice before it was written down, which is how five of them got in.
+
 This is the only repository where changekit is both the thing maintained and
 the thing running. `skill/` is the source and the object of maintenance.
 `.claude/skills/changekit/` is the copy Claude Code loads, committed so that a
