@@ -18,8 +18,8 @@ const ACTIVE = 'changes/active';
 // drift alarm. This file owns the numbers and the README quotes them.
 const SKILL_MAX = 3600;
 const FILE_MAX = 3600;
-// 34000 against 31047 today: about 2950 characters, or roughly 9% of the
-// current size, before the alarm sounds.
+// Markdown alone, because markdown alone is what a turn loads: 34000 against
+// 32744 today, about 1250 characters before the alarm sounds.
 const TOTAL_MAX = 34000;
 
 const failures = [];
@@ -98,7 +98,12 @@ if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
 
 // 3. The context budget.
 const files = tracked(SOURCE);
-const total = files.reduce((n, f) => n + (readOrFlag(f)?.length ?? 0), 0);
+// Markdown alone. The budget protects what a turn loads, and a turn loads
+// markdown; a script shipped in skill/ is run, never read into context, so
+// charging it here would charge for characters nobody pays.
+const total = files
+  .filter((f) => f.endsWith('.md'))
+  .reduce((n, f) => n + (readOrFlag(f)?.length ?? 0), 0);
 if (skillText.length > SKILL_MAX)
   fail(`SKILL.md is ${skillText.length} characters, over its ${SKILL_MAX} ceiling`);
 if (total > TOTAL_MAX)
@@ -113,7 +118,7 @@ for (const f of files.filter((f) => f.includes('/references/'))) {
 }
 note(
   `SKILL.md ${skillText.length}/${SKILL_MAX}, widest route ${widest[0].split('/').pop()} ` +
-    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ ${total}/${TOTAL_MAX}`
+    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ markdown ${total}/${TOTAL_MAX}`
 );
 
 // 4. Nothing names a file that is not there.

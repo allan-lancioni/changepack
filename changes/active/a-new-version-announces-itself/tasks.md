@@ -12,18 +12,18 @@ needs all of them.
 
 ## 1. The arithmetic is a script
 
-Status: not started
+Status: completed
 
-- [ ] `skill/check-update.mjs`: reads `updates:` and `changekit:` from
+- [x] `skill/check-update.mjs`: reads `updates:` and `changekit:` from
       `CHANGEKIT.md`; `off` returns before any network call. Resolves the
       upstream's latest tag, falling back to `version` in `package.json` on
       `main` where no tag exists. Respects `hold <version>`.
-- [ ] Prints nothing and exits 0 where nothing is newer, or where the machine
+- [x] Prints nothing and exits 0 where nothing is newer, or where the machine
       is offline, or where the command was not permitted.
-- [ ] Where something is newer, fetches `CHANGELOG.md` at that ref and prints
+- [x] Where something is newer, fetches `CHANGELOG.md` at that ref and prints
       the newer version and the cost line of every release between the two.
-- [ ] No dependencies, in the style of `bin/install.mjs`.
-- [ ] `scripts/check.mjs`: the context budget sums `.md` alone, and the note
+- [x] No dependencies, in the style of `bin/install.mjs`.
+- [x] `scripts/check.mjs`: the context budget sums `.md` alone, and the note
       says so.
 
 Validation:
