@@ -126,6 +126,13 @@ Out of scope:
 - `close.md` drops below 3,000 characters.
 - `npm run check` passes, and its budget note counts markdown alone.
 
+## Surprises
+
+- **Group 2** — the drawing was short rather than wrong. It promised the check
+  would print the newer version and the cost lines, and `update.md` then needed
+  the ref to install at. The script resolves one and never said it, which only
+  the route consuming the output could discover. Group 4 prints it.
+
 ## Outcome
 
 <Written at closure.>

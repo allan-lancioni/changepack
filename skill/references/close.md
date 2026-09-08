@@ -54,22 +54,10 @@ the archive move goes in that same commit, not a second one.
 
 ## Check for a newer changekit
 
-After the archive commit, and never before it. Silence is the ordinary
-outcome, it leaves no trace in the report, and nothing here holds up a
-closure that already landed.
+After the archive commit, and never before it, from the repository root:
 
-1. Stop where `updates:` in `CHANGEKIT.md` is set to `off`.
-2. Compare the marker at the end of `SKILL.md` against the upstream's latest
-   tag:
+    node .claude/skills/changekit/check-update.mjs
 
-       git ls-remote --tags --refs --sort=-v:refname \
-         https://github.com/allan-lancioni/changekit
-
-   Where the upstream carries no tag at all, read `version` from its
-   `package.json` on `main` instead. Where neither answers, because the
-   machine is offline or the command was not permitted, stop without a word.
-3. Stop where the latest is not newer than the installed version, or not
-   newer than the version `updates:` holds. One of these is true almost every
-   time. Say nothing at all: not that a check ran, not that there was nothing
-   to report. The closure report ends where it would have ended.
-4. Otherwise load `update.md`.
+Silence is the ordinary outcome: it leaves no trace in the report, and nothing
+here holds up a closure that already landed. Where it prints, load `update.md`
+and carry its output there.

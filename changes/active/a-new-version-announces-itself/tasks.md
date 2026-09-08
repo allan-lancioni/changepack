@@ -34,14 +34,14 @@ Validation:
 
 ## 2. Two routes keep only what is theirs
 
-Status: not started
+Status: completed
 
-- [ ] `skill/references/close.md`: the four steps become the command, and the
+- [x] `skill/references/close.md`: the four steps become the command, and the
       sentence saying silence leaves no trace and holds up no closure.
-- [ ] `skill/references/update.md`: loses resolving the tag, fetching the
+- [x] `skill/references/update.md`: loses resolving the tag, fetching the
       changelog and composing the install ref. Keeps presenting, confirming,
       installing, stamping and committing.
-- [ ] Neither route describes a comparison a script performs.
+- [x] Neither route describes a comparison a script performs.
 
 Validation:
 
@@ -66,6 +66,9 @@ Validation:
 
 Status: not started
 
+- [ ] `skill/check-update.mjs`: print the ref beside the version, since
+      `update.md` installs at the ref the check reported and the script
+      resolved it without ever saying it.
 - [ ] `CHANGELOG.md`: the unreleased 1.0.0 entry gains the command, the
       workflow, and what they change for a project that already installed.
 - [ ] No version bump: `main` is at 0.7.0 and 1.0.0 has never shipped.
