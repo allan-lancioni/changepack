@@ -5,8 +5,6 @@ documents:
     says what it touched without being opened>
 ---
 
-# <Title>: spec delta
-
 Normative behavior this change makes true. It lives here until closure, never
 in the document it lands in.
 

@@ -11,8 +11,6 @@ shipped: <the release this shipped in, filled at closure; omit the key until
   then>
 ---
 
-# <Title>
-
 ## Context
 
 <Why now, in one paragraph: what is true today and why that is a problem. The

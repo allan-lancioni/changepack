@@ -7,8 +7,6 @@ order: [1, 2, [3, 4], 5]
 blocked: [1]
 ---
 
-# <Title>: tasks
-
 One group at a time. Check an item only after its validation passes.
 
 ## 1. <Group name>
