@@ -1,14 +1,14 @@
 # Update
 
 The skill directory is replaced wholesale. Nothing the project owns lives in
-it, so an update is a copy and never a merge. `CHANGEKIT.md` sits outside it
+it, so an update is a copy and never a merge. `CHANGEPACK.md` sits outside it
 and is only ever stamped.
 
 Two ways in. `close.md` arrives at **Ask**, having already run the check. A
 user asking for an update in so many words runs it first, from the repository
 root, and starts at **Update** with what it printed:
 
-    node .claude/skills/changekit/check-update.mjs
+    node .claude/skills/changepack/check-update.mjs
 
 ## Ask
 
@@ -16,7 +16,7 @@ One line at the end of the closure report, then AskUserQuestion with three
 answers:
 
 - **Update now.** Follow the rest of this file.
-- **Not now.** Set `updates:` to `hold <latest>` in `CHANGEKIT.md` and commit
+- **Not now.** Set `updates:` to `hold <latest>` in `CHANGEPACK.md` and commit
   that line alone. The question returns when something newer ships, and this
   version never asks again.
 - **Never.** Set `updates:` to `off`. No check runs after that, and no network
@@ -37,12 +37,12 @@ package.
 3. Wait for confirmation. Nothing is written before it.
 4. Install at the ref the check reported, so what was compared is what lands:
 
-       npx github:allan-lancioni/changekit#<ref> --force
+       npx github:allan-lancioni/changepack#<ref> --force
 
-5. Stamp `changekit: <new version>` in `CHANGEKIT.md`. Where `updates:` was
+5. Stamp `changepack: <new version>` in `CHANGEPACK.md`. Where `updates:` was
    holding a version, return it to `ask at closure`: what it held is behind
    you now. Where step 2 named a migration, apply it now.
-6. Commit `.claude/skills/changekit/` and `CHANGEKIT.md`, and nothing else.
+6. Commit `.claude/skills/changepack/` and `CHANGEPACK.md`, and nothing else.
    The rest of the tree is not part of this and is left as it stands.
 7. Say the procedure that just landed applies from the next session. This one
    loaded the old one and finishes on it.

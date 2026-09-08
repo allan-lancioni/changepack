@@ -76,7 +76,7 @@ assistance says so in `commit:`, and only then is the trailer added.
 ## Commit
 
 Commit without asking. The report is the record, not a request for permission.
-Ask first only when the user said to in this conversation, when `CHANGEKIT.md`
+Ask first only when the user said to in this conversation, when `CHANGEPACK.md`
 says to, when a check ran and failed, or when the tree holds work that is not
 yours and partial staging cannot separate it.
 

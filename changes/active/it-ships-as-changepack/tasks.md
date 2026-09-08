@@ -9,30 +9,30 @@ One group at a time. Check an item only after its validation passes.
 
 ## 1. The name
 
-Status: not started
+Status: completed
 
-- [ ] `skill/SKILL.md`: `name: changepack` in the frontmatter, `/changepack`
+- [x] `skill/SKILL.md`: `name: changepack` in the frontmatter, `/changepack`
       where the command is named, and the marker reads
       `<!-- changepack 1.0.0 -->`.
-- [ ] `skill/templates/changekit.md` becomes `skill/templates/changepack.md`,
+- [x] `skill/templates/changekit.md` becomes `skill/templates/changepack.md`,
       with `- **changepack:**` as its version field and the heading and prose
       following.
-- [ ] `skill/templates/change.md`: the frontmatter key `changekit:` becomes
+- [x] `skill/templates/change.md`: the frontmatter key `changekit:` becomes
       `changepack:`.
-- [ ] `skill/references/init.md`: writes `CHANGEPACK.md`, copies
+- [x] `skill/references/init.md`: writes `CHANGEPACK.md`, copies
       `templates/changepack.md`, stamps `changepack`, and names `/changepack`.
-- [ ] `skill/references/update.md`, `close.md`, `run.md`, `work.md`: the path
+- [x] `skill/references/update.md`, `close.md`, `run.md`, `work.md`: the path
       to the check is `.claude/skills/changepack/check-update.mjs`.
-- [ ] `skill/references/run.md`, `commit.md`: `CHANGEPACK.md`.
-- [ ] `skill/references/plan.md`: the frontmatter key it tells planning to
+- [x] `skill/references/run.md`, `commit.md`: `CHANGEPACK.md`.
+- [x] `skill/references/plan.md`: the frontmatter key it tells planning to
       stamp is `changepack`.
-- [ ] `bin/install.mjs`: the target is `.claude/skills/changepack`, and every
+- [x] `bin/install.mjs`: the target is `.claude/skills/changepack`, and every
       line it prints names changepack and `CHANGEPACK.md`.
-- [ ] `scripts/check.mjs`: `LOADED` is `.claude/skills/changepack`, and the
+- [x] `scripts/check.mjs`: `LOADED` is `.claude/skills/changepack`, and the
       marker it reads is `<!-- changepack ... -->`.
-- [ ] `CHANGEKIT.md` becomes `CHANGEPACK.md` with `git mv`, its version field
+- [x] `CHANGEKIT.md` becomes `CHANGEPACK.md` with `git mv`, its version field
       renamed and its prose following. `protect:` names the new path.
-- [ ] `.markdownlint-cli2.jsonc`: the path it names.
+- [x] `.markdownlint-cli2.jsonc`: the path it names.
 
 Validation:
 
@@ -54,6 +54,9 @@ Status: not started
 - [ ] The workflow requests `id-token: write` and publishes with provenance.
 - [ ] The npm token is read from a repository secret, and the workflow fails
       loudly rather than silently skipping when it is absent.
+- [ ] `skill/references/commit.md`: the trailer a package's commits carry is
+      `Changepack:`, and the sentence about closure naming the old version
+      follows. Group 1 surfaced this and did not own it.
 
 Validation:
 
@@ -83,6 +86,9 @@ Status: not started
       is current.
 - [ ] A version published without an `updating` field reports
       `Updating: not stated.` rather than failing.
+- [ ] `skill/references/update.md` step 4 installs `npx changepack@<version>
+      --force`, and the step no longer speaks of a ref. Group 1 renamed the
+      URL it could not yet replace.
 
 Validation:
 

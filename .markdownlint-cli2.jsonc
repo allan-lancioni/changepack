@@ -9,7 +9,7 @@
     "eval",
     // The copy Claude Code loads. Written by bin/install.mjs alone, so a
     // finding here is a finding in skill/ and is fixed there.
-    ".claude/skills/changekit",
+    ".claude/skills/changepack",
     // Archived packages are history and are not edited.
     "changes/archive"
   ],

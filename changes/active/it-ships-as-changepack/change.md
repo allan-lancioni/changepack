@@ -136,6 +136,14 @@ on the forge, costs a permanent discrepancy between the repository and
 everything inside it. GitHub redirects the old path, so existing clones and
 any `npx github:` still in the wild keep resolving.
 
+**The commit trailer becomes `Changepack:`.** The drawing named the
+frontmatter key and the config field and did not reach the trailer a package's
+commits carry, which group 1 surfaced rather than deciding. It follows them:
+the trailer names the tool that governed the run, and the tool is renamed. This
+package's own commits keep `Changekit: 1.0.0`, because that is what ran, which
+is the rule `commit.md` already states for a package that ships a new version.
+Archived packages keep the trailer they were committed with.
+
 **The installer does nothing about an existing changekit install.** It
 installs `changepack` and leaves `.claude/skills/changekit/` and
 `CHANGEKIT.md` where they are. The alternatives were to move them, which costs

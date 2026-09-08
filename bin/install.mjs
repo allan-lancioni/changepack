@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Copies the changekit skill into the repository you run this in.
+// Copies the changepack skill into the repository you run this in.
 // No dependencies, no network, no config: the skill configures itself
 // on its first run.
 
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const { version } = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const source = join(root, 'skill');
-const target = resolve(process.cwd(), '.claude', 'skills', 'changekit');
+const target = resolve(process.cwd(), '.claude', 'skills', 'changepack');
 const force = process.argv.includes('--force') || process.argv.includes('-f');
 
 const say = (m) => process.stdout.write(m + '\n');
@@ -23,14 +23,14 @@ const onPath = (bin) => {
 };
 
 if (!existsSync(source)) {
-  say(`changekit: cannot find the skill at ${source}`);
+  say(`changepack: cannot find the skill at ${source}`);
   process.exit(1);
 }
 
 if (existsSync(target) && !force) {
-  say(`changekit is already installed at .claude/skills/changekit`);
+  say(`changepack is already installed at .claude/skills/changepack`);
   say(``);
-  say(`  Update it with --force. Your CHANGEKIT.md is never touched,`);
+  say(`  Update it with --force. Your CHANGEPACK.md is never touched,`);
   say(`  because it lives outside the skill directory.`);
   process.exit(1);
 }
@@ -41,11 +41,11 @@ mkdirSync(dirname(target), { recursive: true });
 rmSync(target, { recursive: true, force: true });
 cpSync(source, target, { recursive: true });
 
-say(`changekit ${version} installed at .claude/skills/changekit`);
+say(`changepack ${version} installed at .claude/skills/changepack`);
 say(``);
 
 if (!existsSync(resolve(process.cwd(), '.git'))) {
-  say(`  This is not a git repository. changekit expects to be committed`);
+  say(`  This is not a git repository. changepack expects to be committed`);
   say(`  alongside the project it governs.`);
   say(``);
 }
@@ -57,16 +57,16 @@ if (!onPath('claude')) {
   say(``);
 }
 
-if (existsSync(resolve(process.cwd(), 'CHANGEKIT.md'))) {
+if (existsSync(resolve(process.cwd(), 'CHANGEPACK.md'))) {
   say(`  Configuration already present. Open Claude Code here:`);
   say(``);
-  say(`    claude "/changekit"`);
+  say(`    claude "/changepack"`);
 } else {
   say(`  Now configure it. Paste this:`);
   say(``);
-  say(`    claude "/changekit"`);
+  say(`    claude "/changepack"`);
   say(``);
   say(`  It reads the repository, proposes a configuration and writes`);
-  say(`  CHANGEKIT.md. That file is yours; everything under the skill`);
+  say(`  CHANGEPACK.md. That file is yours; everything under the skill`);
   say(`  directory is replaced wholesale on update.`);
 }

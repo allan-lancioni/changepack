@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // This repository's validation. Four invariants, no dependencies.
 //
-// It exists because changekit is the only repository where the skill is both
+// It exists because changepack is the only repository where the skill is both
 // the thing maintained and the thing running, and that arrangement is safe
 // only while something checks it.
 
@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 
 const SOURCE = 'skill';
-const LOADED = '.claude/skills/changekit';
+const LOADED = '.claude/skills/changepack';
 const ACTIVE = 'changes/active';
 
 // The context budget is the product. What a turn actually loads is SKILL.md
@@ -85,7 +85,7 @@ if (drift.length && openPackages.length) {
 
 // 2. One version, said in three places.
 const skillText = readOrFlag(join(SOURCE, 'SKILL.md')) ?? '';
-const marker = skillText.match(/<!--\s*changekit\s+([^\s]+)\s*-->/)?.[1];
+const marker = skillText.match(/<!--\s*changepack\s+([^\s]+)\s*-->/)?.[1];
 const pkg = JSON.parse(readFileSync('package.json', 'utf8')).version;
 const changelog = readFileSync('CHANGELOG.md', 'utf8').match(/^##\s+(\S+)/m)?.[1];
 

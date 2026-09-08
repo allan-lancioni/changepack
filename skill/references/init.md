@@ -1,6 +1,6 @@
 # Init
 
-Write `CHANGEKIT.md`, then stop. Do not plan or implement in the same
+Write `CHANGEPACK.md`, then stop. Do not plan or implement in the same
 turn, even if the user asked for both.
 
 ## Infer, do not interrogate
@@ -31,7 +31,7 @@ The contract every route reads back, and the only place that states it.
 
 | Field | Accepts | Absent means |
 |---|---|---|
-| `changekit` | the version this project runs | stamp it from the marker |
+| `changepack` | the version this project runs | stamp it from the marker |
 | `changes` | a path, in this repository or outside it | `changes/` |
 | `normative` | the documents a later change is held to, or none | `CLAUDE.md`, `AGENTS.md`, `.claude/` |
 | `language` | what gets written into the repository | English |
@@ -49,7 +49,7 @@ A project with no validation command is ordinary, not incomplete.
 
 ## Write
 
-Copy `templates/changekit.md` to `CHANGEKIT.md`, at the repository root, in
+Copy `templates/changepack.md` to `CHANGEPACK.md`, at the repository root, in
 the language you settled on. The field keys stay English: they are what this
 skill reads back. Stamp the version from the marker at the end of `SKILL.md`,
 say where each value came from, and mark the ones you guessed.
@@ -63,7 +63,7 @@ the project owns. Then commit them alone, touching nothing else.
 ## Say what happens next
 
 Say in one line that planning, implementing, reviewing and closing all run
-through `/changekit`, and that `CHANGEKIT.md` is the only file the project
+through `/changepack`, and that `CHANGEPACK.md` is the only file the project
 owns: the skill directory is replaced wholesale on update.
 
 If the same message asked for something else, name it and say it runs next,

@@ -13,7 +13,7 @@ Read the package and summarise it in a few lines: the goal, the groups with
 their status, and the one that runs first. Say what is left to do, not how the
 procedure works.
 
-Run `node .claude/skills/changekit/check-update.mjs` and add what it says to
+Run `node .claude/skills/changepack/check-update.mjs` and add what it says to
 that summary, in its own line. Silence is the ordinary outcome. A package that
 nobody closes is the one place the closure check never reaches.
 
@@ -36,7 +36,7 @@ The brief is the interface. Write it in this order, identical every time except
 the last part:
 
 1. the repository path, and that nothing outside it may be touched;
-2. `CHANGEKIT.md`, `change.md` and `tasks.md`, inline and in full, the drawing
+2. `CHANGEPACK.md`, `change.md` and `tasks.md`, inline and in full, the drawing
    included;
 3. the rules and the return contract below;
 4. last, the one group it owns, and the commits that already landed.
@@ -46,7 +46,7 @@ The rules it gets:
 - implement this group only;
 - read the source you are about to change immediately before changing it. The
   brief is the plan, never the code;
-- never write anything under `changes/`, never write `CHANGEKIT.md`, never run
+- never write anything under `changes/`, never write `CHANGEPACK.md`, never run
   a command that writes git state;
 - run the validation command before reporting, where the project has one;
 - report blocked rather than deciding anything the package did not approve.
