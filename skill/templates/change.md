@@ -1,14 +1,12 @@
 ---
 title: <Title>
-description: <One line saying what the change is, so a listing of archived
-  packages reads without opening any of them.>
+description: <one line saying what the change is, so a listing of archived
+  packages reads without opening any>
 changekit: <the version that planned this>
 opened: <YYYY-MM-DD>
 opened-by: <the git identity that signs the opening commit, as name and email>
-issue: <the issue or discussion this came from; omit the key when there is
-  none>
-shipped: <the release this shipped in, filled at closure; omit the key until
-  then>
+issue: <the issue this came from; omit the key when there is none>
+shipped: <the release this shipped in; filled at closure, omitted until then>
 ---
 
 ## Context
@@ -19,22 +17,18 @@ history and no options.>
 
 ## Goal
 
-<The contract: the behavior that should be true when this closes, and no more
-of it than the change needs. Where the project has no specs, this is the
-normative part of the package, so write it as a contract.>
+<The behavior that should be true when this closes, written as a contract, and
+no more of it than the change needs. Where nothing normative changes, this is
+the normative part of the package.>
 
-<A line that names a file, a collection or a transaction belongs under Changes.
-A line about what keeps working belongs under Cost.>
+<A line naming a file, a collection or a transaction belongs under Changes; one
+about what keeps working belongs under Cost.>
 
 ## Changes
 
-<This section is written last and read first: the drawing is the last thing
-known at plan time and the first thing a reader wants. Understand the change,
-then draw it here.>
-
-<A line above each drawing, saying what it shows, so the drawing is read rather
-than decoded. Then draw what moves, and nothing it does not. Pick the notation
-by what moves:>
+<Written last and read first: understand the change, then draw it. A line above
+each drawing says what it shows, so it is read rather than decoded. Draw what
+moves and nothing it does not, picking the notation by what moves:>
 
 - <files, modules, packages: a tree, marked `+` added, `-` removed,
   `~` changed;>
@@ -46,9 +40,8 @@ by what moves:>
 terminal, on a forge and in an editor alike, with nothing installed.>
 
 <Then the prose the drawing cannot carry, and only that: why this shape and not
-the other one. Never restate the drawing.>
-
-<If nothing structural moves, there is no drawing, and probably no package.>
+the other one. Never restate the drawing. If nothing structural moves, there is
+no drawing, and probably no package.>
 
 ## Open decisions
 
@@ -83,10 +76,10 @@ ordinary answer.>
 
 - **Keeps working:** <what stands while this lands, and what breaks if anything
   does.>
-- **A revert does not undo:** <only what reverting the drawing would leave
-  behind: data written, a policy dropped, an order between groups, a deploy
-  that has to be applied rather than reverted. Where the revert is the inverse
-  of the drawing, write nothing.>
+- **A revert does not undo:** <only what reverting the drawing leaves behind:
+  data written, a policy dropped, an order between groups, a deploy applied
+  rather than reverted. Where the revert is the drawing's inverse, write
+  nothing.>
 
 ## Success criteria
 
