@@ -62,12 +62,12 @@ Validation:
 
 ## 4. Two routes follow
 
-Status: not started
+Status: completed
 
-- [ ] `skill/references/init.md`: what earns a place under `normative:` — that
+- [x] `skill/references/init.md`: what earns a place under `normative:` — that
       something is held to the document and it has named units. A generated
       file does not, and neither does a README.
-- [ ] `skill/references/close.md`: `shipped:` is filled in the frontmatter, and
+- [x] `skill/references/close.md`: `shipped:` is filled in the frontmatter, and
       a package written without one is filled where it can be.
 
 Validation:

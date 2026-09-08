@@ -25,10 +25,10 @@ Close a package only when every task is checked and every dependency is done.
 
 Record the outcome in `change.md`: what shipped, what changed on the way, and
 what was left for later. Delete `Surprises` where nothing was written under it;
-where lines stand, they stay as part of the record. Fill `shipped:` in its
-header with the version `version:` points at, or none where the project exposes
-none. A package opened before the header existed gets what can be filled and
-nothing more.
+where lines stand, they stay as part of the record. Fill `shipped` in the
+frontmatter with the version `version:` points at, omitting the key where the
+project exposes none. A package written before the frontmatter carries
+`shipped:` in a prose header instead: fill it there, and nothing else.
 
 End the report with the package's own history:
 

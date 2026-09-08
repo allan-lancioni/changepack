@@ -40,8 +40,11 @@ contract every route reads back, and the only place that states it.
 | `protect` | paths nothing may write | nothing is protected |
 | `updates` | `ask at closure`, `hold <version>`, `off` | `ask at closure` |
 
-A project with no validation command is ordinary, not incomplete. Write none
-and every route reports it instead of stopping.
+A document earns `normative:` when something is held to it and it has named
+units you can name before and find after. A generated file has neither, and a
+README fails the first test.
+
+A project with no validation command is ordinary, not incomplete.
 
 ## Write
 
