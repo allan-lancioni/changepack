@@ -13,6 +13,10 @@ Read the package and summarise it in a few lines: the goal, the groups with
 their status, and the one that runs first. Say what is left to do, not how the
 procedure works.
 
+Run `node .claude/skills/changekit/check-update.mjs` and add what it says to
+that summary, in its own line. Silence is the ordinary outcome. A package that
+nobody closes is the one place the closure check never reaches.
+
 Then ask with AskUserQuestion, a single question, three options:
 
 - stop after each group, so the user validates before the next one starts;

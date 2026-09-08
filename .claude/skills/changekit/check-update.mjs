@@ -7,7 +7,7 @@
 //
 //     node .claude/skills/changekit/check-update.mjs
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
@@ -52,6 +52,17 @@ const held = updates[0]?.startsWith('hold') ? updates[1]?.replace(/[^\d.]/g, '')
 
 const installed = (field(text, 'changekit') ?? '').split(/\s+/)[0];
 if (!SEMVER.test(installed)) silence();
+
+// An update installs into a quiet tree, so a package still open is the whole
+// answer: say the version exists and stop. Without this a package nobody
+// closes means the check never speaks, because closure is what runs it.
+const changes = (field(text, 'changes') ?? 'changes/').split(/\s+/)[0];
+const active = resolve(process.cwd(), changes, 'active');
+const open = existsSync(active)
+  ? readdirSync(active, { withFileTypes: true })
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+  : [];
 
 // 2. Resolve the upstream. Its latest tag, or `version` on `main` where the
 //    upstream carries no tag at all. Where neither answers, because the
@@ -98,7 +109,17 @@ if (!latest) silence();
 if (compare(latest, installed) <= 0) silence();
 if (held && SEMVER.test(held) && compare(latest, held) <= 0) silence();
 
-// 4. The changelog at that ref. Each `## <version>` section ends with a
+// 4. Where a package is open the update cannot land, so the cost lines would
+//    be read and not acted on. One line, and no changelog is fetched.
+if (open.length) {
+  process.stdout.write(
+    `changekit ${latest} is available; it installs once ` +
+      `${open.join(', ')} ${open.length > 1 ? 'close' : 'closes'}.\n`
+  );
+  process.exit(0);
+}
+
+// 5. The changelog at that ref. Each `## <version>` section ends with a
 //    paragraph opening `Updating:`, and that paragraph is the cost. It is
 //    wrapped in the source, so it is joined back into the one line it is.
 let changelog;
