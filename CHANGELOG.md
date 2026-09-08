@@ -86,11 +86,28 @@ file removed from a release used to survive in every installation, because
 `--force` overwrote what it found and deleted nothing. This is the first
 release that removes files, and it is the release that found it.
 
+**The update check is one command.** Closing a package runs `check-update.mjs`
+and reads what it prints, instead of resolving a tag and comparing two version
+strings in prose. Silence means nothing is newer, which is the ordinary
+outcome. The script ships inside the skill directory, and it is the only place
+that states how the comparison is made, what `off` and `hold` do, and where the
+changelog lives.
+
+**A tag is a consequence of merging.** A push to `main` tags the version in
+`package.json` where no tag carries it. 0.6.0, 0.7.0 and 1.0.0 shipped untagged
+because tagging depended on somebody remembering, and the check has therefore
+reported nothing since 0.6.0.
+
+**The context budget counts markdown alone**, because markdown alone is what a
+turn loads.
+
 Updating: by hand, in two places. An open package: rename `proposal.md` to
 `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete
 `design.md`. `CHANGEKIT.md`: rename the `specs:` field to `normative:` and give
 it the documents a change is held to, or `none`. Nothing else. Archived
-packages are history and are not migrated.
+packages are history and are not migrated. The check and the tagging cost you
+nothing: the script arrives with the skill directory on this install, and the
+workflow is this repository's own.
 
 ## 0.7.0
 

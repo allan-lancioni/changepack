@@ -64,15 +64,15 @@ Validation:
 
 ## 4. It is still 1.0.0
 
-Status: not started
+Status: completed
 
-- [ ] `skill/check-update.mjs`: print the ref beside the version, since
+- [x] `skill/check-update.mjs`: print the ref beside the version, since
       `update.md` installs at the ref the check reported and the script
       resolved it without ever saying it.
-- [ ] `CHANGELOG.md`: the unreleased 1.0.0 entry gains the command, the
+- [x] `CHANGELOG.md`: the unreleased 1.0.0 entry gains the command, the
       workflow, and what they change for a project that already installed.
-- [ ] No version bump: `main` is at 0.7.0 and 1.0.0 has never shipped.
-- [ ] `node bin/install.mjs --force`, inside the archive commit.
+- [x] No version bump: `main` is at 0.7.0 and 1.0.0 has never shipped.
+- [x] `node bin/install.mjs --force`, inside the archive commit.
 
 Validation:
 

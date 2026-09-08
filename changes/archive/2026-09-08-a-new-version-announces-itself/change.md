@@ -4,6 +4,7 @@ description: A command finds a newer changekit and says what it costs, and a tag
 changekit: 1.0.0
 opened: 2026-09-08
 opened-by: Allan C Lancioni <allan@allanlancioni.com>
+shipped: 1.0.0
 ---
 
 ## Context
@@ -135,4 +136,40 @@ Out of scope:
 
 ## Outcome
 
-<Written at closure.>
+Shipped in 1.0.0, still unreleased, so the entry was amended rather than added
+to. Closing a package now runs `check-update.mjs` and reads what it prints;
+`close.md` fell from 3,452 to 2,794 characters and its update section from
+1,002 to about 330. `update.md` went from nine steps to seven. One place states
+how versions compare, what `off` and `hold` do, and where the changelog lives,
+and it is the script. A push to `main` tags the version where no tag carries
+it, so the tag stops depending on anyone remembering. The context budget counts
+markdown alone, because markdown alone is what a turn loads.
+
+The check was verified against the real upstream from a scratch fixture: an
+installed 0.1.0 reports 0.5.0 with the six cost lines between them, a `hold`
+covering the latest is silent, a version newer than upstream is silent, and
+`off` returns before any process is spawned.
+
+### What changed on the way
+
+**The drawing was short, and only the second group could see it.** It promised
+the check would print the newer version and the cost lines; `update.md` then
+needed a ref to install at. The script resolved one internally and never said
+it, and `v<version>` is right when a tag resolved it and wrong when the
+fallback did. Group 4 printed it. This is the first use of `Surprises`, and
+what it caught was an omission rather than a deviation.
+
+**The check reports 0.5.0 today, and that is correct.** 1.0.0 exists on this
+branch and no tag carries it, so the tool honestly cannot see it. The bug this
+package exists to fix is demonstrated by the tool that fixes it, and the first
+merge to `main` resolves both at once.
+
+### Left for later
+
+- **Nothing verifies the changelog contract.** `update.md` and now the script
+  both depend on every `## <version>` section ending with one paragraph opening
+  `Updating:`. Ten sections hold today, by discipline. No invariant proves it,
+  and a section with two such paragraphs, or none, would break the check
+  quietly.
+- **The workflow has never run.** Its logic was exercised by hand against
+  `main`; the first real execution is the merge that lands this branch.
