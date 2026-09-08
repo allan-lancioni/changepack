@@ -1,0 +1,15 @@
+# What `npm run format` must not rewrite.
+
+node_modules
+
+# Third-party checkouts the skill is evaluated against. Gitignored, and 1590
+# .mjs files that are not ours to reformat.
+eval
+
+# The copy Claude Code loads. Written by bin/install.mjs alone, so a finding
+# here is a finding in skill/ and is fixed there.
+.claude/skills/changepack
+
+# Prose, not code. `npm run lint` governs it, and the wrapping is by hand:
+# reflowing it would move the character counts the context budget is read in.
+**/*.md

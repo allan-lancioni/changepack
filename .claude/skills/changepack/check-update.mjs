@@ -86,7 +86,7 @@ if (held && SEMVER.test(held) && compare(latest, held) <= 0) silence();
 if (open.length) {
   process.stdout.write(
     `changepack ${latest} is available; it installs once ` +
-      `${open.join(', ')} ${open.length > 1 ? 'close' : 'closes'}.\n`
+      `${open.join(', ')} ${open.length > 1 ? 'close' : 'closes'}.\n`,
   );
   process.exit(0);
 }

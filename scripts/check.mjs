@@ -37,9 +37,7 @@ const readOrFlag = (path) => {
 };
 
 const tracked = (dir) =>
-  execFileSync('git', ['ls-files', '-z', dir], { encoding: 'utf8' })
-    .split('\0')
-    .filter(Boolean);
+  execFileSync('git', ['ls-files', '-z', dir], { encoding: 'utf8' }).split('\0').filter(Boolean);
 
 // 1. The loaded copy matches the source, unless a package is changing it.
 const openPackages = existsSync(ACTIVE)
@@ -73,13 +71,13 @@ if (drift.length && openPackages.length) {
   note(
     `${SOURCE}/ and ${LOADED}/ differ, which is expected: ` +
       `${openPackages.join(', ')} is open and touches ${SOURCE}/. ` +
-      `The reinstall at closure settles it.`
+      `The reinstall at closure settles it.`,
   );
 } else if (drift.length) {
   fail(
     `${SOURCE}/ and ${LOADED}/ differ with no package open to explain it:\n` +
       drift.map((d) => `      ${d}`).join('\n') +
-      `\n      Run: node bin/install.mjs --force`
+      `\n      Run: node bin/install.mjs --force`,
   );
 }
 
@@ -94,7 +92,7 @@ const changelog = changelogText.match(/^##\s+(\S+)/m)?.[1];
 if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
   fail(
     `the version disagrees with itself: ` +
-      `SKILL.md marker ${marker}, package.json ${pkg}, CHANGELOG.md ${changelog}`
+      `SKILL.md marker ${marker}, package.json ${pkg}, CHANGELOG.md ${changelog}`,
   );
 }
 
@@ -108,24 +106,22 @@ const total = files
   .reduce((n, f) => n + (readOrFlag(f)?.length ?? 0), 0);
 if (skillText.length > SKILL_MAX)
   fail(`SKILL.md is ${skillText.length} characters, over its ${SKILL_MAX} ceiling`);
-if (total > TOTAL_MAX)
-  fail(`${SOURCE}/ is ${total} characters, over its ${TOTAL_MAX} ceiling`);
+if (total > TOTAL_MAX) fail(`${SOURCE}/ is ${total} characters, over its ${TOTAL_MAX} ceiling`);
 
 let widest = ['', 0];
 for (const f of files.filter((f) => f.includes('/references/'))) {
   const n = read(f)?.length ?? 0;
   if (n > widest[1]) widest = [f, n];
-  if (n > FILE_MAX)
-    fail(`${f} is ${n} characters, over the ${FILE_MAX} a single route may load`);
+  if (n > FILE_MAX) fail(`${f} is ${n} characters, over the ${FILE_MAX} a single route may load`);
 }
 note(
   `SKILL.md ${skillText.length}/${SKILL_MAX}, widest route ${widest[0].split('/').pop()} ` +
-    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ markdown ${total}/${TOTAL_MAX}`
+    `${widest[1]}/${FILE_MAX}, ${SOURCE}/ markdown ${total}/${TOTAL_MAX}`,
 );
 
 // 4. Nothing names a file that is not there.
-const named = (text, dir) => [...text.matchAll(new RegExp(`${dir}/([\\w.-]+\\.md)`, 'g'))]
-  .map((m) => m[1]);
+const named = (text, dir) =>
+  [...text.matchAll(new RegExp(`${dir}/([\\w.-]+\\.md)`, 'g'))].map((m) => m[1]);
 
 for (const [text, dir, source] of [
   [skillText, 'references', 'SKILL.md'],
@@ -137,7 +133,7 @@ for (const [text, dir, source] of [
 }
 
 const orphans = readdirSync(join(SOURCE, 'references')).filter(
-  (f) => !skillText.includes(`references/${f}`)
+  (f) => !skillText.includes(`references/${f}`),
 );
 if (orphans.length) note(`not named in SKILL.md: ${orphans.join(', ')}`);
 
@@ -177,11 +173,10 @@ else if (written !== paragraph.join(' '))
   fail(
     `changepack.updating disagrees with the CHANGELOG.md entry for ${pkg}:\n` +
       `      package.json: ${written}\n` +
-      `      CHANGELOG.md: ${paragraph.join(' ')}`
+      `      CHANGELOG.md: ${paragraph.join(' ')}`,
   );
 
-if (gone.length)
-  fail(`tracked by git and missing from disk: ${[...new Set(gone)].join(', ')}`);
+if (gone.length) fail(`tracked by git and missing from disk: ${[...new Set(gone)].join(', ')}`);
 
 for (const n of notes) console.log(`  ${n}`);
 if (failures.length) {
