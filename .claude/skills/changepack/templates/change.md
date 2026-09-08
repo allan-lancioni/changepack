@@ -2,7 +2,7 @@
 title: <Title>
 description: <one line saying what the change is, so a listing of archived
   packages reads without opening any>
-changekit: <the version that planned this>
+changepack: <the version that planned this>
 opened: <YYYY-MM-DD>
 opened-by: <the git identity that signs the opening commit, as name and email>
 issue: <the issue this came from; omit the key when there is none>

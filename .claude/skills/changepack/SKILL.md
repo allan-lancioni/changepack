@@ -1,9 +1,9 @@
 ---
-name: changekit
+name: changepack
 description: Plan, implement, review and close change packages, the folders under changes/ that hold work too large or too uncertain to land in one pass. Use when asked to plan a change, when continuing a task in changes/active/, when reviewing or closing a package, or when deciding whether work needs one. Not for edits that already fit a single coherent pass.
 ---
 
-# Changekit
+# Changepack
 
 A change package is one unit of planned work. It lives in
 `changes/active/<slug>/` while it runs and moves to
@@ -11,7 +11,7 @@ A change package is one unit of planned work. It lives in
 
 ## Read the project file first
 
-Read `CHANGEKIT.md`, at the root of the repository. It sets the changes path,
+Read `CHANGEPACK.md`, at the root of the repository. It sets the changes path,
 the documents `normative:` names, the language for written artifacts, the
 validation command, and the paths you must never write.
 
@@ -59,7 +59,7 @@ form.
   schema, persistence, compatibility, authorization or observable behavior.
   Present the alternatives and their consequences, get an answer, record it
   in the package, then continue.
-- Write in the language `CHANGEKIT.md` records: the package files, their
+- Write in the language `CHANGEPACK.md` records: the package files, their
   slugs, that file itself, the commit messages. Answer the user in the
   language of their message, English when it carries no signal. The two are
   independent and often differ. Code follows the conventions around it and
@@ -69,4 +69,4 @@ form.
   exceptions.
 - Never write a protected path.
 
-<!-- changekit 1.0.0 -->
+<!-- changepack 1.0.0 -->

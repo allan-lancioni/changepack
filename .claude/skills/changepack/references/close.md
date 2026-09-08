@@ -52,11 +52,11 @@ come back.
 Load `commit.md`. When closure follows the last task group in the same run,
 the archive move goes in that same commit, not a second one.
 
-## Check for a newer changekit
+## Check for a newer changepack
 
 After the archive commit, and never before it, from the repository root:
 
-    node .claude/skills/changekit/check-update.mjs
+    node .claude/skills/changepack/check-update.mjs
 
 Silence is the ordinary outcome: it leaves no trace in the report, and nothing
 here holds up a closure that already landed. Where it prints, load `update.md`
