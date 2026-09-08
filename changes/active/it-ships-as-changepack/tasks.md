@@ -103,25 +103,25 @@ Validation:
 
 ## 4. The documents
 
-Status: not started
+Status: completed
 
-- [ ] `README.md`: `npx changepack` is the install, `npx changepack --force`
+- [x] `README.md`: `npx changepack` is the install, `npx changepack --force`
       the update, `/changepack` the command, and the box lists
       `templates/changepack.md`. The paragraph about the update check says one
       request to the registry, not one `git ls-remote`.
-- [ ] `CHANGELOG.md`: the unreleased 1.0.0 entry gains the rename, the
+- [x] `CHANGELOG.md`: the unreleased 1.0.0 entry gains the rename, the
       registry as the channel and the check that reads it. The command at the
       top of the file becomes `npx changepack --force`.
-- [ ] That entry's `Updating:` paragraph states the hand edits: rename
+- [x] That entry's `Updating:` paragraph states the hand edits: rename
       `CHANGEKIT.md` to `CHANGEPACK.md` and its version field, and delete
       `.claude/skills/changekit/` after installing changepack. It says the
       installer does neither.
-- [ ] `RATIONALE.md`: the refusal of an npm package is rewritten. What is
+- [x] `RATIONALE.md`: the refusal of an npm package is rewritten. What is
       refused is a runtime in the governed repository, and the registry is a
       distribution channel that imposes no manifest on a Python, Rust or Go
       repository, because the target is `.claude/skills/` and `npx` already
       required Node before this.
-- [ ] `RATIONALE.md` is added to git, which has never tracked it.
+- [x] `RATIONALE.md` is added to git, which has never tracked it.
 
 Validation:
 

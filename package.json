@@ -30,6 +30,6 @@
     "spec-driven"
   ],
   "changepack": {
-    "updating": "Updating: by hand, in two places. An open package: rename `proposal.md` to `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete `design.md`. `CHANGEKIT.md`: rename the `specs:` field to `normative:` and give it the documents a change is held to, or `none`. Nothing else. Archived packages are history and are not migrated. The check and the tagging cost you nothing: the script arrives with the skill directory on this install, and the workflow is this repository's own."
+    "updating": "Updating: `npx changepack --force`, then by hand. Rename `CHANGEKIT.md` to `CHANGEPACK.md` and its `changekit:` field to `changepack:`, rename the `specs:` field in it to `normative:` and give it the documents a change is held to, or `none`, and delete `.claude/skills/changekit/`. An open package: rename `proposal.md` to `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete `design.md`. The installer neither renames the file nor deletes the old skill directory: it writes the directory it owns and never the file you own, so a repository that installed changekit carries two skill directories until you remove one. Nothing else. Archived packages are history and are not migrated. The check costs you nothing beyond this, because the script arrives with the skill directory on this install."
   }
 }

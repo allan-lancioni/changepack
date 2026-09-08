@@ -1,18 +1,18 @@
 # Changelog
 
-What changes for a repository that already installed the skill. Ask changekit
+What changes for a repository that already installed the skill. Ask changepack
 to update itself, or run the command yourself:
 
 ```bash
-npx github:allan-lancioni/changekit --force
+npx changepack --force
 ```
 
 Every entry ends with what updating costs you. Where that is more than the
-command above, it says so. Your `CHANGEKIT.md` is never replaced: an update
+command above, it says so. Your `CHANGEPACK.md` is never replaced: an update
 stamps the version into it and leaves the rest alone.
 
 The numbers are read against the procedure, not against an API. **Major**: your
-`CHANGEKIT.md` or an open package has to be edited by hand. **Minor**: a new
+`CHANGEPACK.md` or an open package has to be edited by hand. **Minor**: a new
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
@@ -54,7 +54,7 @@ arrives with the drawing. It previously received the proposal alone.
 
 **A package's metadata is frontmatter.** `change.md`, `tasks.md` and
 `spec-delta.md` open with a block a machine can read instead of a header
-formatted as prose: the title, a one-line description, the changekit version,
+formatted as prose: the title, a one-line description, the changepack version,
 the date, who opened it, the issue it came from and what it shipped in. A key
 with no value is omitted, so `issue:` and `shipped:` are written when they have
 something to say. `tasks.md` states its groups and their execution order there,
@@ -91,7 +91,7 @@ and reads what it prints, instead of resolving a tag and comparing two version
 strings in prose. Silence means nothing is newer, which is the ordinary
 outcome. The script ships inside the skill directory, and it is the only place
 that states how the comparison is made, what `off` and `hold` do, and where the
-changelog lives.
+answer is read from.
 
 **A tag is a consequence of merging.** A push to `main` tags the version in
 `package.json` where no tag carries it. 0.6.0, 0.7.0 and 1.0.0 shipped untagged
@@ -101,13 +101,36 @@ reported nothing since 0.6.0.
 **The context budget counts markdown alone**, because markdown alone is what a
 turn loads.
 
-Updating: by hand, in two places. An open package: rename `proposal.md` to
-`change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete
-`design.md`. `CHANGEKIT.md`: rename the `specs:` field to `normative:` and give
-it the documents a change is held to, or `none`. Nothing else. Archived
-packages are history and are not migrated. The check and the tagging cost you
-nothing: the script arrives with the skill directory on this install, and the
-workflow is this repository's own.
+**It ships as changepack.** The skill directory, the file you own, the command,
+the frontmatter key, the marker and the commit trailer all read `changepack`.
+`changekit` on npm belongs to an unrelated package last published in 2022, and
+a name that cannot carry the package is not a name to keep. The repository is
+`allan-lancioni/changepack`, and GitHub redirects the old path, so existing
+clones keep resolving.
+
+**The registry is the channel.** `npx changepack` installs the skill, with no
+owner and no repository to know first, and `npx changepack@<version> --force`
+installs a stated version. A push to `main` publishes as well as tagging, which
+is why the workflow that tagged is now the one that releases: tagging is
+idempotent and publishing is not.
+
+**The check reads the registry too.** `check-update.mjs` makes one request, to
+`registry.npmjs.org/changepack`, and that document answers the whole question:
+the latest version, and what every release between yours and it costs. The cost
+line travels with the package, as `changepack.updating` in each published
+manifest, because `CHANGELOG.md` is deliberately not in the tarball npm ships.
+
+Updating: `npx changepack --force`, then by hand. Rename `CHANGEKIT.md` to
+`CHANGEPACK.md` and its `changekit:` field to `changepack:`, rename the `specs:`
+field in it to `normative:` and give it the documents a change is held to, or
+`none`, and delete `.claude/skills/changekit/`. An open package: rename
+`proposal.md` to `change.md`, merge `design.md` into it under `Changes` and
+`Cost`, and delete `design.md`. The installer neither renames the file nor
+deletes the old skill directory: it writes the directory it owns and never the
+file you own, so a repository that installed changekit carries two skill
+directories until you remove one. Nothing else. Archived packages are history
+and are not migrated. The check costs you nothing beyond this, because the
+script arrives with the skill directory on this install.
 
 ## 0.7.0
 
