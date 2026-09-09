@@ -16,6 +16,30 @@ The numbers are read against the procedure, not against an API. **Major**: your
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
+## 1.1.0
+
+A package is bracketed by two commits that move nothing, and a report says
+nothing where there is nothing to say.
+
+**The archive move is always its own commit.** It used to fold into the last
+task group's commit when closure followed it in the same run, which put a
+directory rename inside a commit about behavior and left the package with no
+visible end. The opening and the closure now bracket everything the package
+produced, and the log shows the boundary without anyone reading a trailer.
+
+**The type says what the commit did to the product.** The opening and archive
+commits move nothing, so they take whatever the convention reserves for that.
+Everywhere else, what shipped wrong is corrected rather than added, and what
+broke on the way here is the feature still landing. The names stay the
+project's: this skill sets no types.
+
+**A report leaves out what it has nothing to say about.** No risk, a clean
+tree and a command that printed nothing were being written down as findings.
+An absent line is now silence, never "none".
+
+Updating: nothing. Your commits change shape from the session after you
+update.
+
 ## 1.0.0
 
 A package is one change, one delta and the tasks, and the change draws what it

@@ -69,4 +69,4 @@ form.
   exceptions.
 - Never write a protected path.
 
-<!-- changepack 1.0.0 -->
+<!-- changepack 1.1.0 -->
