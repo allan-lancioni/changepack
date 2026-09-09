@@ -8,142 +8,147 @@ sidebar:
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-Why the change exists, and what will be true when it closes. It is written
-when the package opens, read before every group, and finished at closure. It
-is also where the reasoning lives, which is why a commit body never carries
-any: the reasoning is the package's, and the package is archived.
+`change.md` answers two questions: why this change exists, and what will be
+true when it is done.
+
+You write it when the package opens, read it again before each group, and
+finish it at closure. Because the reasoning lives here, the commit message
+does not repeat it: anyone who wants to know why something was done this way
+opens the archived package.
 
 ## The frontmatter
 
-| Key | Holds |
+Seven keys. A key with no value is omitted, never written empty.
+
+| Key | What it is |
 |---|---|
-| `title` | the package, named for the outcome |
-| `description` | one line, so a listing of archived packages reads without opening any |
+| `title` | the package, named for what it delivers |
+| `description` | one line, so a list of archived packages reads without opening any |
 | `changepack` | the version that planned it |
 | `opened` | the day it opened |
-| `opened-by` | the git identity that signs the opening commit, name and email |
-| `issue` | where the work came from, omitted when there is none |
+| `opened-by` | who opened it: git name and email, the same the opening commit signs with |
+| `issue` | where the work came from, when it came from somewhere |
 | `shipped` | the release it shipped in, filled at closure |
-
-A key with no value is omitted rather than written empty.
 
 ## The sections
 
-| Section | Holds |
+The body has ten sections, and not every change uses all of them.
+
+| Section | What goes in it |
 |---|---|
 | Context | what is true today, and why that is a problem |
-| Goal | the behavior that should be true at closure, written as a contract |
+| Goal | the behavior that has to exist at closure |
 | Changes | [the drawing](#the-drawing) of what moves |
 | Open decisions | the questions in the way, with alternatives and costs |
-| Decided | what the package settled, and what the alternative would have cost |
-| Scope | what it touches, and what was left out on purpose |
+| Decided | the ones already answered, and what the other option would have cost |
+| Scope | what the change touches, and what was left out |
 | Cost | what keeps working, and what a revert does not undo |
 | Success criteria | what closure can check by looking at behavior |
 | Outcome | what shipped, what changed on the way, what was left |
 | Surprises | a line per group whose diff did not match the drawing |
 
-The template is a floor. A section is added because the work has something to
-say there, never to fill the page.
+The template is a floor. Add a section when the work has something to say in
+it, not to fill the page.
 
 ## The drawing
 
-Written last and read first: understand the change, then draw it. Draw what
-moves and nothing it does not, and pick the notation by what moves.
+This is the Changes section. You write it last, once you understand the
+change, and whoever reads the package reads it first.
+
+Draw only what moves. The notation depends on what is changing. The four below
+draw the same change: the users table starts requiring email confirmation.
 
 <Tabs>
 <TabItem label="Tree">
 
-Files, modules, packages. Marked `+` added, `-` removed, `~` changed, with a
-comment where the name does not say enough.
+For files, modules and packages. `+` added, `-` removed, `~` changed, with a
+comment where the name is not enough.
 
 ```text
-+ docs/
-  + astro.config.mjs        the sidebar, and both locales
-  + src/content/docs/
-    + en/index.mdx          the home
-    + pt/index.mdx          its twin
-~ .gitignore                docs/dist and docs/.astro
-- scripts/build-docs.sh     nothing replaces it
++ src/mail/verification.ts     the email and the token
+~ src/models/user.ts           the new field, and isConfirmed()
+~ src/routes/signup.ts         sends the email after creating
+- src/routes/activate.ts       /verify takes its place
 ```
 
 </TabItem>
 <TabItem label="Table">
 
-A collection, a table, a field, a state. One row per thing that moves, and
+For a collection, a table, a field, a state. One row per thing that moves, and
 what it becomes.
 
-| Key | Today | After |
+```markdown
+| Column | Today | After |
 |---|---|---|
-| `opened` | absent | the day the package opened |
-| `shipped` | absent | the release its work shipped in, at closure |
-| `groups` | said in the heading | a count, read back while the package runs |
+| `email` | text, unique | unchanged |
+| `verified_at` | does not exist | a date, null until confirmed |
+| `status` | `active` or `blocked` | gains `pending`, the new default |
+```
 
 </TabItem>
 <TabItem label="Sequence">
 
-A route, a stream, an order in time. Who says what to whom, and in which
-order.
+For a route, a stream, an order in time. Who calls whom, and in what order.
 
 ```text
-you              run                         the agent
- |  take it to the end
- |--------------->|
- |                |  brief: project file, package, one group
- |                |------------------------------>|
- |                |  FILES, VALIDATION, FOR NEXT GROUP, BLOCKED
- |                |<------------------------------|
- |                |  validate again, read the diff, check the items
- |  the group as a table, and its commit
- |<---------------|
+user               api                mail queue
+   |  POST /signup  |                     |
+   |--------------->|                     |
+   |                |  creates with verified_at null
+   |                |-------------------->|
+   |  GET /verify?token=...               |
+   |--------------->|                     |
+   |                |  writes verified_at, status becomes active
 ```
 
 </TabItem>
 <TabItem label="Flow">
 
-A service, a deploy, a routing. What runs, in what order, and where it stops.
+For a service, a deploy, a routing. What runs, and where it stops.
 
 ```text
-push to main
-     |
-     v
-  npm run check ---> fails ---> nothing is published
-     |
-     v
-  tag the number package.json carries
-     |
-     v
-  npm publish ---> that number is the release
+login
+  |
+  v
+verified_at null? ---> yes ---> 403, and the email is sent again
+  |
+  no
+  |
+  v
+session created
 ```
 
 </TabItem>
 </Tabs>
 
-Most changes move two of these. The tree and the table are preferred because
-they read in a terminal, on a forge and in an editor alike, with nothing
-installed. Under the drawing goes only the prose the drawing cannot carry, and
-that is why this shape and not the other one.
+Most changes use two of these. Prefer the tree and the table: they read in a
+terminal, on a forge and in an editor with nothing installed.
 
-Where nothing structural moves there is no drawing, and probably no package.
+Under the drawing goes only what it does not show, which is why this shape and
+not another one. Do not describe the drawing in prose.
 
-The drawing is not decoration. While the package runs, each group's diff is
-read against it, and where the two disagree a line goes under Surprises.
+If nothing structural moves, there is no drawing. And there probably did not
+need to be a package.
 
-## Decisions
+While the package runs, each group's diff is compared to this drawing. When the
+two disagree, a line goes under Surprises.
 
-An open decision is the question in bold, the alternatives and their costs in
-a table, and the recommendation in prose under it. It says it is blocking when
-no task can start without the answer, and the groups it holds say so too.
+## The decisions
 
-An answered decision moves to Decided and is not deleted. The package keeps
-what was chosen and what the alternative would have cost, which is the record
-nobody has to reconstruct later.
+An open decision goes under Open decisions: the question in bold, the
+alternatives and their costs in a table, and the recommendation in prose below
+it. If no task can start without the answer, say it is blocking, and mark the
+groups it holds.
+
+An answered decision moves to Decided, and is not deleted. What was chosen and
+what the other option would have cost stay on the record, so nobody has to
+reconstruct it later.
 
 ## At closure
 
 Outcome is written then: what shipped, what changed on the way, and what was
-left for later. A package that will not ship says that here instead, with what
-was built and left behind, and what would have to be true for the work to come
-back.
+left for later. If the package was dropped, that is said here too, with what
+was built and what would have to be true for the work to come back.
 
-Surprises is deleted where nothing was written under it. Where lines stand,
-they stay as part of the record.
+Surprises is deleted if nobody wrote anything under it. If there are lines,
+they stay.

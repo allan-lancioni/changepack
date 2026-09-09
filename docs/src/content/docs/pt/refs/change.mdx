@@ -8,142 +8,147 @@ sidebar:
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-Por que a mudança existe, e o que vai ser verdade quando ela fechar. Ele é
-escrito quando o pacote abre, lido antes de cada grupo, e terminado no
-fechamento. É nele que mora o porquê, e é por isso que o corpo de um commit
-nunca carrega nenhum: o porquê é do pacote, e o pacote fica arquivado.
+O `change.md` responde duas perguntas: por que essa mudança existe, e o que vai
+ser verdade quando ela terminar.
+
+Ele é escrito na abertura do pacote, relido antes de cada grupo e completado no
+fechamento. Como o raciocínio fica aqui, a mensagem de commit não precisa
+repetir ele: quem quiser saber por que algo foi feito assim abre o pacote
+arquivado.
 
 ## O frontmatter
 
-| Chave | Guarda |
+Sete chaves. Chave sem valor é omitida, nunca escrita vazia.
+
+| Chave | O que é |
 |---|---|
-| `title` | o pacote, nomeado pelo resultado |
-| `description` | uma linha, para que uma lista de pacotes arquivados se leia sem abrir nenhum |
+| `title` | o nome do pacote, pelo resultado que ele entrega |
+| `description` | uma linha, para a lista de arquivados se ler sem abrir nada |
 | `changepack` | a versão que planejou |
 | `opened` | o dia em que abriu |
-| `opened-by` | a identidade git que assina o commit de abertura, nome e email |
-| `issue` | de onde o trabalho veio, omitida quando não veio de lugar nenhum |
+| `opened-by` | quem abriu: nome e email do git, os mesmos do commit de abertura |
+| `issue` | de onde o trabalho veio, quando veio de algum lugar |
 | `shipped` | a versão em que saiu, preenchida no fechamento |
-
-Uma chave sem valor é omitida em vez de escrita vazia.
 
 ## As seções
 
-| Seção | Guarda |
+O corpo tem dez seções, e nem toda mudança usa todas.
+
+| Seção | O que vai nela |
 |---|---|
 | Context | o que é verdade hoje, e por que isso é um problema |
-| Goal | o comportamento que deve ser verdade no fechamento, escrito como contrato |
+| Goal | o comportamento que tem que existir no fechamento |
 | Changes | [o desenho](#o-desenho) do que se move |
 | Open decisions | as perguntas no caminho, com alternativas e custos |
-| Decided | o que o pacote resolveu, e o que a alternativa teria custado |
-| Scope | no que ele mexe, e o que ficou de fora de propósito |
+| Decided | as que já foram respondidas, e o que a outra opção custaria |
+| Scope | no que a mudança mexe, e o que ficou de fora |
 | Cost | o que continua funcionando, e o que um revert não desfaz |
-| Success criteria | o que o fechamento consegue conferir olhando comportamento |
+| Success criteria | o que dá para conferir no fechamento olhando o comportamento |
 | Outcome | o que saiu, o que mudou no caminho, o que ficou |
 | Surprises | uma linha por grupo cujo diff não bateu com o desenho |
 
-O template é um piso. Uma seção entra porque o trabalho tem algo a dizer ali,
-nunca para preencher a página.
+O template é um piso. Acrescente uma seção quando o trabalho tem o que dizer
+nela, e não para preencher a página.
 
 ## O desenho
 
-Escrito por último e lido primeiro: entenda a mudança, depois desenhe. Desenhe
-o que se move e nada do que não se move, e escolha a notação pelo que se move.
+É a seção Changes. Você escreve ela por último, depois de entender a mudança, e
+quem lê o pacote lê ela primeiro.
+
+Desenhe só o que se move. A notação depende do que está mudando. As quatro
+abaixo desenham a mesma mudança: a tabela de usuários passa a exigir
+confirmação de email.
 
 <Tabs>
 <TabItem label="Árvore">
 
-Arquivos, módulos, pacotes. Marcada `+` entrou, `-` saiu, `~` mudou, com um
-comentário onde o nome não diz o suficiente.
+Para arquivos, módulos e pacotes. `+` entrou, `-` saiu, `~` mudou, com um
+comentário onde o nome não basta.
 
 ```text
-+ docs/
-  + astro.config.mjs        o sidebar, e os dois idiomas
-  + src/content/docs/
-    + en/index.mdx          a home
-    + pt/index.mdx          a gêmea dela
-~ .gitignore                docs/dist e docs/.astro
-- scripts/build-docs.sh     nada entra no lugar
++ src/mail/verificacao.ts      o email e o token
+~ src/models/user.ts           o campo novo, e o metodo confirmado()
+~ src/routes/signup.ts         dispara o email depois de criar
+- src/routes/ativar.ts         o /verify entra no lugar
 ```
 
 </TabItem>
 <TabItem label="Tabela">
 
-Uma coleção, uma tabela, um campo, um estado. Uma linha por coisa que se move,
-e no que ela vira.
+Para uma coleção, uma tabela, um campo, um estado. Uma linha por coisa que se
+move, e no que ela vira.
 
-| Chave | Hoje | Depois |
+```markdown
+| Coluna | Hoje | Depois |
 |---|---|---|
-| `opened` | ausente | o dia em que o pacote abriu |
-| `shipped` | ausente | a versão em que o trabalho saiu, no fechamento |
-| `groups` | dito no título | uma contagem, lida enquanto o pacote roda |
+| `email` | texto, único | igual |
+| `verified_at` | não existe | data, nula até a confirmação |
+| `status` | `ativo` ou `bloqueado` | ganha `pendente`, que é o novo padrão |
+```
 
 </TabItem>
 <TabItem label="Sequência">
 
-Uma rota, um stream, uma ordem no tempo. Quem fala o quê com quem, e em que
-ordem.
+Para uma rota, um stream, uma ordem no tempo. Quem chama quem, e nessa ordem.
 
 ```text
-você             run                          o agente
- |  vai até o fim
- |--------------->|
- |                |  brief: arquivo do projeto, pacote, um grupo
- |                |------------------------------>|
- |                |  FILES, VALIDATION, FOR NEXT GROUP, BLOCKED
- |                |<------------------------------|
- |                |  valida de novo, lê o diff, marca os itens
- |  o grupo como tabela, e o commit dele
- |<---------------|
+usuário            api                fila de email
+   |  POST /signup  |                      |
+   |--------------->|                      |
+   |                |  cria com verified_at nulo
+   |                |--------------------->|
+   |  GET /verify?token=...                |
+   |--------------->|                      |
+   |                |  grava verified_at, status vira ativo
 ```
 
 </TabItem>
 <TabItem label="Fluxo">
 
-Um serviço, um deploy, um roteamento. O que roda, em que ordem, e onde para.
+Para um serviço, um deploy, um roteamento. O que roda, e onde para.
 
 ```text
-push na main
-     |
-     v
-  npm run check ---> falha ---> nada é publicado
-     |
-     v
-  tag com o número que o package.json carrega
-     |
-     v
-  npm publish ---> aquele número é a release
+login
+  |
+  v
+verified_at nulo? ---> sim ---> 403, e reenvia o email
+  |
+  não
+  |
+  v
+sessão criada
 ```
 
 </TabItem>
 </Tabs>
 
-A maioria das mudanças move duas dessas. A árvore e a tabela têm preferência
-porque se leem no terminal, na forge e no editor do mesmo jeito, sem instalar
-nada. Embaixo do desenho vai só a prosa que o desenho não carrega, que é por
-que essa forma e não a outra.
+A maioria das mudanças usa duas dessas. Prefira a árvore e a tabela: elas se
+leem no terminal, na forge e no editor sem instalar nada.
 
-Onde nada estrutural se move não existe desenho, e provavelmente não existe
+Embaixo do desenho vai só o que ele não mostra, que é por que essa forma e não
+outra. Não descreva o desenho em prosa.
+
+Se nada estrutural se move, não tem desenho. E provavelmente não precisava de
 pacote.
 
-O desenho não é enfeite. Enquanto o pacote roda, o diff de cada grupo é lido
-contra ele, e onde os dois discordam uma linha entra em Surprises.
+Durante a rodada, o diff de cada grupo é comparado com esse desenho. Quando os
+dois discordam, uma linha entra em Surprises.
 
 ## As decisões
 
-Uma decisão em aberto é a pergunta em negrito, as alternativas e seus custos
-numa tabela, e a recomendação em prosa embaixo. Ela diz que é bloqueante quando
-nenhuma task começa sem a resposta, e os grupos que ela segura dizem o mesmo.
+Uma decisão em aberto entra em Open decisions: a pergunta em negrito, as
+alternativas e seus custos numa tabela, e a recomendação em prosa embaixo. Se
+nenhuma task começa sem a resposta, diga que ela é bloqueante, e marque os
+grupos que ela segura.
 
-Uma decisão respondida vai para Decided e não é apagada. O pacote guarda o que
-foi escolhido e o que a alternativa teria custado, que é o registro que ninguém
-precisa reconstruir depois.
+Decisão respondida vai para Decided, e não é apagada. Fica registrado o que foi
+escolhido e o que a outra opção teria custado, para ninguém precisar
+reconstruir isso depois.
 
 ## No fechamento
 
-O Outcome é escrito ali: o que saiu, o que mudou no caminho, e o que ficou para
-depois. Um pacote que não vai sair diz isso no lugar, com o que foi construído
-e abandonado, e o que precisaria ser verdade para o trabalho voltar.
+O Outcome é escrito ali: o que saiu, o que mudou no caminho e o que ficou para
+depois. Se o pacote foi abandonado, é aqui que isso é dito, junto com o que foi
+construído e o que precisaria ser verdade para o trabalho voltar.
 
-O Surprises é apagado quando nada foi escrito embaixo dele. Onde existem
-linhas, elas ficam como parte do registro.
+O Surprises é apagado se ninguém escreveu nada nele. Se tem linhas, elas ficam.
