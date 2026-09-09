@@ -58,6 +58,7 @@ implementation and validation pass. Not at the commit, and not at the end of
 the group. A task is never left checked while its work is incomplete, so a
 stop in the middle of a task leaves that task unchecked.
 
-Where a package is run group by group, the conversation driving it is the only
-writer of this file. The agents implementing the groups never write anything
-under the changes path.
+The agents implementing the groups do not write the files under `changes/`.
+They change the code and report; what marks them is the conversation driving
+the work, whether that is run dispatching one agent per group or the session
+you are in.

@@ -59,6 +59,6 @@ implementação e a validação daquele item passam. Não no commit, e não no f
 grupo. Uma task nunca fica marcada com o trabalho dela incompleto, então uma
 parada no meio de uma task deixa aquela task desmarcada.
 
-Onde um pacote é rodado grupo a grupo, a conversa que conduz é a única que
-escreve nesse arquivo. Os agentes que implementam os grupos nunca escrevem nada
-dentro do caminho das mudanças.
+Os agentes que implementam os grupos não escrevem nos arquivos de `changes/`.
+Eles mudam o código e relatam; quem marca é a conversa que conduz, seja ela a
+run despachando um agente por grupo, seja a sessão em que você mesmo está.
