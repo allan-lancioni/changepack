@@ -2,6 +2,25 @@
 title: changepack
 description: A folder your agent writes, you approve, and it runs. Spec-driven
   development, without writing specs for a system you already built.
+head:
+  - tag: script
+    content: |
+      // Starlight opens every directory that has contents. These three carry
+      // theirs so the tree is honest about what is in them, and start closed
+      // so the page is not a wall of filenames.
+      addEventListener('DOMContentLoaded', function () {
+        var shut = ['changepack/', 'settings-screen-refactor/', 'archive/'];
+        var all = document.querySelectorAll('starlight-file-tree summary');
+        for (var i = 0; i < all.length; i++) {
+          // The name only, never the comment beside it.
+          var label = all[i].querySelector('.tree-entry > span');
+          var name = label ? label.textContent.trim() : '';
+          for (var j = 0; j < shut.length; j++) {
+            var s = shut[j];
+            if (name.slice(-s.length) === s) all[i].parentElement.open = false;
+          }
+        }
+      });
 template: splash
 hero:
   tagline: Change packages for coding agents. Spec-driven development, without
@@ -24,10 +43,20 @@ import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/c
 
 ## What a change is
 
-A folder in your repository, next to the code it changes.
+A folder in your repository, next to the code it changes. The rest of the
+tree is all of changepack: a folder of markdown under `.claude/skills/`, and
+one file at the root that is yours.
 
 <FileTree>
 
+- .claude/
+  - skills/
+    - changepack/ the only thing installed, and it is markdown
+      - SKILL.md the gate, the routes, and direct work
+      - references/ one file per route
+      - templates/ what a new change is copied from
+      - check-update.mjs asks the registry for a newer version
+    - … your other skills
 - changes/
   - active/
     - stripe-integration/
@@ -35,12 +64,18 @@ A folder in your repository, next to the code it changes.
       - tasks.md the task groups and their validations, filled in as you go
       - spec-delta.md the rules this change alters, when it alters any
     - settings-screen-refactor/
+      - change.md
+      - tasks.md
+      - spec-delta.md
   - archive/
+    - 2026-08-14-payment-retries/
+- CHANGEPACK.md the one file you own: where changes live, what validates
 
 </FileTree>
 
 It opens when the work starts. It is archived, with the date, when the work is
-done.
+done. That is the whole of it: no dependency, no binary, no state outside the
+repository.
 
 ## Install
 

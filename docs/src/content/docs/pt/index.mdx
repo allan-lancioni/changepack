@@ -3,6 +3,25 @@ title: changepack
 description: Uma pasta que o seu agente escreve, você aprova e ele roda.
   Spec-driven development, sem escrever spec para um sistema que você já
   construiu.
+head:
+  - tag: script
+    content: |
+      // Starlight opens every directory that has contents. These three carry
+      // theirs so the tree is honest about what is in them, and start closed
+      // so the page is not a wall of filenames.
+      addEventListener('DOMContentLoaded', function () {
+        var shut = ['changepack/', 'refatorar-tela-de-configuracoes/', 'archive/'];
+        var all = document.querySelectorAll('starlight-file-tree summary');
+        for (var i = 0; i < all.length; i++) {
+          // The name only, never the comment beside it.
+          var label = all[i].querySelector('.tree-entry > span');
+          var name = label ? label.textContent.trim() : '';
+          for (var j = 0; j < shut.length; j++) {
+            var s = shut[j];
+            if (name.slice(-s.length) === s) all[i].parentElement.open = false;
+          }
+        }
+      });
 template: splash
 hero:
   tagline: Change packages para agentes de código. Spec-driven development,
@@ -25,10 +44,20 @@ import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/c
 
 ## O que é uma change
 
-Uma pasta no seu repositório, ao lado do código que ela muda.
+Uma pasta no seu repositório, ao lado do código que ela muda. O resto da
+árvore é o changepack inteiro: uma pasta de markdown em `.claude/skills/` e um
+arquivo na raiz que é seu.
 
 <FileTree>
 
+- .claude/
+  - skills/
+    - changepack/ a única coisa instalada, e é markdown
+      - SKILL.md o gate, as rotas e o trabalho direto
+      - references/ um arquivo por rota
+      - templates/ de onde uma change nova é copiada
+      - check-update.mjs pergunta ao registro se existe versão nova
+    - … suas outras skills
 - changes/
   - active/
     - stripe-integration/
@@ -36,12 +65,18 @@ Uma pasta no seu repositório, ao lado do código que ela muda.
       - tasks.md os grupos de tasks e suas validações, em tempo real
       - spec-delta.md as regras que essa change altera, quando altera
     - refatorar-tela-de-configuracoes/
+      - change.md
+      - tasks.md
+      - spec-delta.md
   - archive/
+    - 2026-08-14-retry-de-pagamento/
+- CHANGEPACK.md o único arquivo seu: onde as changes moram, o que valida
 
 </FileTree>
 
 Ela abre quando o trabalho começa. É arquivada, com a data, quando o trabalho
-termina.
+termina. É só isso: nenhuma dependência, nenhum binário, nenhum estado fora do
+repositório.
 
 ## Instalação
 
