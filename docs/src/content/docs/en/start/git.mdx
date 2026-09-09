@@ -1,8 +1,8 @@
 ---
 title: Git
 description: >-
-  The three commits a package makes, the convention they follow, and what
-  running without git costs.
+  The three commits a package makes, the convention they follow, and how to
+  take one back.
 sidebar:
   order: 2
 ---
@@ -14,36 +14,8 @@ a folder, and a folder can be copied anywhere; what turns it into history is
 that three moments in its life are commits, and that every one of those
 commits says which package produced it.
 
-## Without git
-
-Nothing checks for a repository and nothing refuses to run. The installer
-says one line and carries on:
-
-```text
-  This is not a git repository. changepack expects to be committed
-  alongside the project it governs.
-```
-
-What you keep is the planning. What you lose is the trail:
-
-| | Without git |
-|---|---|
-| The gate, the decisions, the task groups | unchanged. They are a conversation and a folder |
-| `change.md`, `tasks.md`, `spec-delta.md` | unchanged. Markdown, readable by anyone |
-| The archive move | still happens, as a rename nothing recorded |
-| The three commit points | nothing lands, so nothing marks where a group ended |
-| `opened-by` | no identity to read, so the key is omitted |
-| The package's own history | gone. The trailers had nowhere to go |
-| The convention `init` proposes | nothing to read it from, so it asks |
-
-It runs. It is half of what it is for. Every route ends at a commit, and a
-run that cannot commit ends by reporting and stopping there.
-
-<Aside>
-Use it without git and the packages are still worth writing. Use it with git
-and a package answers, months later, exactly which commits it produced and in
-what order.
-</Aside>
+Nothing here checks for a repository, so it runs without one.
+[What that costs](#without-git) is at the bottom of this page.
 
 ## The convention
 
@@ -125,7 +97,7 @@ Between the two `chore` messages, the type says what the commit did to the
 product. `fix:` is for what shipped wrong, in a release someone already has.
 Something that broke on the way to closure and was repaired before it ever
 shipped is still the feature landing, so it stays `feat:`. The package is
-named by the trailer, never by the type.
+named by [the trailer](#the-trailers), never by the type.
 
 ## The message
 
@@ -139,17 +111,21 @@ behaves differently, never the reasoning: the reasoning is in
 than deleted. A body that will not fit is telling you the work needed a
 package.
 
-Under both, on every commit a package produces, two trailers:
+## The trailers
+
+Under the body, on every commit a package produces, two lines:
 
 ```text
 Change: the-site-stands-up
 Changepack: 1.0.0
 ```
 
+`Change:` is the package's slug, the name of its folder. `Changepack:` is the
+version of the procedure that produced the commit, so a message from a year
+ago says which rules it was written under.
+
 Both or neither, on all three moments. Direct work, the pass that lands
-without a package, carries neither. At closure `Changepack:` still names the
-old version where the package is the one shipping the new one, because that
-is the version that ran.
+without a package, carries neither: nothing produced it but the request.
 
 ## Reading a package back
 
@@ -166,3 +142,69 @@ commit missing from it, being the one about to be made.
 Because a package is a folder in the tree, it travels with the branch it was
 opened on. It merges, rebases, and is thrown away like anything else you have
 in there.
+
+## Taking a change back
+
+Two different things get called undoing, and only one of them is a revert.
+
+**A package that will not ship is closed, never deleted.** Say it is not
+going to happen and it closes on the spot: no audit, and the Outcome says
+what happened, what was built and left behind, and what would have to be true
+for the work to come back. It archives at the same dated path as any other
+closure, on a commit of its own. An attempt that was abandoned is worth more
+in the archive than a clean tree is worth anywhere.
+
+Closing it ends the attempt. It does not revert anything, so whatever its
+groups already landed is still in the tree.
+
+**Reverting what a package landed is direct work**, with no route of its own
+and nothing to it but git. The log hands you the commits:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --format=%H
+```
+
+Revert them in the order that prints, newest first, which is the order they
+undo in. Because every group committed alone, one group comes back out
+without touching the rest.
+
+Ask for it in plain language and it is an ordinary pass: the agent reverts,
+validates and commits, carrying no trailers, because a revert is not the
+package.
+
+**The archived folder stays where it is.** A revert is a new commit rather
+than an erasure, and `changes/archive/<date>-<slug>/` is the record that the
+work happened and was taken back. It is also the only thing that says why it
+was attempted, which is what makes the reverted commits readable a year
+later. Deleting it is a delete and a commit you make by hand.
+
+## Without git
+
+Nothing checks for a repository and nothing refuses to run. The installer
+says one line and carries on:
+
+```text
+  This is not a git repository. changepack expects to be committed
+  alongside the project it governs.
+```
+
+What you keep is the planning. What you lose is the trail:
+
+| | Without git |
+|---|---|
+| The gate, the decisions, the task groups | unchanged. They are a conversation and a folder |
+| `change.md`, `tasks.md`, `spec-delta.md` | unchanged. Markdown, readable by anyone |
+| The archive move | still happens, as a rename nothing recorded |
+| The three commit points | nothing lands, so nothing marks where a group ended |
+| `opened-by` | no identity to read, so the key is omitted |
+| [The trailers](#the-trailers) | nowhere to go, and the package's own history with them |
+| The convention `init` proposes | nothing to read it from, so it asks |
+
+It runs. It is half of what it is for. Every route ends at a commit, and a
+run that cannot commit ends by reporting and stopping there.
+
+<Aside>
+Use it without git and the packages are still worth writing. Use it with git
+and a package answers, months later, exactly which commits it produced, in
+what order, and what it would take to undo them.
+</Aside>

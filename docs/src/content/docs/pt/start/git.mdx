@@ -1,8 +1,8 @@
 ---
 title: Git
 description: >-
-  Os três commits que uma change faz, a convenção que eles seguem e o que
-  custa rodar sem git.
+  Os três commits que uma change faz, a convenção que eles seguem e como
+  desfazer uma.
 sidebar:
   order: 2
 ---
@@ -14,36 +14,8 @@ O changepack escreve documentos. O git é onde eles viram registro. Uma change
 histórico é que três momentos da vida dela são commits, e que todo commit diz
 qual change o produziu.
 
-## Sem git
-
-Nada verifica se existe repositório e nada se recusa a rodar. O instalador
-diz uma linha e segue:
-
-```text
-  This is not a git repository. changepack expects to be committed
-  alongside the project it governs.
-```
-
-O que você mantém é o planejamento. O que você perde é o rastro:
-
-| | Sem git |
-|---|---|
-| O gate, as decisões, os grupos de tasks | igual. São uma conversa e uma pasta |
-| `change.md`, `tasks.md`, `spec-delta.md` | igual. Markdown, que qualquer um lê |
-| A ida para o arquivo | continua acontecendo, como um rename que ninguém registrou |
-| Os três pontos de commit | nada aterrissa, então nada marca onde um grupo terminou |
-| `opened-by` | não há identidade para ler, então a chave é omitida |
-| O histórico da própria change | some. Os trailers não tinham para onde ir |
-| A convenção que o `init` propõe | não há de onde ler, então ele pergunta |
-
-Roda. E é metade do que ele existe para ser. Toda rota termina num commit, e
-uma rodada que não pode comitar termina reportando e parando ali.
-
-<Aside>
-Use sem git e as changes ainda valem o que foram escritas. Use com git e uma
-change responde, meses depois, exatamente quais commits ela produziu e em que
-ordem.
-</Aside>
+Nada aqui verifica se existe repositório, então roda sem um.
+[Quanto isso custa](#sem-git) está no fim desta página.
 
 ## A convenção
 
@@ -125,7 +97,7 @@ Entre as duas mensagens `chore`, o tipo diz o que o commit fez com o produto.
 `fix:` é para o que saiu errado, numa release que alguém já tem. Algo que
 quebrou no caminho até o fechamento e foi consertado antes de sair continua
 sendo a feature aterrissando, então segue `feat:`. A change é nomeada pelo
-trailer, nunca pelo tipo.
+[trailer](#os-trailers), nunca pelo tipo.
 
 ## A mensagem
 
@@ -139,17 +111,21 @@ comporta diferente, nunca o porquê: o porquê está no
 morto em vez de ser apagado. Um corpo que não cabe está te dizendo que o
 trabalho precisava de uma change.
 
-Embaixo dos dois, em todo commit que uma change produz, dois trailers:
+## Os trailers
+
+Embaixo do corpo, em todo commit que uma change produz, duas linhas:
 
 ```text
 Change: the-site-stands-up
 Changepack: 1.0.0
 ```
 
+`Change:` é o slug da change, o nome da pasta dela. `Changepack:` é a versão
+do procedimento que produziu o commit, então uma mensagem de um ano atrás diz
+sob quais regras ela foi escrita.
+
 Os dois ou nenhum, nos três momentos. Trabalho direto, a passada que
-aterrissa sem change, não leva nenhum. No fechamento o `Changepack:` ainda
-nomeia a versão antiga quando a change é justamente a que entrega a nova,
-porque foi essa a versão que rodou.
+aterrissa sem change, não leva nenhum: nada o produziu além do pedido.
 
 ## Lendo uma change de volta
 
@@ -166,3 +142,68 @@ commit de arquivo nela, que é o que está prestes a ser feito.
 Como uma change é uma pasta na árvore, ela acompanha a branch em que foi
 aberta. Faz merge, faz rebase e é jogada fora como qualquer outra coisa que
 você tem ali.
+
+## Desfazendo uma change
+
+Duas coisas diferentes são chamadas de desfazer, e só uma delas é um revert.
+
+**Uma change que não vai sair é fechada, nunca apagada.** Diga que não vai
+acontecer e ela fecha na hora: sem auditoria, e o Outcome diz o que
+aconteceu, o que foi construído e ficou para trás, e o que precisaria ser
+verdade para o trabalho voltar. Ela vai para o mesmo caminho datado de
+qualquer outro fechamento, num commit próprio. Uma tentativa abandonada vale
+mais no arquivo do que uma árvore limpa vale em qualquer lugar.
+
+Fechar encerra a tentativa. Não reverte nada, então o que os grupos dela já
+aterrissaram continua na árvore.
+
+**Reverter o que uma change entregou é trabalho direto**, sem rota própria e
+sem nada além do git. O log te entrega os commits:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --format=%H
+```
+
+Reverta na ordem em que isso imprime, do mais novo para o mais antigo, que é
+a ordem em que eles desfazem. Como cada grupo comitou sozinho, um grupo sai
+sem encostar no resto.
+
+Peça em linguagem natural e é uma passada comum: o agente reverte, valida e
+comita, sem trailer nenhum, porque um revert não é a change.
+
+**A pasta arquivada fica onde está.** Um revert é um commit novo, não um
+apagamento, e `changes/archive/<data>-<slug>/` é o registro de que o trabalho
+aconteceu e foi desfeito. É também a única coisa que diz por que ele foi
+tentado, que é o que deixa os commits revertidos legíveis um ano depois.
+Apagar essa pasta é um delete e um commit que você faz na mão.
+
+## Sem git
+
+Nada verifica se existe repositório e nada se recusa a rodar. O instalador
+diz uma linha e segue:
+
+```text
+  This is not a git repository. changepack expects to be committed
+  alongside the project it governs.
+```
+
+O que você mantém é o planejamento. O que você perde é o rastro:
+
+| | Sem git |
+|---|---|
+| O gate, as decisões, os grupos de tasks | igual. São uma conversa e uma pasta |
+| `change.md`, `tasks.md`, `spec-delta.md` | igual. Markdown, que qualquer um lê |
+| A ida para o arquivo | continua acontecendo, como um rename que ninguém registrou |
+| Os três pontos de commit | nada aterrissa, então nada marca onde um grupo terminou |
+| `opened-by` | não há identidade para ler, então a chave é omitida |
+| [Os trailers](#os-trailers) | não têm para onde ir, e o histórico da própria change vai junto |
+| A convenção que o `init` propõe | não há de onde ler, então ele pergunta |
+
+Roda. E é metade do que ele existe para ser. Toda rota termina num commit, e
+uma rodada que não pode comitar termina reportando e parando ali.
+
+<Aside>
+Use sem git e as changes ainda valem o que foram escritas. Use com git e uma
+change responde, meses depois, exatamente quais commits ela produziu, em que
+ordem, e o que custaria desfazer.
+</Aside>

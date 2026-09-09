@@ -6,10 +6,25 @@ sidebar:
   order: 3
 ---
 
-import { FileTree } from '@astrojs/starlight/components';
+import { Aside, FileTree } from '@astrojs/starlight/components';
 
 A versão que um repositório roda é a que está carimbada no `CHANGEPACK.md`
 dele. Ela anda quando você decide que anda, e nunca sozinha.
+
+## O time roda um procedimento só
+
+A skill é commitada, em `.claude/skills/changepack/`, junto do código que ela
+rege. Ninguém instala e ninguém escolhe versão: um clone já chega com o
+procedimento dentro, e todo agente aberto naquele repositório lê o mesmo.
+
+É para isso que a versão existe. Ela não registra quanto texto se moveu, ela
+responde qual procedimento este repositório roda, preso a um valor só para
+todo mundo que trabalha ali. Uma pessoa atualiza, comita, e no próximo pull o
+time inteiro está na nova, tendo lido a mesma entrada do changelog.
+
+Então não existe adoção para conduzir. Nada para alguém novo instalar, e nada
+para ler antes: a pessoa clona, pede alguma coisa em linguagem natural, e o
+procedimento já está lá.
 
 ## O que os números significam
 
@@ -46,8 +61,11 @@ mão, da raiz do repositório:
 node .claude/skills/changepack/check-update.mjs
 ```
 
-`updates: off` no `CHANGEPACK.md` desliga a checagem, e a chamada de rede
-junto.
+<Aside type="tip" title="Desligando a checagem">
+`updates: off` no `CHANGEPACK.md` encerra a checagem de vez, e a chamada de
+rede junto. Você perde a oferta, não a rota: pedir a atualização com todas as
+letras continua funcionando, e o changelog continua dizendo quanto ela custa.
+</Aside>
 
 ## Ela pergunta uma vez
 
@@ -64,7 +82,7 @@ perguntado duas vezes sobre a mesma versão, e a resposta é commitada, porque a
 versão que um projeto roda pertence ao projeto e não a quem por acaso fechou a
 change.
 
-## Ele se atualiza sozinho
+## A atualização automática
 
 Você não migra nada. O changelog é a entrada: as entradas entre a sua versão e
 a última dizem o que muda e quanto cada uma custa, o agente lê e te conta,
@@ -84,6 +102,16 @@ executar.
 
 Nada é escrito antes de você confirmar. O procedimento que chega vale a partir
 da próxima sessão: a que o instalou carregou o antigo e termina nele.
+
+<Aside type="caution" title="O diretório é substituído, não mesclado">
+Qualquer arquivo que você tenha mudado dentro de `.claude/skills/changepack/`
+é descartado em vez de mantido, e um arquivo que saiu da release sai da sua
+instalação junto. Um repositório que pretende editar o próprio procedimento
+põe `updates: off` antes: isso encerra a oferta, e depois disso a única coisa
+capaz de substituir o diretório é você digitando o comando abaixo. Editar ali
+dentro também significa que você não está mais numa versão publicada, e que o
+changelog não descreve mais o que você roda.
+</Aside>
 
 ## O comando, se você quiser
 

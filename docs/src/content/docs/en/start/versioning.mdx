@@ -6,10 +6,26 @@ sidebar:
   order: 3
 ---
 
-import { FileTree } from '@astrojs/starlight/components';
+import { Aside, FileTree } from '@astrojs/starlight/components';
 
 The version a repository runs is the one stamped in its `CHANGEPACK.md`. It
 moves when you decide it moves, and never on its own.
+
+## The team runs one procedure
+
+The skill is committed, at `.claude/skills/changepack/`, next to the code it
+governs. Nobody installs it and nobody picks a version: a clone arrives with
+the procedure already in it, and every agent opened in that repository reads
+the same one.
+
+That is what the version is for. It is not a record of how much text moved,
+it is the answer to which procedure this repository runs, held to one value
+across everyone working in it. One person updates, commits, and at the next
+pull the whole team is on the new one, having read the same changelog entry.
+
+So there is no adoption to run. Nothing for a new person to install, and
+nothing for them to read first: they clone, they ask for something in plain
+language, and the procedure is already there.
 
 ## What the numbers mean
 
@@ -46,8 +62,11 @@ to date all look the same. You can run it yourself from the repository root:
 node .claude/skills/changepack/check-update.mjs
 ```
 
-`updates: off` in `CHANGEPACK.md` stops the check, and the network call with
-it.
+<Aside type="tip" title="Turning the check off">
+`updates: off` in `CHANGEPACK.md` ends the check for good, and the network
+call with it. You lose the offer, not the route: asking for an update in so
+many words still runs, and the changelog still says what one costs.
+</Aside>
 
 ## It asks once
 
@@ -65,7 +84,7 @@ twice about the same version, and the answer is committed, because the version
 a project runs belongs to the project and not to whoever happened to close the
 package.
 
-## It updates itself
+## The automatic update
 
 You migrate nothing. The changelog is the input: the entries between your
 version and the latest say what changes and what each one costs, the agent
@@ -86,6 +105,16 @@ route, and you approve it rather than perform it.
 Nothing is written before you confirm. The procedure that lands applies from
 the next session: the one that installed it loaded the old one and finishes on
 it.
+
+<Aside type="caution" title="The directory is replaced, not merged">
+Any file you changed under `.claude/skills/changepack/` is discarded rather
+than kept, and a file that left the release leaves your installation with it.
+A repository that means to edit the procedure itself sets `updates: off`
+first: that ends the offer, and after it the only thing that can replace the
+directory is you typing the command below. Editing in place also means you
+are no longer on a released version, and the changelog no longer describes
+what you run.
+</Aside>
 
 ## The command, if you want it
 
