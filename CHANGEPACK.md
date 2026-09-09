@@ -2,7 +2,7 @@
 
 How change packages work in this repository.
 
-- **changepack:** 1.0.1
+- **changepack:** 1.0.0
 - **changes:** changes/
 - **normative:** `skill/`. The procedure is the product here, so a change that
   alters what a route obliges carries a spec delta.
@@ -22,6 +22,13 @@ How change packages work in this repository.
   itself against.
 
 ## House rules
+
+**The version is released, never bumped.** A push to `main` tags and publishes
+whatever number `package.json` carries, so that number is the release itself
+and not a record of one. Ordinary work leaves it alone, and leaves the
+`CHANGELOG.md` entry alone with it. Releasing is a decision: when it is made,
+one commit writes the entry and stamps `package.json`, `skill/SKILL.md` and
+this file together, which is the agreement `npm run check` already enforces.
 
 **No dashes in prose.** Not the em dash, not the en dash, not a hyphen standing
 in for one. A comma, a colon, a full stop or a new sentence says it. This was
