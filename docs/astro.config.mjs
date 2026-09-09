@@ -30,8 +30,8 @@ export default defineConfig({
       // order anywhere here.
       sidebar: [
         {
-          label: 'Start',
-          translations: { 'pt-BR': 'Começo' },
+          label: 'Start here',
+          translations: { 'pt-BR': 'Comece aqui' },
           items: [{ autogenerate: { directory: 'start' } }],
         },
         {
