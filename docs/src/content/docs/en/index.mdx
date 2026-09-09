@@ -10,37 +10,33 @@ hero:
     - text: Install it
       link: /changepack/en/start/install/
       icon: right-arrow
-    - text: See a package end to end
+    - text: See a change end to end
       link: /changepack/en/start/a-package-end-to-end/
       icon: document
       variant: secondary
-    - text: On GitHub
+    - text: GitHub
       link: https://github.com/allan-lancioni/changepack
       icon: external
       variant: minimal
 ---
 
-import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
-## What a change package is
+## What a change is
 
-A folder in your repository, in git, next to the code it changes. Your agent
-writes it, you approve it, and then it runs.
+A folder in your repository, next to the code it changes.
 
 ```text
 changes/active/stripe-integration/
-  change.md        the problem, the goal, the decisions, what moves
-  tasks.md         the task groups, and what proves each one landed
-  spec-delta.md    the rules this change makes normative, when it makes any
+  change.md        the problem, the goal, the decisions, and a drawing of
+                   the state you want
+  tasks.md         the task groups and their validations, filled in as the
+                   work happens
+  spec-delta.md    the rules this change alters, when it alters any
 ```
 
-It opens when the work starts and it is archived, dated, when the work is done.
-You never write those files yourself. The agent proposes them out of the
-conversation you were already having, and nothing lands until you say yes.
-
-A change package is bigger than a regular task and smaller than an epic. An
-epic is several of them, often open at once. There is no database and no
-service behind any of it, so any agent that can read a folder can run one.
+It opens when the work starts. It is archived, with the date, when the work is
+done.
 
 ## Install
 
@@ -48,76 +44,119 @@ service behind any of it, so any agent that can read a folder can run one.
 npx changepack
 ```
 
-It copies markdown into `.claude/skills/` and writes one file you own. Your
-dependency tree does not move, and nothing runs in your repository afterwards.
+Markdown copied into `.claude/skills/`, plus one file that is yours. Nothing is
+added to your dependencies, and nothing keeps running afterwards.
 
-It ships as a Claude Code skill today. The procedure is markdown and the unit
-is a folder in your repository, so neither is bound to one agent.
+Today it ships as a Claude Code skill. The procedure is markdown and the unit
+is a folder, so neither one is tied to a single agent.
 
-## There is nothing to learn
+## How you use it
 
-No command to memorise, no flag, no template to fill. There is no interface to
-learn because there is no interface: the whole product is a conversation and a
-folder. You talk the way you already talk, and the procedure classifies what
-you said and takes the route that fits.
+<Steps>
 
-| You say | It does |
-|---|---|
-| "implement the Stripe integration" | Classifies it as too big for one pass, asks before opening anything, writes the package, commits it, and stops before implementing |
-| "let's refactor the settings screen on another branch" | The same, on the branch you named. The package is a folder in the repository, so it follows the branch it was opened on |
-| "let's migrate the system" | Splits it. Several packages open at once, each one a unit that can be run, reviewed and closed on its own |
-| "take the payments change to the end" | Dispatches a fresh agent per task group, validates every one itself, and commits task group by task group |
-| "take task group 3" | Implements that task group, and checks each item as its own validation passes |
-| "center a div" | Tells you it does not need a package, and centers the div |
+1. Open a Claude Code session, as usual.
+
+2. Talk the change through with the agent, for as long as you need.
+
+3. When it is settled, say "open a change".
+
+4. The agent writes the files. You read them.
+
+5. Say "go ahead". Or open a new session and say "take change X".
+
+6. The agent works, and commits task group by task group. It stops whenever a
+   decision is yours.
+
+7. You approve what landed. The change closes and is archived.
+
+</Steps>
+
+You write none of those files, and you memorise no commands. Plain language,
+start to finish. Your job is deciding and planning. The agent does the rest.
+
+No framework. It plugs into a repository that already exists, and it comes back
+out just as easily.
 
 ## The gate
+
+Too big and the agent proposes more than one change. Too small and it just does
+the work, with no change at all.
+
+```text
+one pass can land it?      yes  ->  it does the work and tells you
+                           no   ->  it proposes a change
+too big for one change?    yes  ->  it proposes several
+```
 
 > Never open a change package because the work touches behavior.
 > Open one because a single pass cannot land it.
 
+## You say, it does
+
+| You say | It does |
+|---|---|
+| "implement the Stripe integration" | Too big for one pass. It asks, writes the change, commits it, and stops before implementing |
+| "let's refactor the settings screen on another branch" | The same, on the branch you named. A change is a folder, so it follows the branch |
+| "let's migrate the system" | Splits it. Several changes open at once, each one run, reviewed and closed on its own |
+| "take the payments change to the end" | A fresh agent per task group. It validates each one itself and commits as it goes |
+| "take task group 3" | Runs that task group, ticking each item as its validation passes |
+| "center a div" | Says it needs no change, and centers the div |
+
 ## Your tokens last
 
-This was built because they did not. A long session pays for its whole history
-on every turn, and a few sessions took a budget that was supposed to last.
+This exists because mine did not. A long session pays for its whole history on
+every turn.
 
-A turn loads between 4k and 8k characters of procedure: the file that is always
-resident, plus the one route the work takes. Both are held to 3600 characters
-by a check that runs on every commit, so the ceiling is a fact and not an
-intention.
+```text
+always loaded      SKILL.md          3401 of 3600 characters
+loaded per turn    one route only    3497 of 3600 at worst
+so, per turn       4k to 8k
+```
 
-Running a whole change dispatches a fresh agent per task group and keeps four
-lines from each: the files it touched, the validation, one note forward, and
-whether it is blocked. Everything else is discarded. The conversation that
-drives a ten group change is about as long as the one that drives a single
-group.
+A check holds both ceilings on every commit.
+
+Running a whole change gives each task group a fresh agent. Four lines come
+back, and everything else is thrown away:
+
+```text
+FILES:             what it touched
+VALIDATION:        the command, and pass or fail
+FOR NEXT GROUP:    two sentences at most
+BLOCKED:           no, or the decision in the way
+```
+
+A ten group change costs about what a one group change costs.
 
 ## The implementation stops being the work
 
-Tell it to run a change to the end and the implementation is often a quarter of
-an hour. A single task group is minutes.
+Run a change to the end and the implementation is often a quarter of an hour. A
+single task group is minutes.
 
-The planning is not, and should not be. It can take a day, or a conversation
-spread across several, and it is joint work: you decide, the package records
-what you decided, and the procedure stops the moment it meets a decision you
-have not made.
+Planning is not, and should not be. It can take a day, or several. You decide,
+the change records what you decided, and the agent stops the moment it hits a
+decision you have not made.
 
-That ratio is the product. The typing collapses, and what is left is the
-deciding, which was always the part that was yours.
+That is the trade. The typing collapses, and the deciding is what is left.
 
 ## A harness for your harness
 
-The same three files that stage a database migration stage a rewrite of your
-`AGENTS.md`, your `.claude/` directory, or a specification spread across forty
-markdown files that reference one another.
+The same three files work on prose. A rewrite of your `AGENTS.md`, of your
+`.claude/` directory, or of a spec spread across forty markdown files that
+reference each other.
 
-`spec-delta.md` is the mechanism. It names every rule a change adds, changes or
-removes, under the document each one lands in, and folds into those documents
-at closure. Nothing normative is written before the behavior exists, and
-nothing drifts, because the delta is the record of what became true.
+`spec-delta.md` is how. It lists what the change does to each document:
+
+```text
++ a rule this change adds
+~ a rule this change changes
+- a rule this change removes
+```
+
+At closure those rules move into the documents they belong to. Nothing is
+written there before the behavior exists.
 
 This repository is the proof. changepack is planned, run and closed by
-changepack, and every folder under `changes/archive/` is a change to the
-procedure, made by the procedure.
+changepack.
 
 ## Where to go
 
@@ -125,20 +164,20 @@ procedure, made by the procedure.
   <LinkCard
     title="Start"
     href="/changepack/en/start/install/"
-    description="Install it, run it once, and watch a package go from
-      opening to archive."
+    description="Install it, run it once, and watch a change go from opening
+      to archive."
   />
   <LinkCard
     title="Routes"
     href="/changepack/en/routes/"
-    description="One page per route, saying what that route obliges, what it
-      writes, and where it stops."
+    description="One page per route: what it obliges, what it writes, and
+      where it stops."
   />
   <LinkCard
     title="The package"
     href="/changepack/en/package/change/"
-    description="The three artifacts a package carries, their frontmatter,
-      and the archive."
+    description="The three files a change carries, their frontmatter, and the
+      archive."
   />
   <LinkCard
     title="Rationale"
@@ -150,24 +189,16 @@ procedure, made by the procedure.
 
 ## What is not there
 
-**Not a vibe coding machine.** Everything here is built to be watched. You
-approve the package before a line is written, the working tree stays the review
-surface, every task group commits on its own, and the procedure stops the
-moment it meets a decision that is yours. You let the agent do the work. You do
-not let it decide.
+**Not a vibe coding machine.** It is built to be watched. You approve the change
+before a line is written. Every task group commits on its own. It stops
+whenever a decision is yours. The agent does the work. You do the deciding.
 
-**No dependency in your repository.** `npx` is a channel, not a runtime. A
-Python, Rust or Go project acquires no manifest, no lockfile and no installed
-tree.
+**Nothing in your dependencies.** `npx` is how it arrives, not what it runs on.
+A Python, Rust or Go project gets no manifest, no lockfile, no installed tree.
 
-**No CLI where it runs.** Nothing is installed where changepack works. The
-state is the repository, which is also why there is nothing to phone home
-about.
+**No CLI, no service, no daemon.** One request to the npm registry, once, to ask
+whether a new version exists. That is everything that touches the network.
 
-**No service, no hook, no daemon.** One request to the npm registry, at one
-moment, is everything that reaches the network, and a line in a file you own
-remembers the answer.
-
-**One tree, by default.** The working tree is the review surface, so a package
-does not open a branch by itself. Ask for a branch or a worktree and it works
-there like anything else.
+**One working tree, by default.** The tree is where you review, so a change does
+not open a branch on its own. Ask for a branch or a worktree and it works
+there.
