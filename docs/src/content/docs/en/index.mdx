@@ -24,16 +24,14 @@ import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
 ## What a change is
 
-A folder in your repository, next to the code it changes.
+A folder in your repository, next to the code it changes:
+`changes/active/stripe-integration/`.
 
-```text
-changes/active/stripe-integration/
-  change.md        the problem, the goal, the decisions, and a drawing of
-                   the state you want
-  tasks.md         the task groups and their validations, filled in as the
-                   work happens
-  spec-delta.md    the rules this change alters, when it alters any
-```
+| File | What it holds |
+|---|---|
+| `change.md` | the problem, the goal, the decisions, and a drawing of the state you want |
+| `tasks.md` | the task groups and their validations, filled in as the work happens |
+| `spec-delta.md` | the rules this change alters, when it alters any |
 
 It opens when the work starts. It is archived, with the date, when the work is
 done.
@@ -64,8 +62,8 @@ is a folder, so neither one is tied to a single agent.
 
 5. Say "go ahead". Or open a new session and say "take change X".
 
-6. The agent works, and commits task group by task group. It stops whenever a
-   decision is yours.
+6. The agent dispatches a subagent per task group, validates each one, and
+   commits as it goes. It stops whenever a decision is yours.
 
 7. You approve what landed. The change closes and is archived.
 
@@ -79,14 +77,11 @@ out just as easily.
 
 ## The gate
 
-Too big and the agent proposes more than one change. Too small and it just does
-the work, with no change at all.
-
-```text
-one pass can land it?      yes  ->  it does the work and tells you
-                           no   ->  it proposes a change
-too big for one change?    yes  ->  it proposes several
-```
+| The work | It does |
+|---|---|
+| Fits in one pass | Does it, and tells you |
+| Does not fit | Proposes a change |
+| Does not fit in one change | Proposes several |
 
 > Never open a change package because the work touches behavior.
 > Open one because a single pass cannot land it.
@@ -107,16 +102,13 @@ too big for one change?    yes  ->  it proposes several
 This exists because mine did not. A long session pays for its whole history on
 every turn.
 
-```text
-always loaded      SKILL.md          3401 of 3600 characters
-loaded per turn    one route only    3497 of 3600 at worst
-so, per turn       4k to 8k
-```
+changepack is one skill. It decides on its own when to be invoked, and pulls
+the rest of the rules in on demand, one route at a time. Every piece has a
+character ceiling, held by a check on every commit, so a turn costs a few
+thousand characters instead of the whole procedure.
 
-A check holds both ceilings on every commit.
-
-Running a whole change gives each task group a fresh agent. Four lines come
-back, and everything else is thrown away:
+Running a whole change gives each task group a fresh subagent, and each one
+answers in four lines:
 
 ```text
 FILES:             what it touched
@@ -125,7 +117,8 @@ FOR NEXT GROUP:    two sentences at most
 BLOCKED:           no, or the decision in the way
 ```
 
-A ten group change costs about what a one group change costs.
+The conversation driving the change does not grow with the number of task
+groups. What each group spends implementing is still what it spends.
 
 ## The implementation stops being the work
 

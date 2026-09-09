@@ -25,16 +25,14 @@ import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
 ## O que é uma change
 
-Uma pasta no seu repositório, ao lado do código que ela muda.
+Uma pasta no seu repositório, ao lado do código que ela muda:
+`changes/active/stripe-integration/`.
 
-```text
-changes/active/stripe-integration/
-  change.md        o problema, o objetivo, as decisões e o desenho do
-                   estado desejado
-  tasks.md         os grupos de tasks e suas validações, preenchidos em
-                   tempo real
-  spec-delta.md    as regras que essa change altera, quando altera
-```
+| Arquivo | O que guarda |
+|---|---|
+| `change.md` | o problema, o objetivo, as decisões e o desenho do estado desejado |
+| `tasks.md` | os grupos de tasks e suas validações, preenchidos em tempo real |
+| `spec-delta.md` | as regras que essa change altera, quando altera |
 
 Ela abre quando o trabalho começa. É arquivada, com a data, quando o trabalho
 termina.
@@ -65,8 +63,8 @@ unidade é uma pasta, então nenhum dos dois está preso a um agente só.
 
 5. Diga "pode começar". Ou abra uma sessão nova e diga "pega a change X".
 
-6. O agente trabalha e commita por grupo de tasks, parando quando precisa de
-   uma decisão sua.
+6. O agente despacha um subagente por grupo de tasks, valida cada um e
+   commita conforme anda. Ele para quando precisa de uma decisão sua.
 
 7. Você aprova o que foi feito. A change fecha e vai para o arquivo.
 
@@ -80,14 +78,11 @@ facilidade.
 
 ## O gate
 
-Se for grande demais, o agente propõe mais de uma change. Se for pequena
-demais, ele faz direto, sem change nenhuma.
-
-```text
-uma passada resolve?       sim  ->  ele faz e te conta
-                           não  ->  ele propõe uma change
-grande demais para uma?    sim  ->  ele propõe várias
-```
+| O trabalho | Ele faz |
+|---|---|
+| Cabe numa passada | Faz, e te conta |
+| Não cabe | Propõe uma change |
+| Não cabe nem em uma change | Propõe várias |
 
 > Nunca abra uma change porque o trabalho mexe em comportamento.
 > Abra uma porque uma passada só não dá conta.
@@ -108,16 +103,13 @@ grande demais para uma?    sim  ->  ele propõe várias
 Isso existe porque os meus não duravam. Uma sessão longa paga pelo histórico
 inteiro a cada turno.
 
-```text
-sempre carregado    SKILL.md            3401 de 3600 caracteres
-por turno           uma rota, só uma    3497 de 3600 no pior caso
-total por turno     4k a 8k
-```
+O changepack é uma skill só. Ela decide sozinha quando é invocada e busca o
+resto das regras sob demanda, uma rota por vez. Cada peça tem um teto de
+caracteres, segurado por um check em todo commit, então um turno custa alguns
+milhares de caracteres em vez do procedimento inteiro.
 
-Um check segura os dois tetos em todo commit.
-
-Rodar uma change inteira dá um agente novo para cada grupo de tasks. Voltam
-quatro linhas, e todo o resto é jogado fora:
+Rodar uma change inteira dá um subagente novo para cada grupo de tasks, e cada
+um responde em quatro linhas:
 
 ```text
 FILES:              o que ele tocou
@@ -126,7 +118,8 @@ FOR NEXT GROUP:     no máximo duas frases
 BLOCKED:            não, ou a decisão que trava
 ```
 
-Uma change de dez grupos custa mais ou menos o que custa uma de um grupo.
+A conversa que conduz a change não cresce com o número de grupos. O que cada
+grupo gasta implementando continua sendo o que ele gasta.
 
 ## A implementação deixa de ser o trabalho
 
