@@ -6,6 +6,8 @@ sidebar:
   order: 3
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 Por que a mudança existe, e o que vai ser verdade quando ela fechar. Ele é
 escrito quando o pacote abre, lido antes de cada grupo, e terminado no
 fechamento. É nele que mora o porquê, e é por isso que o corpo de um commit
@@ -31,7 +33,7 @@ Uma chave sem valor é omitida em vez de escrita vazia.
 |---|---|
 | Context | o que é verdade hoje, e por que isso é um problema |
 | Goal | o comportamento que deve ser verdade no fechamento, escrito como contrato |
-| Changes | o desenho do que se move |
+| Changes | [o desenho](#o-desenho) do que se move |
 | Open decisions | as perguntas no caminho, com alternativas e custos |
 | Decided | o que o pacote resolveu, e o que a alternativa teria custado |
 | Scope | no que ele mexe, e o que ficou de fora de propósito |
@@ -48,12 +50,73 @@ nunca para preencher a página.
 Escrito por último e lido primeiro: entenda a mudança, depois desenhe. Desenhe
 o que se move e nada do que não se move, e escolha a notação pelo que se move.
 
-| O que se move | Notação |
-|---|---|
-| arquivos, módulos, pacotes | uma árvore, marcada `+` entrou, `-` saiu, `~` mudou |
-| coleção, tabela, campo, estado | uma tabela do que cada um vira |
-| rota, stream, ordem no tempo | uma sequência |
-| serviço, deploy, roteamento | um fluxo |
+<Tabs>
+<TabItem label="Árvore">
+
+Arquivos, módulos, pacotes. Marcada `+` entrou, `-` saiu, `~` mudou, com um
+comentário onde o nome não diz o suficiente.
+
+```text
++ docs/
+  + astro.config.mjs        o sidebar, e os dois idiomas
+  + src/content/docs/
+    + en/index.mdx          a home
+    + pt/index.mdx          a gêmea dela
+~ .gitignore                docs/dist e docs/.astro
+- scripts/build-docs.sh     nada entra no lugar
+```
+
+</TabItem>
+<TabItem label="Tabela">
+
+Uma coleção, uma tabela, um campo, um estado. Uma linha por coisa que se move,
+e no que ela vira.
+
+| Chave | Hoje | Depois |
+|---|---|---|
+| `opened` | ausente | o dia em que o pacote abriu |
+| `shipped` | ausente | a versão em que o trabalho saiu, no fechamento |
+| `groups` | dito no título | uma contagem, lida enquanto o pacote roda |
+
+</TabItem>
+<TabItem label="Sequência">
+
+Uma rota, um stream, uma ordem no tempo. Quem fala o quê com quem, e em que
+ordem.
+
+```text
+você             run                          o agente
+ |  vai até o fim
+ |--------------->|
+ |                |  brief: arquivo do projeto, pacote, um grupo
+ |                |------------------------------>|
+ |                |  FILES, VALIDATION, FOR NEXT GROUP, BLOCKED
+ |                |<------------------------------|
+ |                |  valida de novo, lê o diff, marca os itens
+ |  o grupo como tabela, e o commit dele
+ |<---------------|
+```
+
+</TabItem>
+<TabItem label="Fluxo">
+
+Um serviço, um deploy, um roteamento. O que roda, em que ordem, e onde para.
+
+```text
+push na main
+     |
+     v
+  npm run check ---> falha ---> nada é publicado
+     |
+     v
+  tag com o número que o package.json carrega
+     |
+     v
+  npm publish ---> aquele número é a release
+```
+
+</TabItem>
+</Tabs>
 
 A maioria das mudanças move duas dessas. A árvore e a tabela têm preferência
 porque se leem no terminal, na forge e no editor do mesmo jeito, sem instalar
