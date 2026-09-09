@@ -1,6 +1,88 @@
 ---
 title: changepack
-description: Pacotes de mudança para o Claude Code.
+description: Pacotes de mudança para o Claude Code. Uma skill que você copia
+  para o seu repositório, não um framework que você instala.
+template: splash
+hero:
+  tagline: Um pacote de mudança é uma pasta pequena que guarda uma unidade de
+    trabalho planejado. changepack é o procedimento que os conduz, escrito como
+    uma skill do Claude Code.
+  actions:
+    - text: Instalar
+      link: /changepack/pt/start/install/
+      icon: right-arrow
+    - text: No GitHub
+      link: https://github.com/allan-lancioni/changepack
+      icon: external
+      variant: minimal
 ---
 
-Pacotes de mudança para o Claude Code.
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+> Nunca abra um pacote de mudança porque o trabalho mexe em comportamento.
+> Abra um porque uma passada só não dá conta.
+
+## Instalação
+
+Copie para o repositório que ele vai reger:
+
+```bash
+npx changepack
+```
+
+Ou, sem rodar código meu:
+
+```bash
+npx degit allan-lancioni/changepack/skill .claude/skills/changepack
+```
+
+Depois abra o Claude Code nesse repositório e rode `/changepack`. Ele lê o
+repositório, propõe uma configuração e escreve um arquivo. É toda a instalação.
+
+## Você fala, ele faz
+
+Tudo passa por `/changepack`, em linguagem comum:
+
+| Você fala | Ele faz |
+|---|---|
+| "planeje a migração multi tenant" | Classifica. Se não couber em uma passada, pergunta antes de abrir o pacote, escreve, comita e para |
+| "comece a tarefa 2" | Resume o que falta, pergunta até onde ir, implementa e marca os itens conforme cada um valida |
+| "rode a mudança inteira" | Despacha um agente novo por grupo, valida cada um por conta própria, comita grupo a grupo |
+| "revise isso" | Lê e relata, na ordem do impacto, e não muda nada |
+| "feche" | Audita os critérios contra o comportamento real e arquiva com a data |
+| "atualize o changepack" | Lê quanto custa cada versão entre a sua e a última, diz, e então troca a skill |
+| "renomeie essa variável" | Diz que isso não precisa de pacote, e faz |
+
+## Por onde ir
+
+<CardGrid>
+  <LinkCard
+    title="Começo"
+    href="/changepack/pt/start/install/"
+    description="Instale, rode uma vez e acompanhe um pacote da abertura ao arquivo."
+  />
+  <LinkCard
+    title="Rotas"
+    href="/changepack/pt/routes/"
+    description="Uma página por rota, dizendo o que ela obriga e o que ela recusa."
+  />
+  <LinkCard
+    title="O pacote"
+    href="/changepack/pt/package/change/"
+    description="Os três artefatos que um pacote carrega, seu frontmatter e o arquivo."
+  />
+  <LinkCard
+    title="Fundamento"
+    href="/changepack/pt/rationale/why/"
+    description="Opinião, marcada como opinião. Por que o produto é o
+      portão e não a pasta."
+  />
+</CardGrid>
+
+## O que não tem aqui
+
+Nenhuma dependência para instalar, nenhuma CLI para manter de pé e nenhum
+estado fora do seu repositório. A skill é comitada junto com o projeto, então
+quem clona recebe o mesmo processo sem nada para preparar. A única coisa que
+roda é a checagem de versão, uma requisição ao registro do npm em um momento
+só, e o que ela guarda é uma linha no arquivo que é seu.

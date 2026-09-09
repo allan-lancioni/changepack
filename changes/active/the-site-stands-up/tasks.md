@@ -36,14 +36,14 @@ Validation:
 
 ## 2. The home reads
 
-Status: not started
+Status: completed
 
-- [ ] Write `docs/src/content/docs/en/index.mdx` in full: the splash hero, the
+- [x] Write `docs/src/content/docs/en/index.mdx` in full: the splash hero, the
       gate quoted alone, the install command with the degit alternative, the
       routing table from `README.md`, four cards, and what is not there.
-- [ ] Write `docs/src/content/docs/pt/index.mdx` as the same six sections. It
+- [x] Write `docs/src/content/docs/pt/index.mdx` as the same six sections. It
       is an adaptation and not a translation: same argument, same length.
-- [ ] Confirm no dash character entered either file, since the house rule
+- [x] Confirm no dash character entered either file, since the house rule
       governs prose the repository ships.
 
 Validation:

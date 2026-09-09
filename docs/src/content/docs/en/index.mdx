@@ -1,6 +1,90 @@
 ---
 title: changepack
-description: Change packages for Claude Code.
+description: Change packages for Claude Code. A skill you copy into your repo,
+  not a framework you install.
+template: splash
+hero:
+  tagline: A change package is a small folder holding one unit of planned work.
+    changepack is the procedure for running them, written as a Claude Code skill.
+  actions:
+    - text: Install it
+      link: /changepack/en/start/install/
+      icon: right-arrow
+    - text: On GitHub
+      link: https://github.com/allan-lancioni/changepack
+      icon: external
+      variant: minimal
 ---
 
-Change packages for Claude Code.
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+> Never open a change package because the work touches behavior.
+> Open one because a single pass cannot land it.
+
+## Install
+
+Copy it into the repository it will govern:
+
+```bash
+npx changepack
+```
+
+Or, without running any code of mine:
+
+```bash
+npx degit allan-lancioni/changepack/skill .claude/skills/changepack
+```
+
+Then open Claude Code in that repository and run `/changepack`. It reads the
+repo, proposes a configuration, and writes one file. That is the whole setup.
+
+## You say, it does
+
+Everything runs through `/changepack`, in plain language:
+
+| You say | It does |
+|---|---|
+| "plan the multi tenant migration" | Classifies. If it is too big for one pass, asks before opening the package, writes it, commits it, and stops |
+| "start task 2" | Summarises what is left, asks how far to run, then implements and checks items as they validate |
+| "run the whole change" | Dispatches a fresh agent per group, validates each one itself, commits group by group |
+| "review this" | Reads and reports, ordered by impact, and changes nothing |
+| "close it" | Audits the criteria against real behavior, archives with a date |
+| "update changepack" | Reads what each release between your version and the latest costs, says so, then replaces the skill |
+| "rename this variable" | Tells you it does not need a package, and does it |
+
+## Where to go
+
+<CardGrid>
+  <LinkCard
+    title="Start"
+    href="/changepack/en/start/install/"
+    description="Install it, run it once, and watch a package go from
+      opening to archive."
+  />
+  <LinkCard
+    title="Routes"
+    href="/changepack/en/routes/"
+    description="One page per route, saying what that route obliges and
+      what it refuses."
+  />
+  <LinkCard
+    title="The package"
+    href="/changepack/en/package/change/"
+    description="The three artifacts a package carries, their frontmatter,
+      and the archive."
+  />
+  <LinkCard
+    title="Rationale"
+    href="/changepack/en/rationale/why/"
+    description="Opinion, marked as opinion. Why the gate is the product
+      and the folder is not."
+  />
+</CardGrid>
+
+## What is not there
+
+No dependency to install, no CLI to keep running, and no state outside your
+repository. The skill is committed with your project, so everyone who clones it
+gets the same process with nothing to set up. The only thing that runs is the
+update check, one request to the npm registry at one moment, and what it
+remembers is a line in the file you own.
