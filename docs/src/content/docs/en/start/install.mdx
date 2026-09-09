@@ -1,0 +1,125 @@
+---
+title: Install
+description: >-
+  Copy the skill in, then run it once and it configures itself.
+sidebar:
+  order: 1
+---
+
+import { FileTree } from '@astrojs/starlight/components';
+
+Two commands. The first copies a directory in. The second fills in the one
+file that is yours.
+
+## Copy the skill in
+
+Run this at the root of the repository it will govern:
+
+```bash
+npx changepack
+```
+
+<FileTree>
+
+- .claude/
+  - skills/
+    - **changepack/** everything below is written by the installer
+      - **SKILL.md** the gate, the routes, and direct work
+      - **references/** one file per route
+        - init.md
+        - plan.md
+        - work.md
+        - run.md
+        - commit.md
+        - review.md
+        - close.md
+        - update.md
+      - **templates/** what a new change is copied from
+        - change.md
+        - tasks.md
+        - spec-delta.md
+        - changepack.md
+      - **check-update.mjs** asks the registry for a newer version
+
+</FileTree>
+
+Thirteen markdown files and one script. Nothing goes into your dependencies
+and no process outlives the command. The directory it writes is `skill/` in
+this repository, so any other way of copying that folder lands in the same
+place.
+
+## Run it once
+
+```bash
+claude "/changepack"
+```
+
+The installer prints that line for you, and prints
+`npm install -g @anthropic-ai/claude-code` above it if Claude Code is not on
+your PATH.
+
+That session reads the repository and writes two things:
+
+<FileTree>
+
+- **CHANGEPACK.md** new, and yours: how changepack works in this repository
+- changes/
+  - **.gitkeep** new, because git does not track an empty directory
+- .claude/skills/changepack/ untouched
+
+</FileTree>
+
+Then it stops. It does not plan and it does not implement in the same turn,
+even when the same message asked for both: it names what you asked for and
+says it runs next, once the configuration is approved.
+
+### It infers, it does not interrogate
+
+Every field arrives with a value already proposed, read from what the
+repository says. Your manifest for the version, a test script for the
+validation command, `git log` for the commit convention, `CLAUDE.md` and
+`AGENTS.md` for what a later change is held to. Where it finds nothing, the
+field takes its default, and a project with no validation command is ordinary
+rather than incomplete.
+
+It asks only about what it could not find, marks every value it guessed, and
+says where each one came from. You correct the list and approve it, and it
+commits those two files alone.
+[CHANGEPACK.md](/changepack/en/refs/changepack/) is what you are approving.
+
+From here everything runs through `/changepack`, in plain language.
+[SKILL.md](/changepack/en/refs/) is the whole procedure on one page.
+
+## Reinstalling
+
+An install already in place stops the command. `--force` is how you mean it:
+
+```bash
+npx changepack --force
+```
+
+The directory is replaced, not merged. A file that left the release leaves
+your installation with it, and an edit made under there is lost rather than
+kept. That is why nothing of yours belongs in it. `CHANGEPACK.md` sits outside
+the directory and is never touched.
+
+You rarely type this. When a package closes, and only then, the skill compares
+itself against the latest release and offers to update, saying what the
+versions between yours and it would cost.
+[Versioning](/changepack/en/start/versioning/) is that route.
+
+## Removing it
+
+Delete the directory and the file, and nothing of changepack is left:
+
+<FileTree>
+
+- ~~.claude/skills/changepack/~~
+- ~~CHANGEPACK.md~~
+- changes/ kept: it is history, not machinery
+
+</FileTree>
+
+Nothing else was written and nothing was registered anywhere. The packages in
+your changes directory are markdown and read without the skill that produced
+them.

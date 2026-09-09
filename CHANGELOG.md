@@ -11,10 +11,11 @@ Every entry ends with what updating costs you. Where that is more than the
 command above, it says so. Your `CHANGEPACK.md` is never replaced: an update
 stamps the version into it and leaves the rest alone.
 
-The numbers are read against the procedure, not against an API. **Major**: your
-`CHANGEPACK.md` or an open package has to be edited by hand. **Minor**: a new
-route or capability, and the configuration you have stays valid. **Patch**:
-wording and fixes that leave the resulting procedure the same.
+The numbers are read against the procedure and against nothing else. **Major**:
+compatibility breaks, and what you already have has to become something else.
+**Minor**: the procedure really changes and what you have keeps working; you
+adapt, and nothing is broken. **Patch**: the procedure that results is the
+same. Almost every release is one of the last two.
 
 ## 1.0.0
 
