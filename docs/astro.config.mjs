@@ -40,9 +40,9 @@ export default defineConfig({
           items: [{ autogenerate: { directory: 'project-file' } }],
         },
         {
-          label: 'Routes',
-          translations: { 'pt-BR': 'Rotas' },
-          items: [{ autogenerate: { directory: 'routes' } }],
+          label: 'Refs',
+          translations: { 'pt-BR': 'Refs' },
+          items: [{ autogenerate: { directory: 'refs' } }],
         },
         {
           label: 'The package',
