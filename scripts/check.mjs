@@ -81,18 +81,33 @@ if (drift.length && openPackages.length) {
   );
 }
 
-// 2. One version, said in three places.
+// 2. One version, said in four places. The project file is one of them: it
+//    carries the version this repository runs, and nothing else was checking
+//    that it agreed, so the four held by luck rather than by invariant.
 const skillText = readOrFlag(join(SOURCE, 'SKILL.md')) ?? '';
 const marker = skillText.match(/<!--\s*changepack\s+([^\s]+)\s*-->/)?.[1];
 const manifest = JSON.parse(readFileSync('package.json', 'utf8'));
 const pkg = manifest.version;
 const changelogText = readFileSync('CHANGELOG.md', 'utf8');
 const changelog = changelogText.match(/^##\s+(\S+)/m)?.[1];
+// `- **changepack:** 1.0.0`, or written plainly. The same shape check-update
+//  reads, because it is the same line.
+const projectText = readOrFlag('CHANGEPACK.md') ?? '';
+const project = projectText.match(/^\s*[-*]?\s*\**changepack:\**\s*(\S+)/m)?.[1];
 
-if (!(marker && pkg && changelog && marker === pkg && pkg === changelog)) {
+const said = {
+  'SKILL.md marker': marker,
+  'package.json': pkg,
+  'CHANGELOG.md': changelog,
+  'CHANGEPACK.md': project,
+};
+const agreed = new Set(Object.values(said));
+if (agreed.has(undefined) || agreed.size !== 1) {
   fail(
     `the version disagrees with itself: ` +
-      `SKILL.md marker ${marker}, package.json ${pkg}, CHANGELOG.md ${changelog}`,
+      Object.entries(said)
+        .map(([where, value]) => `${where} ${value}`)
+        .join(', '),
   );
 }
 

@@ -12,7 +12,7 @@ How change packages work in this repository.
   says to you follows your message.
 - **version:** `package.json`.
 - **validate:** `npm run check`. Five invariants: the loaded copy matches
-  `skill/`, the version agrees with itself across three files, the context
+  `skill/`, the version agrees with itself across four files, the context
   budget holds, nothing names a file that is not there, and the cost of
   updating is said the same way in `CHANGELOG.md` and in `package.json`.
 - **commit:** conventional, no agent co-author, one per commit point, without
