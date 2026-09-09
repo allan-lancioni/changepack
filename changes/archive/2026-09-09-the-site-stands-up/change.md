@@ -5,6 +5,7 @@ description: A Starlight site in this repository, bilingual and navigable, with
 changepack: 1.0.0
 opened: 2026-09-09
 opened-by: Allan C Lancioni <allan@allanlancioni.com>
+shipped: 1.0.0
 ---
 
 ## Context
@@ -165,4 +166,44 @@ Out of scope:
 
 ## Outcome
 
+A Starlight site builds under `docs/` from its own manifest, in English and
+Portuguese, at `/changepack/en/` and `/changepack/pt/`. Sixty five pages come
+out of the build: two homes, sixty two section pages, and the 404 Starlight
+generates. The home carries the six sections in the order planned, with the
+gate standing alone as two quoted sentences and nothing framing them. The
+sidebar shows the eight groups in both languages, labels translated, and every
+one of its thirty one entries a language opens a page that exists.
+
+The root is unmoved where it matters. `npm run check` still reads `git ls-files
+skill` and prints the same budget line it printed before the package opened:
+`SKILL.md 3401/3600, widest route run.md 3497/3600, skill/ markdown
+32286/34000`. `normative:` still reads `skill/` alone, nothing under `docs/` is
+named by it, and no file in `skill/` was touched, so the package carries no
+delta.
+
+Left for later, as planned: the words in all sixty two section pages, the
+deployment, the sixth invariant pairing a route with its page, `RATIONALE.md`
+moving into the site, and any theme override. Left for later and not planned:
+the house rule naming `docs/` as a consumer of `skill/` stays unwritten, which
+is the observation this repository wanted to make rather than assume.
+
 ## Surprises
+
+The section table sums to thirty one pages a language, not the twenty one the
+scope and group 3 both name. The table is the one that says what each section
+holds, so it carried. `Routes` at nine is the eight files in
+`skill/references/` plus an overview at the section root, which is what the
+home links to.
+
+`docs/package-lock.json` is committed and is not in the drawing. A manifest
+with no lockfile does not build the same twice, and the drawing named the
+manifest alone.
+
+Markdownlint never saw the two homes. Its glob was `**/*.md` and the homes are
+`.mdx`, so group 2's validation asked a check to pass on files it could not
+reach. The glob gained `**/*.mdx` in group 2, and the pages wrap at eighty like
+the prose at the root.
+
+The build prints two Starlight warnings on every run, one for an absent `i18n`
+collection and one for the 404 entry it generates itself. Declaring the `i18n`
+collection empty produces two warnings instead of one, so it was left out.
