@@ -106,6 +106,15 @@ the question this repository wants answered by observation rather than by
 assumption. Writing it now settles the question by removing it. It is a one
 line change and can be written the moment the observation says it is needed.
 
+**The site answers at `allan-lancioni.github.io/changepack`.** The manifest
+needed a `site` before the build could name a canonical URL, and the package
+had left hosting open. GitHub Pages serves this repository under a project
+path, so `base` is `/changepack` and every page gains that prefix: the two
+homes are `/changepack/en/` and `/changepack/pt/`, and the success criterion
+above reads `/en/` as the path under the base. The built tree is unaffected,
+`docs/dist/en/` and `docs/dist/pt/` either way, and a later move to an apex
+domain is two lines in `astro.config.mjs`.
+
 ## Scope
 
 - `docs/`, in full: the manifest, the Astro and Starlight configuration, the

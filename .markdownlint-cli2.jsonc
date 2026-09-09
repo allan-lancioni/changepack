@@ -11,7 +11,11 @@
     // finding here is a finding in skill/ and is fixed there.
     ".claude/skills/changepack",
     // Archived packages are history and are not edited.
-    "changes/archive"
+    "changes/archive",
+    // Installed and built by the documentation site, not written by hand.
+    "docs/node_modules",
+    "docs/dist",
+    "docs/.astro"
   ],
   "config": {
     // Templates are written to be filled in: `<Title>`, `<rule>`, `<one>`.

@@ -6,6 +6,10 @@ node_modules
 # .mjs files that are not ours to reformat.
 eval
 
+# Build output of the documentation site. Its node_modules is covered above.
+docs/dist
+docs/.astro
+
 # The copy Claude Code loads. Written by bin/install.mjs alone, so a finding
 # here is a finding in skill/ and is fixed there.
 .claude/skills/changepack

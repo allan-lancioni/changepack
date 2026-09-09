@@ -11,20 +11,20 @@ One group at a time. Check an item only after its validation passes.
 
 ## 1. The site builds
 
-Status: not started
+Status: completed
 
-- [ ] Create `docs/package.json` with astro, `@astrojs/starlight` and sharp,
+- [x] Create `docs/package.json` with astro, `@astrojs/starlight` and sharp,
       and the scripts `dev`, `build` and `preview`.
-- [ ] Write `docs/astro.config.mjs`: the starlight integration, `site`, and
+- [x] Write `docs/astro.config.mjs`: the starlight integration, `site`, and
       `i18n` with `defaultLocale: 'en'`, locales `en` and `pt`, and no `root`.
-- [ ] Write `docs/tsconfig.json` and `docs/src/content.config.ts` declaring the
+- [x] Write `docs/tsconfig.json` and `docs/src/content.config.ts` declaring the
       starlight docs collection.
-- [ ] Add `docs/public/favicon.svg`.
-- [ ] Add a one line `docs/src/content/docs/en/index.mdx` and its `pt` twin, so
+- [x] Add `docs/public/favicon.svg`.
+- [x] Add a one line `docs/src/content/docs/en/index.mdx` and its `pt` twin, so
       the build has a page to render. The words arrive in group 2.
-- [ ] Add `docs/node_modules`, `docs/dist` and `docs/.astro` to `.gitignore`.
-- [ ] Add `docs/dist` and `docs/.astro` to `.prettierignore`.
-- [ ] Add the same three to the `ignores` of `.markdownlint-cli2.jsonc`, with
+- [x] Add `docs/node_modules`, `docs/dist` and `docs/.astro` to `.gitignore`.
+- [x] Add `docs/dist` and `docs/.astro` to `.prettierignore`.
+- [x] Add the same three to the `ignores` of `.markdownlint-cli2.jsonc`, with
       one line saying they are build output.
 
 Validation:
