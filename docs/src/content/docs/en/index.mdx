@@ -1,10 +1,10 @@
 ---
 title: changepack
-description: One unit of planned work your agent opens, runs and closes. Spec
-  driven development, without writing specs for a system you already built.
+description: A folder your agent writes, you approve, and it runs. Spec-driven
+  development, without writing specs for a system you already built.
 template: splash
 hero:
-  tagline: Change packages for coding agents. Spec driven development, without
+  tagline: Change packages for coding agents. Spec-driven development, without
     the entry fee.
   actions:
     - text: Install it
@@ -22,22 +22,25 @@ hero:
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## The unit is a folder
+## What a change package is
 
-A change package is one unit of planned work: the problem, the behavior it
-should produce, and the task groups that get there. It opens when the work
-starts, and it is archived, dated, when the work is done.
+A folder in your repository, in git, next to the code it changes. Your agent
+writes it, you approve it, and then it runs.
 
-Three files, all markdown. `change.md` holds the problem, the goal, the
-decisions and a drawing of what moves. `tasks.md` holds the task groups, each
-with the observation that proves it. `spec-delta.md` holds the rules the change
-makes normative, and only when it makes any.
+```text
+changes/active/stripe-integration/
+  change.md        the problem, the goal, the decisions, what moves
+  tasks.md         the task groups, and what proves each one landed
+  spec-delta.md    the rules this change makes normative, when it makes any
+```
+
+It opens when the work starts and it is archived, dated, when the work is done.
+You never write those files yourself. The agent proposes them out of the
+conversation you were already having, and nothing lands until you say yes.
 
 A change package is bigger than a regular task and smaller than an epic. An
-epic is several of them, often open at the same time.
-
-It lives in your repository, in git, next to the code it changes. There is no
-database and no service, so an agent that can read a folder can run one.
+epic is several of them, often open at once. There is no database and no
+service behind any of it, so any agent that can read a folder can run one.
 
 ## Install
 
@@ -53,9 +56,10 @@ is a folder in your repository, so neither is bound to one agent.
 
 ## There is nothing to learn
 
-No command to memorise, no flag, no template to fill. You talk the way you
-already talk, and the procedure classifies what you said and takes the route
-that fits.
+No command to memorise, no flag, no template to fill. There is no interface to
+learn because there is no interface: the whole product is a conversation and a
+folder. You talk the way you already talk, and the procedure classifies what
+you said and takes the route that fits.
 
 | You say | It does |
 |---|---|

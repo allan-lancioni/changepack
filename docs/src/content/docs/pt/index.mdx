@@ -1,21 +1,21 @@
 ---
 title: changepack
-description: Uma unidade de trabalho planejado que o seu agente abre, conduz e
-  fecha. Desenvolvimento guiado por spec, sem escrever spec para um sistema que
-  você já construiu.
+description: Uma pasta que o seu agente escreve, você aprova e ele roda.
+  Spec-driven development, sem escrever spec para um sistema que você já
+  construiu.
 template: splash
 hero:
-  tagline: Pacotes de mudança para agentes de código. Desenvolvimento guiado
-    por spec, sem a taxa de entrada.
+  tagline: Change packages para agentes de código. Spec-driven development,
+    sem taxa de entrada.
   actions:
     - text: Instalar
       link: /changepack/pt/start/install/
       icon: right-arrow
-    - text: Ver um pacote de ponta a ponta
+    - text: Ver uma change de ponta a ponta
       link: /changepack/pt/start/a-package-end-to-end/
       icon: document
       variant: secondary
-    - text: No GitHub
+    - text: GitHub
       link: https://github.com/allan-lancioni/changepack
       icon: external
       variant: minimal
@@ -23,24 +23,25 @@ hero:
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## A unidade é uma pasta
+## O que é uma change
 
-Um pacote de mudança é uma unidade de trabalho planejado: o problema, o
-comportamento que deve passar a valer, e os grupos de tarefa que levam até lá.
-Ele abre quando o trabalho começa e é arquivado, com data, quando o trabalho
-termina.
+Uma pasta no seu repositório, no git, ao lado do código que ela muda. Seu
+agente escreve, você aprova, e aí ela roda.
 
-Três arquivos, todos markdown. O `change.md` guarda o problema, o objetivo, as
-decisões e um desenho do que se move. O `tasks.md` guarda os grupos de tarefa,
-cada um com a observação que o prova. O `spec-delta.md` guarda as regras que a
-mudança torna normativas, e só quando ela torna alguma.
+```text
+changes/active/stripe-integration/
+  change.md        o problema, o objetivo, as decisões, o que se move
+  tasks.md         os task groups, e o que prova cada um
+  spec-delta.md    as regras que essa change torna normativas, quando torna
+```
 
-Um pacote de mudança é maior que uma tarefa comum e menor que um épico. Um
-épico são vários deles, quase sempre abertos ao mesmo tempo.
+Ela abre quando o trabalho começa e é arquivada, com data, quando o trabalho
+termina. Você nunca escreve esses arquivos. O agente propõe a partir da
+conversa que vocês já estavam tendo, e nada entra antes de você dizer sim.
 
-Ele mora no seu repositório, no git, ao lado do código que muda. Não tem banco
-e não tem serviço, então qualquer agente que saiba ler uma pasta consegue
-conduzir um.
+Uma change é maior que uma task comum e menor que um épico. Um épico são várias
+changes, quase sempre abertas ao mesmo tempo. Não tem banco e não tem serviço
+atrás de nada disso, então qualquer agente que saiba ler uma pasta roda uma.
 
 ## Instalação
 
@@ -58,48 +59,48 @@ agente só.
 
 ## Não tem nada para aprender
 
-Nenhum comando para decorar, nenhuma flag, nenhum template para preencher.
-Você fala do jeito que já fala, e o procedimento classifica o que você disse e
-toma a rota que serve.
+Nenhum comando para decorar, nenhuma flag, nenhum template para preencher. Não
+tem interface para aprender porque não tem interface: o produto inteiro é uma
+conversa e uma pasta. Você fala do jeito que já fala, e o procedimento
+classifica o que você disse e toma a rota que serve.
 
 | Você fala | Ele faz |
 |---|---|
-| "implementa a integração com a Stripe" | Classifica como grande demais para uma passada, pergunta antes de abrir qualquer coisa, escreve o pacote, comita e para antes de implementar |
-| "vamos refatorar a tela de configurações em outra branch" | O mesmo, na branch que você disse. O pacote é uma pasta no repositório, então acompanha a branch em que foi aberto |
-| "vamos migrar o sistema" | Divide. Vários pacotes abertos ao mesmo tempo, cada um uma unidade que se conduz, se revisa e se fecha sozinha |
-| "pega a change de pagamentos e vai até o fim" | Despacha um agente novo por grupo de tarefa, valida cada um por conta própria e comita grupo a grupo |
-| "pega o grupo 3" | Implementa aquele grupo de tarefa e marca cada item conforme a validação dele passa |
-| "centraliza essa div" | Diz que isso não precisa de pacote, e centraliza a div |
+| "implementa a integração com a Stripe" | Classifica como grande demais para uma passada, pergunta antes de abrir qualquer coisa, escreve a change, comita e para antes de implementar |
+| "vamos refatorar a tela de configurações em outra branch" | O mesmo, na branch que você disse. A change é uma pasta no repositório, então acompanha a branch em que foi aberta |
+| "vamos migrar o sistema" | Divide. Várias changes abertas ao mesmo tempo, cada uma uma unidade que roda, se revisa e se fecha sozinha |
+| "pega a change de pagamentos e vai até o fim" | Despacha um agente novo por task group, valida cada um por conta própria e comita task group a task group |
+| "pega o task group 3" | Implementa aquele task group e marca cada item conforme a validação dele passa |
+| "centraliza essa div" | Diz que isso não precisa de uma change, e centraliza a div |
 
-## O portão
+## O gate
 
-> Nunca abra um pacote de mudança porque o trabalho mexe em comportamento.
-> Abra um porque uma passada só não dá conta.
+> Nunca abra uma change porque o trabalho mexe em comportamento.
+> Abra uma porque uma passada só não dá conta.
 
 ## Seus tokens duram
 
 Isso nasceu porque eles não duravam. Uma sessão longa paga pelo histórico
-inteiro a cada turno, e poucas sessões consumiam um orçamento que era para
-durar bem mais.
+inteiro a cada turno, e poucas sessões comiam um orçamento que era para durar
+bem mais.
 
 Um turno carrega entre 4k e 8k caracteres de procedimento: o arquivo que fica
 sempre residente, mais a única rota que o trabalho toma. Os dois são presos a
-3600 caracteres por uma checagem que roda em todo commit, então o teto é fato e
-não intenção.
+3600 caracteres por um check que roda em todo commit, então o teto é fato e não
+intenção.
 
-Conduzir uma mudança inteira despacha um agente novo por grupo de tarefa e
-guarda quatro linhas de cada um: os arquivos que tocou, a validação, uma nota
-para a frente, e se está bloqueado. Todo o resto é descartado. A conversa que
-conduz uma mudança de dez grupos tem mais ou menos o tamanho da que conduz um
-grupo só.
+Rodar uma change inteira despacha um agente novo por task group e guarda quatro
+linhas de cada um: os arquivos que tocou, a validação, uma nota para a frente,
+e se travou. Todo o resto é descartado. A conversa que roda uma change de dez
+task groups tem mais ou menos o tamanho da que roda um só.
 
 ## A implementação deixa de ser o trabalho
 
-Mande conduzir uma mudança até o fim e a implementação costuma levar um quarto
-de hora. Um grupo de tarefa sozinho leva minutos.
+Mande rodar uma change até o fim e a implementação costuma levar um quarto de
+hora. Um task group sozinho leva minutos.
 
 O planejamento não, e nem deveria. Ele pode levar um dia, ou uma conversa
-espalhada por vários, e é trabalho a dois: você decide, o pacote registra o que
+espalhada por vários, e é trabalho a dois: você decide, a change registra o que
 você decidiu, e o procedimento para no instante em que encontra uma decisão que
 você ainda não tomou.
 
@@ -108,18 +109,18 @@ sempre foi a parte que era sua.
 
 ## Um harness para o seu harness
 
-Os mesmos três arquivos que encenam uma migração de banco encenam a reescrita
-do seu `AGENTS.md`, do seu diretório `.claude/`, ou de uma especificação
+Os mesmos três arquivos que organizam uma migração de banco organizam a
+reescrita do seu `AGENTS.md`, do seu diretório `.claude/`, ou de uma spec
 espalhada por quarenta arquivos markdown que se referenciam.
 
-O `spec-delta.md` é o mecanismo. Ele nomeia cada regra que a mudança adiciona,
+O `spec-delta.md` é o mecanismo. Ele nomeia cada regra que a change adiciona,
 altera ou remove, embaixo do documento em que cada uma cai, e se dobra nesses
 documentos no fechamento. Nada normativo é escrito antes de o comportamento
 existir, e nada se desencontra, porque o delta é o registro do que passou a
 valer.
 
-Este repositório é a prova. O changepack é planejado, conduzido e fechado pelo
-changepack, e toda pasta em `changes/archive/` é uma mudança no procedimento,
+Este repositório é a prova. O changepack é planejado, rodado e fechado pelo
+changepack, e toda pasta em `changes/archive/` é uma change no procedimento,
 feita pelo procedimento.
 
 ## Por onde ir
@@ -128,7 +129,7 @@ feita pelo procedimento.
   <LinkCard
     title="Começo"
     href="/changepack/pt/start/install/"
-    description="Instale, rode uma vez e acompanhe um pacote da abertura ao arquivo."
+    description="Instale, rode uma vez e acompanhe uma change da abertura ao arquivo."
   />
   <LinkCard
     title="Rotas"
@@ -139,7 +140,7 @@ feita pelo procedimento.
   <LinkCard
     title="O pacote"
     href="/changepack/pt/package/change/"
-    description="Os três artefatos que um pacote carrega, seu frontmatter e o arquivo."
+    description="Os três arquivos que uma change carrega, seu frontmatter e o arquivo."
   />
   <LinkCard
     title="Fundamento"
@@ -152,23 +153,23 @@ feita pelo procedimento.
 ## O que não tem aqui
 
 **Não é uma máquina de vibe coding.** Tudo aqui foi desenhado para ser
-acompanhado de perto. Você aprova o pacote antes de uma linha ser escrita, a
-árvore de trabalho continua sendo a superfície de revisão, todo grupo de tarefa
-comita sozinho, e o procedimento para no instante em que encontra uma decisão
-que é sua. Você deixa o agente trabalhar. Você não deixa ele decidir.
+acompanhado de perto. Você aprova a change antes de uma linha ser escrita, o
+working tree continua sendo a superfície de revisão, todo task group comita
+sozinho, e o procedimento para no instante em que encontra uma decisão que é
+sua. Você deixa o agente trabalhar. Você não deixa ele decidir.
 
 **Nenhuma dependência no seu repositório.** `npx` é um canal, não um runtime.
 Um projeto Python, Rust ou Go não ganha manifesto, nem lockfile, nem árvore
 instalada.
 
 **Nenhuma CLI onde ele roda.** Nada é instalado onde o changepack trabalha. O
-estado é o repositório, que é também por que não existe nada para telefonar
-para casa.
+estado é o repositório, que é também por que não tem nada para telefonar para
+casa.
 
 **Nenhum serviço, nenhum hook, nenhum daemon.** Uma requisição ao registro do
 npm, em um momento só, é tudo que alcança a rede, e uma linha em um arquivo que
 é seu guarda a resposta.
 
-**Uma árvore só, por padrão.** A árvore de trabalho é a superfície de revisão,
-então um pacote não abre uma branch por conta própria. Peça uma branch ou uma
+**Um working tree só, por padrão.** O working tree é a superfície de revisão,
+então uma change não abre branch por conta própria. Peça uma branch ou uma
 worktree e ele trabalha lá como em qualquer outro lugar.
