@@ -1,0 +1,168 @@
+---
+title: Git
+description: >-
+  The three commits a package makes, the convention they follow, and what
+  running without git costs.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+changepack writes documents. Git is where they become a record. A package is
+a folder, and a folder can be copied anywhere; what turns it into history is
+that three moments in its life are commits, and that every one of those
+commits says which package produced it.
+
+## Without git
+
+Nothing checks for a repository and nothing refuses to run. The installer
+says one line and carries on:
+
+```text
+  This is not a git repository. changepack expects to be committed
+  alongside the project it governs.
+```
+
+What you keep is the planning. What you lose is the trail:
+
+| | Without git |
+|---|---|
+| The gate, the decisions, the task groups | unchanged. They are a conversation and a folder |
+| `change.md`, `tasks.md`, `spec-delta.md` | unchanged. Markdown, readable by anyone |
+| The archive move | still happens, as a rename nothing recorded |
+| The three commit points | nothing lands, so nothing marks where a group ended |
+| `opened-by` | no identity to read, so the key is omitted |
+| The package's own history | gone. The trailers had nowhere to go |
+| The convention `init` proposes | nothing to read it from, so it asks |
+
+It runs. It is half of what it is for. Every route ends at a commit, and a
+run that cannot commit ends by reporting and stopping there.
+
+<Aside>
+Use it without git and the packages are still worth writing. Use it with git
+and a package answers, months later, exactly which commits it produced and in
+what order.
+</Aside>
+
+## The convention
+
+Conventional commits are the default, and the recommendation. They are not a
+requirement: the skill never sets the type names, it follows the ones the
+project already uses.
+
+`init` reads `git log --oneline -20` and proposes what it finds there, so a
+repository that has been writing `feat:` and `fix:` for two years gets
+`conventional` without being asked, and one writing something else gets that
+instead. The answer lands in one field of
+[CHANGEPACK.md](/changepack/en/refs/changepack/), which is where you change
+it:
+
+```markdown
+- **commit:** conventional, no agent co-author, one per commit point, without
+  asking.
+```
+
+That line is the default, and it carries three separate decisions:
+
+| In `commit:` | What it does |
+|---|---|
+| `conventional` | what the messages look like. Another convention's name puts the three roles below onto that convention's names |
+| `ask first` | every commit point asks before landing, instead of committing and reporting |
+| `co-author` | the agent is credited as co-author, for a project that has to disclose machine assistance. Absent, no agent is ever credited |
+
+The three roles a convention has to provide are the same everywhere: one type
+for work that moves nothing, one for behavior arriving, one for behavior
+corrected. Under conventional commits those are `chore`, `feat` and `fix`.
+
+## What a package looks like in the log
+
+Three commit points, and each one commits alone: the package when it opens, a
+task group as it lands, the archive move at closure. One real package from
+this repository:
+
+```text
+0dd9279 chore: open a-package-reads-like-a-document
+3339557 feat: a change file opens with what the change is
+856d69d feat: the other two templates carry their metadata
+605ac21 feat: planning stamps the frontmatter and counts the gates
+4496bda feat: two routes follow the frontmatter
+ec3f73d chore: close a-package-reads-like-a-document
+```
+
+Two `chore` messages with the work between them. That is the shape of every
+package, and the reason you can find one in a log you have never read.
+
+**The opening** commits the three files and nothing else. No code moved, so
+it takes the type reserved for work that moves nothing. It is the boundary:
+everything after it belongs to the package.
+
+**Each group** commits as it lands, after its own validation passed, and
+before the next group starts. Four groups, four commits.
+
+**The archive move** is its own commit even when the last group landed a
+moment earlier, and it names the shipped version where the project has one:
+
+```text
+2b0971b chore: close it-ships-as-changepack at 1.0.0
+```
+
+### Why it commits along the way
+
+A group is one verifiable outcome, and it commits at the moment that outcome
+is proved. Four reasons, all of them the same reason:
+
+- What passed validation is separated from what has not started yet.
+- Running a package to the end dispatches a fresh subagent per group, and
+  each one begins on a clean tree.
+- One group reverts without touching the others.
+- The log says where the run stopped, which is what the next session reads
+  before it picks the work up.
+
+### The type is about the product, not the package
+
+Between the two `chore` messages, the type says what the commit did to the
+product. `fix:` is for what shipped wrong, in a release someone already has.
+Something that broke on the way to closure and was repaired before it ever
+shipped is still the feature landing, so it stays `feat:`. The package is
+named by the trailer, never by the type.
+
+## The message
+
+The subject says what is true now, in 72 characters or fewer, concrete rather
+than evocative. Someone scanning the log decides from the subject alone
+whether the commit concerns them.
+
+The body is optional and never longer than 300 characters. It carries what
+behaves differently, never the reasoning: the reasoning is in
+[change.md](/changepack/en/refs/change/), and that file is archived rather
+than deleted. A body that will not fit is telling you the work needed a
+package.
+
+Under both, on every commit a package produces, two trailers:
+
+```text
+Change: the-site-stands-up
+Changepack: 1.0.0
+```
+
+Both or neither, on all three moments. Direct work, the pass that lands
+without a package, carries neither. At closure `Changepack:` still names the
+old version where the package is the one shipping the new one, because that
+is the version that ran.
+
+## Reading a package back
+
+The trailer is an index nobody had to build:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --reverse --oneline
+```
+
+That returns the whole package, in order, from the opening to the last group
+that landed. Closure ends its report with exactly that line, with the archive
+commit missing from it, being the one about to be made.
+
+Because a package is a folder in the tree, it travels with the branch it was
+opened on. It merges, rebases, and is thrown away like anything else you have
+in there.

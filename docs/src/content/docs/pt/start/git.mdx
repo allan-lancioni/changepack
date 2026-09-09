@@ -1,0 +1,168 @@
+---
+title: Git
+description: >-
+  Os três commits que uma change faz, a convenção que eles seguem e o que
+  custa rodar sem git.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+O changepack escreve documentos. O git é onde eles viram registro. Uma change
+é uma pasta, e pasta se copia para qualquer lugar; o que transforma isso em
+histórico é que três momentos da vida dela são commits, e que todo commit diz
+qual change o produziu.
+
+## Sem git
+
+Nada verifica se existe repositório e nada se recusa a rodar. O instalador
+diz uma linha e segue:
+
+```text
+  This is not a git repository. changepack expects to be committed
+  alongside the project it governs.
+```
+
+O que você mantém é o planejamento. O que você perde é o rastro:
+
+| | Sem git |
+|---|---|
+| O gate, as decisões, os grupos de tasks | igual. São uma conversa e uma pasta |
+| `change.md`, `tasks.md`, `spec-delta.md` | igual. Markdown, que qualquer um lê |
+| A ida para o arquivo | continua acontecendo, como um rename que ninguém registrou |
+| Os três pontos de commit | nada aterrissa, então nada marca onde um grupo terminou |
+| `opened-by` | não há identidade para ler, então a chave é omitida |
+| O histórico da própria change | some. Os trailers não tinham para onde ir |
+| A convenção que o `init` propõe | não há de onde ler, então ele pergunta |
+
+Roda. E é metade do que ele existe para ser. Toda rota termina num commit, e
+uma rodada que não pode comitar termina reportando e parando ali.
+
+<Aside>
+Use sem git e as changes ainda valem o que foram escritas. Use com git e uma
+change responde, meses depois, exatamente quais commits ela produziu e em que
+ordem.
+</Aside>
+
+## A convenção
+
+Conventional commits é o padrão, e é a recomendação. Não é exigência: a skill
+nunca define os nomes dos tipos, ela segue os que o projeto já usa.
+
+O `init` lê `git log --oneline -20` e propõe o que encontra ali, então um
+repositório que escreve `feat:` e `fix:` há dois anos recebe `conventional`
+sem ser perguntado, e um que escreve outra coisa recebe aquela outra coisa. A
+resposta cai num campo do
+[CHANGEPACK.md](/changepack/pt/refs/changepack/), que é onde você muda:
+
+```markdown
+- **commit:** conventional, no agent co-author, one per commit point, without
+  asking.
+```
+
+Essa linha é o padrão, e ela carrega três decisões separadas:
+
+| No `commit:` | O que faz |
+|---|---|
+| `conventional` | como as mensagens ficam. O nome de outra convenção joga os três papéis abaixo nos nomes daquela convenção |
+| `ask first` | todo ponto de commit pergunta antes de aterrissar, em vez de comitar e reportar |
+| `co-author` | o agente entra como co-autor, para um projeto que precisa declarar assistência de máquina. Ausente, nenhum agente é creditado |
+
+Os três papéis que uma convenção precisa oferecer são os mesmos em qualquer
+uma: um tipo para trabalho que não move nada, um para comportamento
+chegando, um para comportamento corrigido. Em conventional commits eles são
+`chore`, `feat` e `fix`.
+
+## Como uma change aparece no log
+
+Três pontos de commit, e cada um comita sozinho: a change quando abre, cada
+grupo de tasks quando aterrissa, a ida para o arquivo no fechamento. Uma
+change real deste repositório:
+
+```text
+0dd9279 chore: open a-package-reads-like-a-document
+3339557 feat: a change file opens with what the change is
+856d69d feat: the other two templates carry their metadata
+605ac21 feat: planning stamps the frontmatter and counts the gates
+4496bda feat: two routes follow the frontmatter
+ec3f73d chore: close a-package-reads-like-a-document
+```
+
+Duas mensagens `chore` com o trabalho no meio. Esse é o formato de toda
+change, e o motivo de você achar uma num log que nunca leu.
+
+**A abertura** comita os três arquivos e mais nada. Nenhum código se mexeu,
+então ela leva o tipo reservado para trabalho que não move nada. É a
+fronteira: tudo depois dela pertence à change.
+
+**Cada grupo** comita quando aterrissa, depois que a validação dele passou e
+antes do próximo grupo começar. Quatro grupos, quatro commits.
+
+**A ida para o arquivo** é um commit próprio mesmo quando o último grupo
+aterrissou um minuto antes, e nomeia a versão que saiu, onde o projeto tem
+uma:
+
+```text
+2b0971b chore: close it-ships-as-changepack at 1.0.0
+```
+
+### Por que comitar pelo caminho
+
+Um grupo é um resultado verificável, e ele comita no momento em que esse
+resultado fica provado. Quatro motivos, todos o mesmo motivo:
+
+- O que passou na validação fica separado do que ainda nem começou.
+- Rodar uma change até o fim despacha um subagente novo por grupo, e cada um
+  começa numa árvore limpa.
+- Um grupo volta atrás sem encostar nos outros.
+- O log diz onde a rodada parou, que é o que a próxima sessão lê antes de
+  pegar o trabalho.
+
+### O tipo fala do produto, não da change
+
+Entre as duas mensagens `chore`, o tipo diz o que o commit fez com o produto.
+`fix:` é para o que saiu errado, numa release que alguém já tem. Algo que
+quebrou no caminho até o fechamento e foi consertado antes de sair continua
+sendo a feature aterrissando, então segue `feat:`. A change é nomeada pelo
+trailer, nunca pelo tipo.
+
+## A mensagem
+
+O assunto diz o que é verdade agora, em 72 caracteres ou menos, concreto em
+vez de evocativo. Quem passa os olhos no log decide só pelo assunto se aquele
+commit é da conta dele.
+
+O corpo é opcional e nunca passa de 300 caracteres. Ele carrega o que se
+comporta diferente, nunca o porquê: o porquê está no
+[change.md](/changepack/pt/refs/change/), e esse arquivo vai para o arquivo
+morto em vez de ser apagado. Um corpo que não cabe está te dizendo que o
+trabalho precisava de uma change.
+
+Embaixo dos dois, em todo commit que uma change produz, dois trailers:
+
+```text
+Change: the-site-stands-up
+Changepack: 1.0.0
+```
+
+Os dois ou nenhum, nos três momentos. Trabalho direto, a passada que
+aterrissa sem change, não leva nenhum. No fechamento o `Changepack:` ainda
+nomeia a versão antiga quando a change é justamente a que entrega a nova,
+porque foi essa a versão que rodou.
+
+## Lendo uma change de volta
+
+O trailer é um índice que ninguém precisou construir:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --reverse --oneline
+```
+
+Isso devolve a change inteira, em ordem, da abertura até o último grupo que
+aterrissou. O fechamento termina o relatório com exatamente essa linha, sem o
+commit de arquivo nela, que é o que está prestes a ser feito.
+
+Como uma change é uma pasta na árvore, ela acompanha a branch em que foi
+aberta. Faz merge, faz rebase e é jogada fora como qualquer outra coisa que
+você tem ali.
