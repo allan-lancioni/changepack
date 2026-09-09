@@ -1,0 +1,13 @@
+/* A file tree indents four levels before a filename starts, so the comment
+   beside a deep entry has almost no room left. Starlight lets it drop to a
+   second line: `.tree-entry` is an inline-flex with `flex-wrap: wrap` capped
+   at the container width. Keep the entry on one line instead. The component
+   already scrolls sideways, so nothing overflows the page. */
+starlight-file-tree .tree-entry {
+  flex-wrap: nowrap;
+  max-width: none;
+}
+
+starlight-file-tree .comment {
+  white-space: nowrap;
+}

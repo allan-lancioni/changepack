@@ -14,6 +14,8 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'changepack',
+      // One stylesheet, for layouts the built in components do not cover.
+      customCss: ['./src/styles/custom.css'],
       // Both languages carry a prefix and neither sits at the root, so every
       // page has exactly one URL and no language is privileged. `root` is
       // unset on purpose: setting it would serve one locale from /.
