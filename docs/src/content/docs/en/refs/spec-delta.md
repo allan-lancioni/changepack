@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-The third file of a package, written only when the change alters something a
+The third file of a change, written only when the work alters something a
 later change will be held to. It holds the rules the change makes true, and it
 holds them until closure.
 
@@ -27,7 +27,7 @@ goes in `change.md` under Goal instead.
 ## The shape
 
 The frontmatter carries the title and `documents:`, one path per heading below
-and in the same order, so an archived package says what it touched without
+and in the same order, so an archived change says what it touched without
 being opened.
 
 Then one heading per document, so folding it at closure is one file at a time,
@@ -49,11 +49,11 @@ carry. What it will say after closure, not what the change is doing to it.
 
 ## Where it lands
 
-Nothing is written into a normative document while the package is open. The
+Nothing is written into a normative document while the change is open. The
 proposed behavior lives here, and the document still states what is true
 today.
 
 At closure the delta is folded in, one heading at a time, and the document
-states the new behavior as current. The delta stays in the package, as the
+states the new behavior as current. The delta stays in the change, as the
 record of what became normative. Where a rule landed differently from how it
 was declared, its line says so.

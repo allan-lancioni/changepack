@@ -48,9 +48,9 @@ installed the skill, and ends with what updating costs.
 
 ## When the check runs
 
-When a package closes, and only then. A package planned under one procedure
+When a change closes, and only then. A change planned under one procedure
 keeps it until it closes, so nothing is checked while one is open and no
-update is installed over one. An open package is never rewritten into a
+update is installed over one. An open change is never rewritten into a
 procedure it was not planned under.
 
 The check is one request to the npm registry, and it is everything about
@@ -82,7 +82,7 @@ Three answers, at the end of the closure report:
 What is recorded is the decision, not the date. A repository is never asked
 twice about the same version, and the answer is committed, because the version
 a project runs belongs to the project and not to whoever happened to close the
-package.
+change.
 
 ## The automatic update
 

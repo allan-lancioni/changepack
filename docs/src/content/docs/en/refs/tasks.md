@@ -6,8 +6,8 @@ sidebar:
   order: 4
 ---
 
-The work, cut into groups. It is written when the package opens and edited as
-the package lands, which makes it the only file in the package that changes
+The work, cut into groups. It is written when the change opens and edited as
+each group lands, which makes it the only one of the three files that moves
 while the work runs.
 
 ## The frontmatter

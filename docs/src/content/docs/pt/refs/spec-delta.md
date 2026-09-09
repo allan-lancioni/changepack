@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-O terceiro arquivo de um pacote, escrito só quando a mudança altera algo a que
+O terceiro arquivo de uma change, escrito só quando a mudança altera algo a que
 uma mudança posterior vai ser cobrada. Ele guarda as regras que a mudança torna
 verdadeiras, e guarda até o fechamento.
 
@@ -29,7 +29,7 @@ para o `change.md`, embaixo de Goal.
 ## O formato
 
 O frontmatter carrega o título e o `documents:`, um caminho por título abaixo e
-na mesma ordem, para que um pacote arquivado diga no que ele mexeu sem precisar
+na mesma ordem, para que uma change arquivada diga no que ela mexeu sem precisar
 ser aberto.
 
 Depois um título por documento, para que dobrar no fechamento seja um arquivo
@@ -53,11 +53,11 @@ fazendo com ele.
 
 ## Onde ele aterrissa
 
-Nada é escrito num documento normativo enquanto o pacote está aberto. O
+Nada é escrito num documento normativo enquanto a change está aberta. O
 comportamento proposto mora aqui, e o documento continua dizendo o que é
 verdade hoje.
 
 No fechamento o delta é dobrado, um título por vez, e o documento passa a
-dizer o comportamento novo como atual. O delta fica no pacote, como o registro
+dizer o comportamento novo como atual. O delta fica na change, como o registro
 do que virou normativo. Onde uma regra aterrissou diferente de como foi
 declarada, a linha dela diz isso.

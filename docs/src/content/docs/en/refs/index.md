@@ -29,20 +29,20 @@ running skill, that is said in one line before anything else.
 |---|---|
 | Lands in one coherent pass, no unapproved decision in the way | Direct work, below |
 | Larger, ambiguous, staged, migratory, or crossing contexts | [plan](#plan) |
-| Running a package group by group, dispatching each | [run](#run) |
+| Running a change group by group, dispatching each | [run](#run) |
 | Implementing one group yourself | [work](#work) |
 | Looking without changing | [review](#review) |
 | Every task checked and validated | [close](#close) |
 | Updating the skill itself | [update](#update) |
 | Explaining or changing the project file | [init](#init) |
 
-A package is not opened because the work touches behavior. It is opened
+A change is not opened because the work touches behavior. It is opened
 because a single pass cannot land it. Direct work that runs into an unapproved
 decision stops where it stands and re-routes to plan.
 
-Opening one is confirmed first, with a question offering the package and the
+Opening one is confirmed first, with a question offering the change and the
 direct pass, and nothing is written until the answer is in. The question is
-skipped only when you asked for a package in so many words.
+skipped only when you asked for a change in so many words.
 
 ### Direct work
 
@@ -91,19 +91,19 @@ Taken when the work does not fit one coherent pass.
 It writes `changes/active/<slug>/`: `change.md` and `tasks.md` always, and
 `spec-delta.md` where the change alters something a later change is held to.
 Every open decision goes in `change.md` as alternatives, costs and a
-recommendation. A package with an unanswered decision is not approvable, so
+recommendation. A change with an unanswered decision is not approvable, so
 the answer is either taken now or written down as blocking.
 
-It stops after committing the package. It does not implement, and it does not
+It stops after committing the change. It does not implement, and it does not
 ask to.
 
 ### run
 
-Taken to drive a whole package from one conversation. It dispatches, it
+Taken to drive a whole change from one conversation. It dispatches, it
 validates, it commits. It never implements.
 
 One fresh agent per group, in order, never a reused one. Each is briefed with
-the project file and the package in full, and answers in four lines: the files
+the project file and the change in full, and answers in four lines: the files
 it touched, the validation and its result, at most two sentences for the next
 group, and whether it is blocked. The driving conversation runs the validation
 again itself, reads the diff against the drawing in `change.md`, checks the
@@ -118,12 +118,12 @@ is committed.
 Taken to implement one group by hand, one task at a time, in the conversation
 you are already in.
 
-It reads the package and the current authority for the behavior about to
+It reads the change and the current authority for the behavior about to
 change, asks once whether to stop after each group, and checks an item the
 moment that item's own validation passes. A task is never left checked while
 its work is incomplete.
 
-It stops at an open decision the package did not approve, at a failed
+It stops at an open decision the change did not approve, at a failed
 validation, at the end of a group where you asked to stop, and when there is
 no group left.
 
@@ -148,17 +148,17 @@ It audits the success criteria against behavior that exists rather than
 against tasks that are checked, folds the delta into the documents it names,
 searches the scope for drafts, scaffolds and dead references, and runs the
 project's validation. Then it records the outcome in `change.md`, fills the
-shipped version, ends the report with the package's own commits, and moves the
+shipped version, ends the report with the change's own commits, and moves the
 folder to `changes/archive/<YYYY-MM-DD>-<slug>/`.
 
-A package that will not ship is closed the same way, never left open.
+A change that will not ship is closed the same way, never left open.
 
 It stops after the archive commit, which lands alone.
 
 ### commit
 
 Taken at the end of every route that changed a file. Three moments commit, and
-each one commits alone: the package when it opens, a task group as it lands,
+each one commits alone: the change when it opens, a task group as it lands,
 the archive move at closure.
 
 A check behaves three ways and only one stops the run: it passes and is
@@ -168,9 +168,9 @@ that passed.
 
 The subject says what is true now, in 72 characters or fewer. The body is
 optional, never longer than 300 characters, and carries what behaves
-differently rather than the reasoning: the reasoning is the package's. A
-package's commits carry two trailers, `Change:` and `Changepack:`, and direct
-work carries none. No agent is credited as co-author unless the project says
+differently rather than the reasoning, which belongs to the change. Its
+commits carry two trailers, `Change:` and `Changepack:`, and direct work
+carries none. No agent is credited as co-author unless the project says
 it must disclose.
 
 ### update
@@ -187,5 +187,5 @@ Declining is recorded too. Not now holds the version and asks again when
 something newer ships; never turns the check off, and no network call outlives
 that answer.
 
-It stops where a package is open, and says the update runs once that package
+It stops where a change is open, and says the update runs once that change
 closes.

@@ -30,20 +30,20 @@ que está rodando, isso é dito em uma linha antes de qualquer outra coisa.
 |---|---|
 | Cabe em uma passada coerente, sem decisão pendente no caminho | Trabalho direto, abaixo |
 | Maior, ambíguo, faseado, migratório, ou cruzando contextos | [plan](#plan) |
-| Rodar um pacote grupo a grupo, despachando cada um | [run](#run) |
+| Rodar uma change grupo a grupo, despachando cada um | [run](#run) |
 | Implementar um grupo você mesmo | [work](#work) |
 | Olhar sem mudar | [review](#review) |
 | Toda task marcada e validada | [close](#close) |
 | Atualizar a própria skill | [update](#update) |
 | Explicar ou mudar o arquivo do projeto | [init](#init) |
 
-Um pacote não é aberto porque o trabalho mexe em comportamento. Ele é aberto
+Uma change não é aberta porque o trabalho mexe em comportamento. Ela é aberta
 porque uma passada só não dá conta. O trabalho direto que esbarra numa decisão
 não aprovada para onde está e vai para a plan.
 
-Abrir um é confirmado antes, com uma pergunta que oferece o pacote e a passada
+Abrir uma é confirmado antes, com uma pergunta que oferece a change e a passada
 direta, e nada é escrito até a resposta chegar. A pergunta só é pulada quando
-você pediu um pacote com todas as letras.
+você pediu uma change com todas as letras.
 
 ### Trabalho direto
 
@@ -93,19 +93,19 @@ Tomada quando o trabalho não cabe em uma passada coerente.
 Ela escreve `changes/active/<slug>/`: o `change.md` e o `tasks.md` sempre, e o
 `spec-delta.md` quando a mudança altera algo a que uma mudança posterior é
 cobrada. Toda decisão em aberto entra no `change.md` como alternativas, custos
-e uma recomendação. Um pacote com decisão sem resposta não é aprovável, então
+e uma recomendação. Uma change com decisão sem resposta não é aprovável, então
 ou a resposta sai agora, ou fica escrita como bloqueio.
 
-Ela para depois de comitar o pacote. Não implementa, e não pede para
+Ela para depois de comitar a change. Não implementa, e não pede para
 implementar.
 
 ### run
 
-Tomada para conduzir um pacote inteiro de uma conversa só. Ela despacha, ela
+Tomada para conduzir uma change inteira de uma conversa só. Ela despacha, ela
 valida, ela comita. Ela nunca implementa.
 
 Um agente novo por grupo, na ordem, nunca um reaproveitado. Cada um recebe o
-arquivo do projeto e o pacote por inteiro, e responde em quatro linhas: os
+arquivo do projeto e a change por inteiro, e responde em quatro linhas: os
 arquivos que tocou, a validação e o resultado, no máximo duas frases para o
 próximo grupo, e se está travado. A conversa que conduz roda a validação de
 novo por conta própria, lê o diff contra o desenho do `change.md`, marca os
@@ -119,12 +119,12 @@ saiu do escopo do grupo. Nesses casos nada é marcado e nada é comitado.
 Tomada para implementar um grupo na mão, uma task por vez, na conversa em que
 você já está.
 
-Ela lê o pacote e a autoridade atual sobre o comportamento que vai mudar,
+Ela lê a change e a autoridade atual sobre o comportamento que vai mudar,
 pergunta uma vez se é para parar a cada grupo, e marca um item no instante em
 que a validação daquele item passa. Uma task nunca fica marcada com o trabalho
 dela incompleto.
 
-Ela para numa decisão que o pacote não aprovou, numa validação que falhou, no
+Ela para numa decisão que a change não aprovou, numa validação que falhou, no
 fim de um grupo quando você pediu para parar, e quando não sobra grupo.
 
 ### review
@@ -148,17 +148,17 @@ Ela audita os critérios de sucesso contra o comportamento que existe, e não
 contra as tasks que estão marcadas, dobra o delta nos documentos que ele nomeia,
 varre o escopo atrás de rascunhos, andaimes e referências mortas, e roda a
 validação do projeto. Depois registra o resultado no `change.md`, preenche a
-versão em que aquilo saiu, encerra o relatório com os commits do próprio pacote,
+versão em que aquilo saiu, encerra o relatório com os commits da própria change,
 e move a pasta para `changes/archive/<YYYY-MM-DD>-<slug>/`.
 
-Um pacote que não vai sair é fechado do mesmo jeito, nunca deixado aberto.
+Uma change que não vai sair é fechada do mesmo jeito, nunca deixada aberta.
 
 Ela para depois do commit de arquivamento, que aterrissa sozinho.
 
 ### commit
 
 Tomada no fim de toda rota que mudou um arquivo. Três momentos comitam, e cada
-um comita sozinho: o pacote quando abre, um grupo de tasks quando aterrissa, a
+um comita sozinho: a change quando abre, um grupo de tasks quando aterrissa, a
 ida para o arquivo no fechamento.
 
 Um check se comporta de três jeitos e só um para a rodada: ele passa e é
@@ -168,8 +168,8 @@ passou.
 
 O assunto diz o que é verdade agora, em 72 caracteres ou menos. O corpo é
 opcional, nunca passa de 300 caracteres, e carrega o que passou a se comportar
-diferente em vez do porquê: o porquê é do pacote. Os commits de um pacote levam
-dois trailers, `Change:` e `Changepack:`, e o trabalho direto não leva nenhum.
+diferente em vez do porquê, que é da change. Os commits dela levam dois
+trailers, `Change:` e `Changepack:`, e o trabalho direto não leva nenhum.
 Nenhum agente é creditado como co-autor, a não ser que o projeto precise
 declarar isso.
 
@@ -187,5 +187,5 @@ Recusar também fica registrado. Agora não segura a versão e volta a perguntar
 quando sair algo mais novo; nunca desliga o check, e nenhuma chamada de rede
 sobrevive a essa resposta.
 
-Ela para onde existe pacote aberto, e diz que o update roda assim que aquele
-pacote fechar.
+Ela para onde existe change aberta, e diz que o update roda assim que aquela
+change fechar.

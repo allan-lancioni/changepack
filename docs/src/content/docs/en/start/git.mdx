@@ -1,7 +1,7 @@
 ---
 title: Git
 description: >-
-  The three commits a package makes, the convention they follow, and how to
+  The three commits a change makes, the convention they follow, and how to
   take one back.
 sidebar:
   order: 3
@@ -9,10 +9,10 @@ sidebar:
 
 import { Badge } from '@astrojs/starlight/components';
 
-changepack writes documents. Git is where they become a record. A package is
+changepack writes documents. Git is where they become a record. A change is
 a folder, and a folder can be copied anywhere; what turns it into history is
 that three moments in its life are commits, and that every one of those
-commits says which package produced it.
+commits says which change produced it.
 
 ## The convention
 
@@ -44,10 +44,10 @@ The three roles a convention has to provide are the same everywhere: one type
 for work that moves nothing, one for behavior arriving, one for behavior
 corrected. Under conventional commits those are `chore`, `feat` and `fix`.
 
-## What a package looks like in the log
+## What a change looks like in the log
 
-Three commit points, and each one commits alone: the package when it opens, a
-task group as it lands, the archive move at closure. One real package from
+Three commit points, and each one commits alone: the change when it opens, a
+task group as it lands, the archive move at closure. One real change from
 this repository:
 
 ```text
@@ -60,11 +60,11 @@ ec3f73d chore: close a-package-reads-like-a-document
 ```
 
 Two `chore` messages with the work between them. That is the shape of every
-package, and the reason you can find one in a log you have never read.
+change, and the reason you can find one in a log you have never read.
 
 **The opening** commits the three files and nothing else. No code moved, so
 it takes the type reserved for work that moves nothing. It is the boundary:
-everything after it belongs to the package.
+everything after it belongs to the change.
 
 **Each group** commits as it lands, after its own validation passed, and
 before the next group starts. Four groups, four commits.
@@ -82,18 +82,18 @@ A group is one verifiable outcome, and it commits at the moment that outcome
 is proved. Four reasons, all of them the same reason:
 
 - What passed validation is separated from what has not started yet.
-- Running a package to the end dispatches a fresh subagent per group, and
+- Running a change to the end dispatches a fresh subagent per group, and
   each one begins on a clean tree.
 - One group reverts without touching the others.
 - The log says where the run stopped, which is what the next session reads
   before it picks the work up.
 
-### The type is about the product, not the package
+### The type is about the product, not the change it came from
 
 Between the two `chore` messages, the type says what the commit did to the
 product. `fix:` is for what shipped wrong, in a release someone already has.
 Something that broke on the way to closure and was repaired before it ever
-shipped is still the feature landing, so it stays `feat:`. The package is
+shipped is still the feature landing, so it stays `feat:`. The change is
 named by [the trailer](#the-trailers), never by the type.
 
 ## The message
@@ -106,25 +106,25 @@ The body is optional and never longer than 300 characters. It carries what
 behaves differently, never the reasoning: the reasoning is in
 [change.md](/changepack/en/refs/change/), and that file is archived rather
 than deleted. A body that will not fit is telling you the work needed a
-package.
+change.
 
 ## The trailers
 
-Under the body, on every commit a package produces, two lines:
+Under the body, on every commit a change produces, two lines:
 
 ```text
 Change: the-site-stands-up
 Changepack: 1.0.0
 ```
 
-`Change:` is the package's slug, the name of its folder. `Changepack:` is the
+`Change:` is the change's slug, the name of its folder. `Changepack:` is the
 version of the procedure that produced the commit, so a message from a year
 ago says which rules it was written under.
 
 Both or neither, on all three moments. Direct work, the pass that lands
-without a package, carries neither: nothing produced it but the request.
+without a change, carries neither: nothing produced it but the request.
 
-## Reading a package back
+## Reading a change back
 
 The trailer is an index nobody had to build:
 
@@ -132,11 +132,11 @@ The trailer is an index nobody had to build:
 git log --grep='Change: a-package-reads-like-a-document' --reverse --oneline
 ```
 
-That returns the whole package, in order, from the opening to the last group
+That returns the whole change, in order, from the opening to the last group
 that landed. Closure ends its report with exactly that line, with the archive
 commit missing from it, being the one about to be made.
 
-Because a package is a folder in the tree, it travels with the branch it was
+Because a change is a folder in the tree, it travels with the branch it was
 opened on. It merges, rebases, and is thrown away like anything else you have
 in there.
 
@@ -146,7 +146,7 @@ Three different operations, and the difference between them is what survives.
 
 ### Abandoning
 
-A package that will not run to the end is abandoned, and abandoning it is
+A change that will not run to the end is abandoned, and abandoning it is
 closing it. Say it is not going to happen and it closes on the spot: no
 audit, and the Outcome says what happened, what was built and left behind,
 and what would have to be true for the work to come back. It archives at the
@@ -171,11 +171,11 @@ without touching the rest.
 
 Ask for it in plain language and it is an ordinary pass: the agent reverts,
 validates and commits, carrying no [trailers](#the-trailers), because a
-revert is not the package.
+revert is not the change.
 
-Reverting is not abandoning. A package still open is still open afterwards,
+Reverting is not abandoning. A change still open is still open afterwards,
 now with nothing behind it, so an abandoned experiment usually wants both:
-revert the code, then close the package saying why.
+revert the code, then close the change saying why.
 
 ### Purging
 
@@ -190,7 +190,7 @@ purging does not shrink history, it only stops the reasoning being found by
 anyone who lists the directory. That reasoning is the whole reason the folder
 was archived instead of thrown away.
 
-The case where it is right is a package that holds something that should
+The case where it is right is a change that holds something that should
 never have been in the tree: a secret, real user data. Delete it, and
 remember that git kept it anyway. A leaked credential needs rotating, not
 purging.
@@ -216,7 +216,7 @@ What you keep is the planning. What you lose is the trail:
 | The archive move | still happens, as a rename nothing recorded |
 | The three commit points | nothing lands, so nothing marks where a group ended |
 | `opened-by` | no identity to read, so the key is omitted |
-| [The trailers](#the-trailers) | nowhere to go, and the package's own history with them |
+| [The trailers](#the-trailers) | nowhere to go, and the change's own history with them |
 | The convention `init` proposes | nothing to read it from, so it asks |
 
 Every route ends at a commit, and a run that cannot commit ends by reporting

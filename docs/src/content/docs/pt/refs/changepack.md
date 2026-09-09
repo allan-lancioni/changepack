@@ -7,8 +7,8 @@ sidebar:
 ---
 
 O único arquivo que é do projeto. Todo o resto que o changepack instala é
-substituído por inteiro num update, então tudo o que você decide sobre como os
-pacotes de mudança funcionam aqui mora nesse arquivo, na raiz do repositório.
+substituído por inteiro num update, então tudo o que você decide sobre como as
+changes funcionam aqui mora nesse arquivo, na raiz do repositório.
 
 Toda rota lê ele antes de qualquer outra coisa.
 
@@ -32,7 +32,7 @@ Como as mudanças funcionam neste repositório.
 | `changes` | um caminho, dentro deste repositório ou fora dele | `changes/` |
 | `normative` | os documentos a que uma mudança posterior é cobrada, ou nenhum | `CLAUDE.md`, `AGENTS.md`, `.claude/` |
 | `language` | o idioma do que for escrito no repositório | inglês |
-| `version` | onde mora a versão do próprio projeto | nenhuma, e um pacote não registra versão de saída |
+| `version` | onde mora a versão do próprio projeto | nenhuma, e uma change não registra versão de saída |
 | `validate` | um comando, ou nenhum | sem comando: as rotas relatam isso e seguem |
 | `commit` | a convenção, `ask first`, e `co-author` onde o projeto precisa declarar | convencional, sem perguntar, e sem co-autor agente |
 | `protect` | caminhos que ninguém pode escrever | nada é protegido |
@@ -55,7 +55,7 @@ nenhum, nenhuma mudança carrega.
 
 ## Os que se leem torto
 
-O `language:` manda no que é escrito no repositório: os arquivos do pacote,
+O `language:` manda no que é escrito no repositório: os arquivos da change,
 seus slugs, esse arquivo, as mensagens de commit. O que é falado com você segue
 o idioma da sua mensagem, então os dois são independentes e quase sempre
 diferem. Código segue as convenções em volta dele e não esse campo.

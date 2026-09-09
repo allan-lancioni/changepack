@@ -6,9 +6,9 @@ sidebar:
   order: 4
 ---
 
-O trabalho, cortado em grupos. Ele é escrito quando o pacote abre e editado
-conforme o pacote aterrissa, o que faz dele o único arquivo do pacote que muda
-enquanto o trabalho corre.
+O trabalho, cortado em grupos. Ele é escrito quando a change abre e editado
+conforme cada grupo aterrissa, o que faz dele o único dos três arquivos que se
+mexe enquanto o trabalho corre.
 
 ## O frontmatter
 

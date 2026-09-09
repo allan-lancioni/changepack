@@ -32,7 +32,7 @@ How change packages work in this repository.
 | `changes` | a path, in this repository or outside it | `changes/` |
 | `normative` | the documents a later change is held to, or none | `CLAUDE.md`, `AGENTS.md`, `.claude/` |
 | `language` | what gets written into the repository | English |
-| `version` | where this project's own version lives | none, and a package records no shipped version |
+| `version` | where this project's own version lives | none, and a change records no shipped version |
 | `validate` | one command, or none | no command: the routes report that and continue |
 | `commit` | the convention, `ask first`, and `co-author` where the project must disclose | conventional, without asking, and no agent co-author |
 | `protect` | paths nothing may write | nothing is protected |
@@ -55,7 +55,7 @@ no change ever does.
 
 ## The ones that read oddly
 
-`language:` governs what is written into the repository: the package files,
+`language:` governs what is written into the repository: the change files,
 their slugs, this file, the commit messages. What is said to you follows the
 language of your message instead, so the two are independent and often differ.
 Code follows the conventions around it and not this field.

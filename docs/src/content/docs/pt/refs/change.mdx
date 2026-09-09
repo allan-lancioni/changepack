@@ -12,11 +12,11 @@ O `change.md` responde duas perguntas: por que essa mudança existe, e o que vai
 ser verdade quando ela terminar.
 
 Quem escreve é o agente, quando planeja. Você lê, corrige e aprova antes de
-qualquer implementação. O arquivo nasce na abertura do pacote, é relido antes
+qualquer implementação. O arquivo nasce na abertura da change, é relido antes
 de cada grupo e completado no fechamento.
 
 Como o raciocínio fica aqui, a mensagem de commit não precisa repetir ele: quem
-quiser saber por que algo foi feito assim abre o pacote arquivado.
+quiser saber por que algo foi feito assim abre a change arquivada.
 
 ## O frontmatter
 
@@ -24,7 +24,7 @@ Sete chaves. Chave sem valor é omitida, nunca escrita vazia.
 
 | Chave | O que é |
 |---|---|
-| `title` | o nome do pacote, pelo resultado que ele entrega |
+| `title` | o nome da change, pelo resultado que ela entrega |
 | `description` | uma linha, para a lista de arquivados se ler sem abrir nada |
 | `changepack` | a versão que planejou |
 | `opened` | o dia em que abriu |
@@ -131,7 +131,7 @@ Embaixo do desenho vai só o que ele não mostra: por que essa forma e não outr
 O desenho não é redescrito em prosa.
 
 Se nada estrutural se move, não tem desenho. E provavelmente não precisava de
-pacote.
+change.
 
 ## As decisões
 
@@ -156,11 +156,11 @@ Um grupo que bateu com o desenho não escreve nada, e silêncio é o resultado
 comum.
 
 No fechamento, a seção some se ninguém escreveu nada nela. Se tem linhas, elas
-ficam no pacote arquivado, que é onde alguém procura quando o código não se
+ficam na change arquivada, que é onde alguém procura quando o código não se
 parece com o plano.
 
 ## No fechamento
 
 O Outcome é escrito ali: o que saiu, o que mudou no caminho e o que ficou para
-depois. Se o pacote foi abandonado, é aqui que isso é dito, junto com o que foi
+depois. Se a change foi abandonada, é aqui que isso é dito, junto com o que foi
 construído e o que precisaria ser verdade para o trabalho voltar.

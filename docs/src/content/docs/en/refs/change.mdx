@@ -12,12 +12,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 true when it is done.
 
 The agent writes it while it plans. You read it, correct it and approve it
-before any implementation. The file starts when the package opens, is read
+before any implementation. The file starts when the change opens, is read
 again before each group, and is finished at closure.
 
 Because the reasoning lives here, the commit message does not repeat it:
 anyone who wants to know why something was done this way opens the archived
-package.
+change.
 
 ## The frontmatter
 
@@ -25,8 +25,8 @@ Seven keys. A key with no value is omitted, never written empty.
 
 | Key | What it is |
 |---|---|
-| `title` | the package, named for what it delivers |
-| `description` | one line, so a list of archived packages reads without opening any |
+| `title` | the change, named for what it delivers |
+| `description` | one line, so a list of archived changes reads without opening any |
 | `changepack` | the version that planned it |
 | `opened` | the day it opened |
 | `opened-by` | who opened it: git name and email, the same the opening commit signs with |
@@ -132,7 +132,7 @@ Under the drawing goes only what it does not show: why this shape and not
 another one. The drawing is never described again in prose.
 
 If nothing structural moves, there is no drawing. And there probably did not
-need to be a package.
+need to be a change.
 
 ## The decisions
 
@@ -157,11 +157,11 @@ A group that matched the drawing writes nothing, and silence is the ordinary
 outcome.
 
 At closure the section is deleted if nobody wrote anything under it. If there
-are lines, they stay in the archived package, which is where someone looks
+are lines, they stay in the archived change, which is where someone looks
 when the code does not resemble the plan.
 
 ## At closure
 
 Outcome is written then: what shipped, what changed on the way, and what was
-left for later. If the package was dropped, that is said here too, with what
+left for later. If the change was dropped, that is said here too, with what
 was built and what would have to be true for the work to come back.
