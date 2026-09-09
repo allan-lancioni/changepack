@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Is there a newer changepack? Prints nothing when there is not, which is the
 // ordinary outcome, and never fails: offline, unresolvable or forbidden all
-// look the same as up to date. No dependencies, no writes, no questions.
+// look the same as up to date. The one thing it says without news is that it
+// could not read which version runs here, because that silence would be
+// permanent. No dependencies, no writes, no questions.
 //
 // Run from the root of the repository being governed:
 //
@@ -16,8 +18,9 @@ import { resolve } from 'node:path';
 const REGISTRY = 'https://registry.npmjs.org/changepack';
 const TIMEOUT = 10000;
 
-// Every exit but the one that has something to say is this one.
+// Every exit but the ones that have something to say is this one.
 const silence = () => process.exit(0);
+const say = (m) => process.stdout.write(m + '\n');
 
 // A configuration line is `- **key:** value`, or `key: value` where somebody
 // wrote it plainly. Only the value matters, and only its first words.
@@ -45,8 +48,19 @@ const updates = (field(text, 'updates') ?? '').toLowerCase().split(/\s+/);
 if (updates[0]?.startsWith('off')) silence();
 const held = updates[0]?.startsWith('hold') ? updates[1]?.replace(/[^\d.]/g, '') : null;
 
+// A version that cannot be read is not the same as no news. Silence is how
+// this script reports success, so a `changepack:` that does not parse would
+// wear that face forever and the repository would never hear about another
+// release. This one speaks, and says nothing about updating, having checked
+// nothing.
 const installed = (field(text, 'changepack') ?? '').split(/\s+/)[0];
-if (!SEMVER.test(installed)) silence();
+if (!SEMVER.test(installed)) {
+  say(
+    `CHANGEPACK.md: \`changepack:\` reads ${installed ? `"${installed}"` : 'empty'}, ` +
+      `not a version like 1.2.3, so no check ran.`,
+  );
+  process.exit(0);
+}
 
 // An update installs into a quiet tree, so a package still open is the whole
 // answer: say the version exists and stop. Without this a package nobody
@@ -106,8 +120,6 @@ const between = Object.keys(doc?.versions ?? {})
       cost: typeof stated === 'string' && stated.trim() ? stated.trim() : 'Updating: not stated.',
     };
   });
-
-const say = (m) => process.stdout.write(m + '\n');
 
 say(`changepack ${latest} is available; you run ${installed}.`);
 if (between.length) {

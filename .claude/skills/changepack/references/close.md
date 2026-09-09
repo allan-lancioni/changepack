@@ -61,4 +61,6 @@ After the archive commit, and never before it, from the repository root:
 
 Silence is the ordinary outcome. It leaves no trace in the report, not even as
 a command that ran, and nothing here holds up a closure that already landed.
-Where it prints, load `update.md` and carry its output there.
+Where it names a newer version, load `update.md` and carry its output there.
+Where it says it could not read which version runs here, that line goes in the
+report and nothing else happens.
