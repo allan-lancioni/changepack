@@ -4,18 +4,15 @@ description: >-
   Os três commits que uma change faz, a convenção que eles seguem e como
   desfazer uma.
 sidebar:
-  order: 2
+  order: 3
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
 
 O changepack escreve documentos. O git é onde eles viram registro. Uma change
 é uma pasta, e pasta se copia para qualquer lugar; o que transforma isso em
 histórico é que três momentos da vida dela são commits, e que todo commit diz
 qual change o produziu.
-
-Nada aqui verifica se existe repositório, então roda sem um.
-[Quanto isso custa](#sem-git) está no fim desta página.
 
 ## A convenção
 
@@ -143,22 +140,26 @@ Como uma change é uma pasta na árvore, ela acompanha a branch em que foi
 aberta. Faz merge, faz rebase e é jogada fora como qualquer outra coisa que
 você tem ali.
 
-## Desfazendo uma change
+## Três formas de voltar atrás
 
-Duas coisas diferentes são chamadas de desfazer, e só uma delas é um revert.
+Três operações diferentes, e o que separa uma da outra é o que sobra.
 
-**Uma change que não vai sair é fechada, nunca apagada.** Diga que não vai
-acontecer e ela fecha na hora: sem auditoria, e o Outcome diz o que
-aconteceu, o que foi construído e ficou para trás, e o que precisaria ser
-verdade para o trabalho voltar. Ela vai para o mesmo caminho datado de
-qualquer outro fechamento, num commit próprio. Uma tentativa abandonada vale
-mais no arquivo do que uma árvore limpa vale em qualquer lugar.
+### Abandonar
 
-Fechar encerra a tentativa. Não reverte nada, então o que os grupos dela já
-aterrissaram continua na árvore.
+Uma change que não vai rodar até o fim é abandonada, e abandonar é fechar.
+Diga que não vai acontecer e ela fecha na hora: sem auditoria, e o Outcome
+diz o que aconteceu, o que foi construído e ficou para trás, e o que
+precisaria ser verdade para o trabalho voltar. Ela vai para o mesmo caminho
+datado de qualquer outro fechamento, num commit próprio.
 
-**Reverter o que uma change entregou é trabalho direto**, sem rota própria e
-sem nada além do git. O log te entrega os commits:
+Nada é revertido. O que os grupos dela já aterrissaram continua na árvore, e
+fica lá até você pedir a próxima operação. Uma tentativa abandonada vale mais
+no arquivo do que uma árvore limpa vale em qualquer lugar.
+
+### Reverter
+
+Tirar o código de volta. Sem rota própria, sem nada além do git, e o log te
+entrega os commits:
 
 ```bash
 git log --grep='Change: a-package-reads-like-a-document' --format=%H
@@ -169,18 +170,35 @@ a ordem em que eles desfazem. Como cada grupo comitou sozinho, um grupo sai
 sem encostar no resto.
 
 Peça em linguagem natural e é uma passada comum: o agente reverte, valida e
-comita, sem trailer nenhum, porque um revert não é a change.
+comita, sem [trailer](#os-trailers) nenhum, porque um revert não é a change.
 
-**A pasta arquivada fica onde está.** Um revert é um commit novo, não um
-apagamento, e `changes/archive/<data>-<slug>/` é o registro de que o trabalho
-aconteceu e foi desfeito. É também a única coisa que diz por que ele foi
-tentado, que é o que deixa os commits revertidos legíveis um ano depois.
-Apagar essa pasta é um delete e um commit que você faz na mão.
+Reverter não é abandonar. Uma change aberta continua aberta depois disso,
+agora sem nada atrás dela, então um experimento abandonado normalmente quer
+as duas coisas: reverter o código e fechar a change dizendo por quê.
 
-## Sem git
+### Purgar
 
-Nada verifica se existe repositório e nada se recusa a rodar. O instalador
-diz uma linha e segue:
+Apagar a pasta arquivada. Nada no procedimento pede isso e nada proíbe: o
+arquivo só recebe, nunca é podado, e `changes/archive/` é o único diretório
+que cresce para sempre de propósito. Peça, ou dê `rm -rf` na pasta e comite
+você mesmo. É um delete como outro qualquer.
+
+Ganha-se pouco. A pasta continua no git, a um `git show` de distância, então
+purgar não encolhe histórico nenhum: só impede que o raciocínio seja
+encontrado por quem lista o diretório. E esse raciocínio é justamente o
+motivo de a pasta ter sido arquivada em vez de jogada fora.
+
+O caso em que purgar é certo é uma change que carrega algo que nunca deveria
+ter entrado na árvore: um segredo, dado real de usuário. Apague, e lembre que
+o git guardou assim mesmo. Credencial vazada se resolve rotacionando, não
+apagando.
+
+## Sem git <Badge text="Não recomendado" variant="caution" />
+
+O changepack é feito para ser usado com git. Ele não verifica se existe
+repositório e não se recusa a rodar, o que faz rodar sem um ser uma
+degradação silenciosa, não um modo suportado: nada falha, e metade do
+procedimento simplesmente não está lá. O instalador diz uma linha e segue:
 
 ```text
   This is not a git repository. changepack expects to be committed
@@ -199,11 +217,6 @@ O que você mantém é o planejamento. O que você perde é o rastro:
 | [Os trailers](#os-trailers) | não têm para onde ir, e o histórico da própria change vai junto |
 | A convenção que o `init` propõe | não há de onde ler, então ele pergunta |
 
-Roda. E é metade do que ele existe para ser. Toda rota termina num commit, e
-uma rodada que não pode comitar termina reportando e parando ali.
-
-<Aside>
-Use sem git e as changes ainda valem o que foram escritas. Use com git e uma
-change responde, meses depois, exatamente quais commits ela produziu, em que
-ordem, e o que custaria desfazer.
-</Aside>
+Toda rota termina num commit, e uma rodada que não pode comitar termina
+reportando e parando ali. Nada te avisa uma segunda vez. Se o repositório não
+está sob controle de versão, coloque sob controle de versão antes.

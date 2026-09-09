@@ -4,18 +4,15 @@ description: >-
   The three commits a package makes, the convention they follow, and how to
   take one back.
 sidebar:
-  order: 2
+  order: 3
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Badge } from '@astrojs/starlight/components';
 
 changepack writes documents. Git is where they become a record. A package is
 a folder, and a folder can be copied anywhere; what turns it into history is
 that three moments in its life are commits, and that every one of those
 commits says which package produced it.
-
-Nothing here checks for a repository, so it runs without one.
-[What that costs](#without-git) is at the bottom of this page.
 
 ## The convention
 
@@ -143,22 +140,26 @@ Because a package is a folder in the tree, it travels with the branch it was
 opened on. It merges, rebases, and is thrown away like anything else you have
 in there.
 
-## Taking a change back
+## Three ways back
 
-Two different things get called undoing, and only one of them is a revert.
+Three different operations, and the difference between them is what survives.
 
-**A package that will not ship is closed, never deleted.** Say it is not
-going to happen and it closes on the spot: no audit, and the Outcome says
-what happened, what was built and left behind, and what would have to be true
-for the work to come back. It archives at the same dated path as any other
-closure, on a commit of its own. An attempt that was abandoned is worth more
-in the archive than a clean tree is worth anywhere.
+### Abandoning
 
-Closing it ends the attempt. It does not revert anything, so whatever its
-groups already landed is still in the tree.
+A package that will not run to the end is abandoned, and abandoning it is
+closing it. Say it is not going to happen and it closes on the spot: no
+audit, and the Outcome says what happened, what was built and left behind,
+and what would have to be true for the work to come back. It archives at the
+same dated path as any other closure, on a commit of its own.
 
-**Reverting what a package landed is direct work**, with no route of its own
-and nothing to it but git. The log hands you the commits:
+Nothing is reverted. Whatever its groups already landed is still in the tree,
+and it stays there until you ask for the next operation. An attempt that was
+abandoned is worth more in the archive than a clean tree is worth anywhere.
+
+### Reverting
+
+Taking the code back out. No route of its own, nothing to it but git, and the
+log hands you the commits:
 
 ```bash
 git log --grep='Change: a-package-reads-like-a-document' --format=%H
@@ -169,19 +170,37 @@ undo in. Because every group committed alone, one group comes back out
 without touching the rest.
 
 Ask for it in plain language and it is an ordinary pass: the agent reverts,
-validates and commits, carrying no trailers, because a revert is not the
-package.
+validates and commits, carrying no [trailers](#the-trailers), because a
+revert is not the package.
 
-**The archived folder stays where it is.** A revert is a new commit rather
-than an erasure, and `changes/archive/<date>-<slug>/` is the record that the
-work happened and was taken back. It is also the only thing that says why it
-was attempted, which is what makes the reverted commits readable a year
-later. Deleting it is a delete and a commit you make by hand.
+Reverting is not abandoning. A package still open is still open afterwards,
+now with nothing behind it, so an abandoned experiment usually wants both:
+revert the code, then close the package saying why.
 
-## Without git
+### Purging
 
-Nothing checks for a repository and nothing refuses to run. The installer
-says one line and carries on:
+Deleting the archived folder. Nothing in the procedure asks for this and
+nothing forbids it: the archive is only ever written to, never pruned, and
+`changes/archive/` is the one directory that grows forever by design. Ask for
+it, or `rm -rf` the folder and commit it yourself. It is a delete like any
+other.
+
+There is little to gain. The folder is still in git, one `git show` away, so
+purging does not shrink history, it only stops the reasoning being found by
+anyone who lists the directory. That reasoning is the whole reason the folder
+was archived instead of thrown away.
+
+The case where it is right is a package that holds something that should
+never have been in the tree: a secret, real user data. Delete it, and
+remember that git kept it anyway. A leaked credential needs rotating, not
+purging.
+
+## Without git <Badge text="Not recommended" variant="caution" />
+
+changepack is meant to be used with git. It does not check for a repository
+and it does not refuse to run, which makes running without one a quiet
+degradation rather than a supported mode: nothing fails, and half the
+procedure is simply not there. The installer says one line and carries on:
 
 ```text
   This is not a git repository. changepack expects to be committed
@@ -200,11 +219,6 @@ What you keep is the planning. What you lose is the trail:
 | [The trailers](#the-trailers) | nowhere to go, and the package's own history with them |
 | The convention `init` proposes | nothing to read it from, so it asks |
 
-It runs. It is half of what it is for. Every route ends at a commit, and a
-run that cannot commit ends by reporting and stopping there.
-
-<Aside>
-Use it without git and the packages are still worth writing. Use it with git
-and a package answers, months later, exactly which commits it produced, in
-what order, and what it would take to undo them.
-</Aside>
+Every route ends at a commit, and a run that cannot commit ends by reporting
+and stopping there. Nothing warns you a second time. If the repository is not
+under version control, put it under version control first.
