@@ -35,14 +35,14 @@ export default defineConfig({
           items: [{ autogenerate: { directory: 'start' } }],
         },
         {
+          label: 'Foundations',
+          translations: { 'pt-BR': 'Fundamentos' },
+          items: [{ autogenerate: { directory: 'foundations' } }],
+        },
+        {
           label: 'Refs',
           translations: { 'pt-BR': 'Refs' },
           items: [{ autogenerate: { directory: 'refs' } }],
-        },
-        {
-          label: 'Rationale',
-          translations: { 'pt-BR': 'Fundamento' },
-          items: [{ autogenerate: { directory: 'rationale' } }],
         },
         {
           label: 'Internals',
