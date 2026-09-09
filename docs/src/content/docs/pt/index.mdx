@@ -21,18 +21,26 @@ hero:
       variant: minimal
 ---
 
-import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
+import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/components';
 
 ## O que é uma change
 
-Uma pasta no seu repositório, ao lado do código que ela muda:
-`changes/active/stripe-integration/`.
+Uma pasta no seu repositório, ao lado do código que ela muda.
 
-| Arquivo | O que guarda |
-|---|---|
-| `change.md` | o problema, o objetivo, as decisões e o desenho do estado desejado |
-| `tasks.md` | os grupos de tasks e suas validações, preenchidos em tempo real |
-| `spec-delta.md` | as regras que essa change altera, quando altera |
+<FileTree>
+
+- changes/
+  - active/
+    - stripe-integration/
+      - change.md o problema, o objetivo, as decisões e o estado desejado
+      - tasks.md os grupos de tasks e suas validações, em tempo real
+      - spec-delta.md as regras que essa change altera, quando altera
+    - refatorar-tela-de-configuracoes/
+      - …
+  - archive/
+    - …
+
+</FileTree>
 
 Ela abre quando o trabalho começa. É arquivada, com a data, quando o trabalho
 termina.
@@ -78,14 +86,19 @@ facilidade.
 
 ## O gate
 
-| O trabalho | Ele faz |
-|---|---|
-| Cabe numa passada | Faz, e te conta |
-| Não cabe | Propõe uma change |
-| Não cabe nem em uma change | Propõe várias |
+O changepack nunca abre uma change porque o trabalho mexe em comportamento.
+Ele abre uma change porque uma passada só não dá conta.
 
-> Nunca abra uma change porque o trabalho mexe em comportamento.
-> Abra uma porque uma passada só não dá conta.
+Cabe numa passada? Ele faz, e te conta o que fez.
+
+Não cabe? Ele propõe uma change.
+
+Não cabe nem em uma change? Ele propõe várias.
+
+<Aside>
+O changepack nunca abre uma change porque o trabalho mexe em comportamento.
+Ele abre uma change porque uma passada só não dá conta.
+</Aside>
 
 ## Você fala, ele faz
 
@@ -123,8 +136,8 @@ grupo gasta implementando continua sendo o que ele gasta.
 
 ## A implementação deixa de ser o trabalho
 
-Mande rodar uma change até o fim e a implementação costuma levar um quarto de
-hora. Um grupo de tasks sozinho leva minutos.
+Mande rodar uma change até o fim e a implementação costuma levar ~15
+minutos. Um grupo de tasks sozinho leva minutos.
 
 O planejamento não, e nem deveria. Pode levar um dia, ou vários. Você decide, a
 change registra o que você decidiu, e o agente para no instante em que esbarra

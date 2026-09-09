@@ -20,18 +20,26 @@ hero:
       variant: minimal
 ---
 
-import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
+import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/components';
 
 ## What a change is
 
-A folder in your repository, next to the code it changes:
-`changes/active/stripe-integration/`.
+A folder in your repository, next to the code it changes.
 
-| File | What it holds |
-|---|---|
-| `change.md` | the problem, the goal, the decisions, and a drawing of the state you want |
-| `tasks.md` | the task groups and their validations, filled in as the work happens |
-| `spec-delta.md` | the rules this change alters, when it alters any |
+<FileTree>
+
+- changes/
+  - active/
+    - stripe-integration/
+      - change.md the problem, the goal, the decisions, the state you want
+      - tasks.md the task groups and their validations, filled in as you go
+      - spec-delta.md the rules this change alters, when it alters any
+    - settings-screen-refactor/
+      - …
+  - archive/
+    - …
+
+</FileTree>
 
 It opens when the work starts. It is archived, with the date, when the work is
 done.
@@ -77,14 +85,16 @@ out just as easily.
 
 ## The gate
 
-| The work | It does |
-|---|---|
-| Fits in one pass | Does it, and tells you |
-| Does not fit | Proposes a change |
-| Does not fit in one change | Proposes several |
+Does it fit in one pass? It does the work, and tells you what it did.
 
-> Never open a change package because the work touches behavior.
-> Open one because a single pass cannot land it.
+Does it not fit? It proposes a change.
+
+Does it not fit in one change either? It proposes several.
+
+<Aside>
+changepack never opens a change because the work touches behavior.
+It opens a change because a single pass cannot land it.
+</Aside>
 
 ## You say, it does
 
@@ -122,7 +132,7 @@ groups. What each group spends implementing is still what it spends.
 
 ## The implementation stops being the work
 
-Run a change to the end and the implementation is often a quarter of an hour. A
+Run a change to the end and the implementation is often ~15 minutes. A
 single task group is minutes.
 
 Planning is not, and should not be. It can take a day, or several. You decide,
