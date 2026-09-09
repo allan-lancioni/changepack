@@ -1,16 +1,20 @@
 ---
 title: changepack
-description: Pacotes de mudança para o Claude Code. Uma skill que você copia
-  para o seu repositório, não um framework que você instala.
+description: Uma unidade de trabalho planejado que o seu agente abre, conduz e
+  fecha. Desenvolvimento guiado por spec, sem escrever spec para um sistema que
+  você já construiu.
 template: splash
 hero:
-  tagline: Um pacote de mudança é uma pasta pequena que guarda uma unidade de
-    trabalho planejado. changepack é o procedimento que os conduz, escrito como
-    uma skill do Claude Code.
+  tagline: Pacotes de mudança para agentes de código. Desenvolvimento guiado
+    por spec, sem a taxa de entrada.
   actions:
     - text: Instalar
       link: /changepack/pt/start/install/
       icon: right-arrow
+    - text: Ver um pacote de ponta a ponta
+      link: /changepack/pt/start/a-package-end-to-end/
+      icon: document
+      variant: secondary
     - text: No GitHub
       link: https://github.com/allan-lancioni/changepack
       icon: external
@@ -19,39 +23,104 @@ hero:
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-> Nunca abra um pacote de mudança porque o trabalho mexe em comportamento.
-> Abra um porque uma passada só não dá conta.
+## A unidade é uma pasta
+
+Um pacote de mudança é uma unidade de trabalho planejado: o problema, o
+comportamento que deve passar a valer, e os grupos de tarefa que levam até lá.
+Ele abre quando o trabalho começa e é arquivado, com data, quando o trabalho
+termina.
+
+Três arquivos, todos markdown. O `change.md` guarda o problema, o objetivo, as
+decisões e um desenho do que se move. O `tasks.md` guarda os grupos de tarefa,
+cada um com a observação que o prova. O `spec-delta.md` guarda as regras que a
+mudança torna normativas, e só quando ela torna alguma.
+
+Um pacote de mudança é maior que uma tarefa comum e menor que um épico. Um
+épico são vários deles, quase sempre abertos ao mesmo tempo.
+
+Ele mora no seu repositório, no git, ao lado do código que muda. Não tem banco
+e não tem serviço, então qualquer agente que saiba ler uma pasta consegue
+conduzir um.
 
 ## Instalação
-
-Copie para o repositório que ele vai reger:
 
 ```bash
 npx changepack
 ```
 
-Ou, sem rodar código meu:
+Ele copia markdown para `.claude/skills/` e escreve um arquivo que é seu. Sua
+árvore de dependências não se mexe, e nada fica rodando no seu repositório
+depois disso.
 
-```bash
-npx degit allan-lancioni/changepack/skill .claude/skills/changepack
-```
+Hoje ele chega como uma skill do Claude Code. O procedimento é markdown e a
+unidade é uma pasta no seu repositório, então nenhum dos dois está preso a um
+agente só.
 
-Depois abra o Claude Code nesse repositório e rode `/changepack`. Ele lê o
-repositório, propõe uma configuração e escreve um arquivo. É toda a instalação.
+## Não tem nada para aprender
 
-## Você fala, ele faz
-
-Tudo passa por `/changepack`, em linguagem comum:
+Nenhum comando para decorar, nenhuma flag, nenhum template para preencher.
+Você fala do jeito que já fala, e o procedimento classifica o que você disse e
+toma a rota que serve.
 
 | Você fala | Ele faz |
 |---|---|
-| "planeje a migração multi tenant" | Classifica. Se não couber em uma passada, pergunta antes de abrir o pacote, escreve, comita e para |
-| "comece a tarefa 2" | Resume o que falta, pergunta até onde ir, implementa e marca os itens conforme cada um valida |
-| "rode a mudança inteira" | Despacha um agente novo por grupo, valida cada um por conta própria, comita grupo a grupo |
-| "revise isso" | Lê e relata, na ordem do impacto, e não muda nada |
-| "feche" | Audita os critérios contra o comportamento real e arquiva com a data |
-| "atualize o changepack" | Lê quanto custa cada versão entre a sua e a última, diz, e então troca a skill |
-| "renomeie essa variável" | Diz que isso não precisa de pacote, e faz |
+| "implementa a integração com a Stripe" | Classifica como grande demais para uma passada, pergunta antes de abrir qualquer coisa, escreve o pacote, comita e para antes de implementar |
+| "vamos refatorar a tela de configurações em outra branch" | O mesmo, na branch que você disse. O pacote é uma pasta no repositório, então acompanha a branch em que foi aberto |
+| "vamos migrar o sistema" | Divide. Vários pacotes abertos ao mesmo tempo, cada um uma unidade que se conduz, se revisa e se fecha sozinha |
+| "pega a change de pagamentos e vai até o fim" | Despacha um agente novo por grupo de tarefa, valida cada um por conta própria e comita grupo a grupo |
+| "pega o grupo 3" | Implementa aquele grupo de tarefa e marca cada item conforme a validação dele passa |
+| "centraliza essa div" | Diz que isso não precisa de pacote, e centraliza a div |
+
+## O portão
+
+> Nunca abra um pacote de mudança porque o trabalho mexe em comportamento.
+> Abra um porque uma passada só não dá conta.
+
+## Seus tokens duram
+
+Isso nasceu porque eles não duravam. Uma sessão longa paga pelo histórico
+inteiro a cada turno, e poucas sessões consumiam um orçamento que era para
+durar bem mais.
+
+Um turno carrega entre 4k e 8k caracteres de procedimento: o arquivo que fica
+sempre residente, mais a única rota que o trabalho toma. Os dois são presos a
+3600 caracteres por uma checagem que roda em todo commit, então o teto é fato e
+não intenção.
+
+Conduzir uma mudança inteira despacha um agente novo por grupo de tarefa e
+guarda quatro linhas de cada um: os arquivos que tocou, a validação, uma nota
+para a frente, e se está bloqueado. Todo o resto é descartado. A conversa que
+conduz uma mudança de dez grupos tem mais ou menos o tamanho da que conduz um
+grupo só.
+
+## A implementação deixa de ser o trabalho
+
+Mande conduzir uma mudança até o fim e a implementação costuma levar um quarto
+de hora. Um grupo de tarefa sozinho leva minutos.
+
+O planejamento não, e nem deveria. Ele pode levar um dia, ou uma conversa
+espalhada por vários, e é trabalho a dois: você decide, o pacote registra o que
+você decidiu, e o procedimento para no instante em que encontra uma decisão que
+você ainda não tomou.
+
+Essa proporção é o produto. A digitação encolhe, e o que sobra é a decisão, que
+sempre foi a parte que era sua.
+
+## Um harness para o seu harness
+
+Os mesmos três arquivos que encenam uma migração de banco encenam a reescrita
+do seu `AGENTS.md`, do seu diretório `.claude/`, ou de uma especificação
+espalhada por quarenta arquivos markdown que se referenciam.
+
+O `spec-delta.md` é o mecanismo. Ele nomeia cada regra que a mudança adiciona,
+altera ou remove, embaixo do documento em que cada uma cai, e se dobra nesses
+documentos no fechamento. Nada normativo é escrito antes de o comportamento
+existir, e nada se desencontra, porque o delta é o registro do que passou a
+valer.
+
+Este repositório é a prova. O changepack é planejado, conduzido e fechado pelo
+changepack, e toda pasta em `changes/archive/` é uma mudança no procedimento,
+feita pelo procedimento.
 
 ## Por onde ir
 
@@ -64,7 +133,8 @@ Tudo passa por `/changepack`, em linguagem comum:
   <LinkCard
     title="Rotas"
     href="/changepack/pt/routes/"
-    description="Uma página por rota, dizendo o que ela obriga e o que ela recusa."
+    description="Uma página por rota, dizendo o que ela obriga, o que ela
+      escreve e onde ela para."
   />
   <LinkCard
     title="O pacote"
@@ -74,15 +144,31 @@ Tudo passa por `/changepack`, em linguagem comum:
   <LinkCard
     title="Fundamento"
     href="/changepack/pt/rationale/why/"
-    description="Opinião, marcada como opinião. Por que o produto é o
-      portão e não a pasta."
+    description="Opinião, marcada como opinião. Por que é assim, e o que foi
+      recusado de propósito."
   />
 </CardGrid>
 
 ## O que não tem aqui
 
-Nenhuma dependência para instalar, nenhuma CLI para manter de pé e nenhum
-estado fora do seu repositório. A skill é comitada junto com o projeto, então
-quem clona recebe o mesmo processo sem nada para preparar. A única coisa que
-roda é a checagem de versão, uma requisição ao registro do npm em um momento
-só, e o que ela guarda é uma linha no arquivo que é seu.
+**Não é uma máquina de vibe coding.** Tudo aqui foi desenhado para ser
+acompanhado de perto. Você aprova o pacote antes de uma linha ser escrita, a
+árvore de trabalho continua sendo a superfície de revisão, todo grupo de tarefa
+comita sozinho, e o procedimento para no instante em que encontra uma decisão
+que é sua. Você deixa o agente trabalhar. Você não deixa ele decidir.
+
+**Nenhuma dependência no seu repositório.** `npx` é um canal, não um runtime.
+Um projeto Python, Rust ou Go não ganha manifesto, nem lockfile, nem árvore
+instalada.
+
+**Nenhuma CLI onde ele roda.** Nada é instalado onde o changepack trabalha. O
+estado é o repositório, que é também por que não existe nada para telefonar
+para casa.
+
+**Nenhum serviço, nenhum hook, nenhum daemon.** Uma requisição ao registro do
+npm, em um momento só, é tudo que alcança a rede, e uma linha em um arquivo que
+é seu guarda a resposta.
+
+**Uma árvore só, por padrão.** A árvore de trabalho é a superfície de revisão,
+então um pacote não abre uma branch por conta própria. Peça uma branch ou uma
+worktree e ele trabalha lá como em qualquer outro lugar.

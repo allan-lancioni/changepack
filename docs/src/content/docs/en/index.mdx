@@ -1,15 +1,19 @@
 ---
 title: changepack
-description: Change packages for Claude Code. A skill you copy into your repo,
-  not a framework you install.
+description: One unit of planned work your agent opens, runs and closes. Spec
+  driven development, without writing specs for a system you already built.
 template: splash
 hero:
-  tagline: A change package is a small folder holding one unit of planned work.
-    changepack is the procedure for running them, written as a Claude Code skill.
+  tagline: Change packages for coding agents. Spec driven development, without
+    the entry fee.
   actions:
     - text: Install it
       link: /changepack/en/start/install/
       icon: right-arrow
+    - text: See a package end to end
+      link: /changepack/en/start/a-package-end-to-end/
+      icon: document
+      variant: secondary
     - text: On GitHub
       link: https://github.com/allan-lancioni/changepack
       icon: external
@@ -18,39 +22,98 @@ hero:
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-> Never open a change package because the work touches behavior.
-> Open one because a single pass cannot land it.
+## The unit is a folder
+
+A change package is one unit of planned work: the problem, the behavior it
+should produce, and the task groups that get there. It opens when the work
+starts, and it is archived, dated, when the work is done.
+
+Three files, all markdown. `change.md` holds the problem, the goal, the
+decisions and a drawing of what moves. `tasks.md` holds the task groups, each
+with the observation that proves it. `spec-delta.md` holds the rules the change
+makes normative, and only when it makes any.
+
+A change package is bigger than a regular task and smaller than an epic. An
+epic is several of them, often open at the same time.
+
+It lives in your repository, in git, next to the code it changes. There is no
+database and no service, so an agent that can read a folder can run one.
 
 ## Install
-
-Copy it into the repository it will govern:
 
 ```bash
 npx changepack
 ```
 
-Or, without running any code of mine:
+It copies markdown into `.claude/skills/` and writes one file you own. Your
+dependency tree does not move, and nothing runs in your repository afterwards.
 
-```bash
-npx degit allan-lancioni/changepack/skill .claude/skills/changepack
-```
+It ships as a Claude Code skill today. The procedure is markdown and the unit
+is a folder in your repository, so neither is bound to one agent.
 
-Then open Claude Code in that repository and run `/changepack`. It reads the
-repo, proposes a configuration, and writes one file. That is the whole setup.
+## There is nothing to learn
 
-## You say, it does
-
-Everything runs through `/changepack`, in plain language:
+No command to memorise, no flag, no template to fill. You talk the way you
+already talk, and the procedure classifies what you said and takes the route
+that fits.
 
 | You say | It does |
 |---|---|
-| "plan the multi tenant migration" | Classifies. If it is too big for one pass, asks before opening the package, writes it, commits it, and stops |
-| "start task 2" | Summarises what is left, asks how far to run, then implements and checks items as they validate |
-| "run the whole change" | Dispatches a fresh agent per group, validates each one itself, commits group by group |
-| "review this" | Reads and reports, ordered by impact, and changes nothing |
-| "close it" | Audits the criteria against real behavior, archives with a date |
-| "update changepack" | Reads what each release between your version and the latest costs, says so, then replaces the skill |
-| "rename this variable" | Tells you it does not need a package, and does it |
+| "implement the Stripe integration" | Classifies it as too big for one pass, asks before opening anything, writes the package, commits it, and stops before implementing |
+| "let's refactor the settings screen on another branch" | The same, on the branch you named. The package is a folder in the repository, so it follows the branch it was opened on |
+| "let's migrate the system" | Splits it. Several packages open at once, each one a unit that can be run, reviewed and closed on its own |
+| "take the payments change to the end" | Dispatches a fresh agent per task group, validates every one itself, and commits task group by task group |
+| "take task group 3" | Implements that task group, and checks each item as its own validation passes |
+| "center a div" | Tells you it does not need a package, and centers the div |
+
+## The gate
+
+> Never open a change package because the work touches behavior.
+> Open one because a single pass cannot land it.
+
+## Your tokens last
+
+This was built because they did not. A long session pays for its whole history
+on every turn, and a few sessions took a budget that was supposed to last.
+
+A turn loads between 4k and 8k characters of procedure: the file that is always
+resident, plus the one route the work takes. Both are held to 3600 characters
+by a check that runs on every commit, so the ceiling is a fact and not an
+intention.
+
+Running a whole change dispatches a fresh agent per task group and keeps four
+lines from each: the files it touched, the validation, one note forward, and
+whether it is blocked. Everything else is discarded. The conversation that
+drives a ten group change is about as long as the one that drives a single
+group.
+
+## The implementation stops being the work
+
+Tell it to run a change to the end and the implementation is often a quarter of
+an hour. A single task group is minutes.
+
+The planning is not, and should not be. It can take a day, or a conversation
+spread across several, and it is joint work: you decide, the package records
+what you decided, and the procedure stops the moment it meets a decision you
+have not made.
+
+That ratio is the product. The typing collapses, and what is left is the
+deciding, which was always the part that was yours.
+
+## A harness for your harness
+
+The same three files that stage a database migration stage a rewrite of your
+`AGENTS.md`, your `.claude/` directory, or a specification spread across forty
+markdown files that reference one another.
+
+`spec-delta.md` is the mechanism. It names every rule a change adds, changes or
+removes, under the document each one lands in, and folds into those documents
+at closure. Nothing normative is written before the behavior exists, and
+nothing drifts, because the delta is the record of what became true.
+
+This repository is the proof. changepack is planned, run and closed by
+changepack, and every folder under `changes/archive/` is a change to the
+procedure, made by the procedure.
 
 ## Where to go
 
@@ -64,8 +127,8 @@ Everything runs through `/changepack`, in plain language:
   <LinkCard
     title="Routes"
     href="/changepack/en/routes/"
-    description="One page per route, saying what that route obliges and
-      what it refuses."
+    description="One page per route, saying what that route obliges, what it
+      writes, and where it stops."
   />
   <LinkCard
     title="The package"
@@ -76,15 +139,31 @@ Everything runs through `/changepack`, in plain language:
   <LinkCard
     title="Rationale"
     href="/changepack/en/rationale/why/"
-    description="Opinion, marked as opinion. Why the gate is the product
-      and the folder is not."
+    description="Opinion, marked as opinion. Why it is this way, and what was
+      refused on purpose."
   />
 </CardGrid>
 
 ## What is not there
 
-No dependency to install, no CLI to keep running, and no state outside your
-repository. The skill is committed with your project, so everyone who clones it
-gets the same process with nothing to set up. The only thing that runs is the
-update check, one request to the npm registry at one moment, and what it
-remembers is a line in the file you own.
+**Not a vibe coding machine.** Everything here is built to be watched. You
+approve the package before a line is written, the working tree stays the review
+surface, every task group commits on its own, and the procedure stops the
+moment it meets a decision that is yours. You let the agent do the work. You do
+not let it decide.
+
+**No dependency in your repository.** `npx` is a channel, not a runtime. A
+Python, Rust or Go project acquires no manifest, no lockfile and no installed
+tree.
+
+**No CLI where it runs.** Nothing is installed where changepack works. The
+state is the repository, which is also why there is nothing to phone home
+about.
+
+**No service, no hook, no daemon.** One request to the npm registry, at one
+moment, is everything that reaches the network, and a line in a file you own
+remembers the answer.
+
+**One tree, by default.** The working tree is the review surface, so a package
+does not open a branch by itself. Ask for a branch or a worktree and it works
+there like anything else.
