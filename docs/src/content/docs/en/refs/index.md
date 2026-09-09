@@ -1,5 +1,5 @@
 ---
-title: The skill
+title: SKILL.md
 description: >-
   What is loaded on every turn, and the eight references it pulls in on demand.
 sidebar:

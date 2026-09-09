@@ -1,5 +1,5 @@
 ---
-title: A skill
+title: SKILL.md
 description: >-
   O que é carregado em todo turno, e as oito referências que ele busca sob
   demanda.
