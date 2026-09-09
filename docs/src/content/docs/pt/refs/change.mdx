@@ -11,10 +11,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 O `change.md` responde duas perguntas: por que essa mudança existe, e o que vai
 ser verdade quando ela terminar.
 
-Ele é escrito na abertura do pacote, relido antes de cada grupo e completado no
-fechamento. Como o raciocínio fica aqui, a mensagem de commit não precisa
-repetir ele: quem quiser saber por que algo foi feito assim abre o pacote
-arquivado.
+Quem escreve é o agente, quando planeja. Você lê, corrige e aprova antes de
+qualquer implementação. O arquivo nasce na abertura do pacote, é relido antes
+de cada grupo e completado no fechamento.
+
+Como o raciocínio fica aqui, a mensagem de commit não precisa repetir ele: quem
+quiser saber por que algo foi feito assim abre o pacote arquivado.
 
 ## O frontmatter
 
@@ -45,18 +47,20 @@ O corpo tem dez seções, e nem toda mudança usa todas.
 | Cost | o que continua funcionando, e o que um revert não desfaz |
 | Success criteria | o que dá para conferir no fechamento olhando o comportamento |
 | Outcome | o que saiu, o que mudou no caminho, o que ficou |
-| Surprises | uma linha por grupo cujo diff não bateu com o desenho |
+| [Surprises](#surprises) | uma linha por grupo cujo diff não bateu com o desenho |
 
-O template é um piso. Acrescente uma seção quando o trabalho tem o que dizer
-nela, e não para preencher a página.
+O template é um piso. Uma seção entra quando o trabalho tem o que dizer nela, e
+não para preencher a página.
 
 ## O desenho
 
-É a seção Changes. Você escreve ela por último, depois de entender a mudança, e
-quem lê o pacote lê ela primeiro.
+É a seção Changes, e ela é escrita para você. O desenho vai se formando
+enquanto o agente planeja, e é a última coisa que ele escreve, depois de
+entender a mudança. Do seu lado é a primeira que você lê: dá para validar o
+raciocínio olhando, em vez de ler parágrafos.
 
-Desenhe só o que se move. A notação depende do que está mudando. As quatro
-abaixo desenham a mesma mudança: a tabela de usuários passa a exigir
+O desenho mostra só o que se move. A notação depende do que está mudando. As
+quatro abaixo desenham a mesma mudança: a tabela de usuários passa a exigir
 confirmação de email.
 
 <Tabs>
@@ -78,13 +82,11 @@ comentário onde o nome não basta.
 Para uma coleção, uma tabela, um campo, um estado. Uma linha por coisa que se
 move, e no que ela vira.
 
-```markdown
 | Coluna | Hoje | Depois |
 |---|---|---|
 | `email` | texto, único | igual |
 | `verified_at` | não existe | data, nula até a confirmação |
 | `status` | `ativo` ou `bloqueado` | ganha `pendente`, que é o novo padrão |
-```
 
 </TabItem>
 <TabItem label="Sequência">
@@ -122,33 +124,43 @@ sessão criada
 </TabItem>
 </Tabs>
 
-A maioria das mudanças usa duas dessas. Prefira a árvore e a tabela: elas se
-leem no terminal, na forge e no editor sem instalar nada.
+A maioria das mudanças usa duas dessas. A árvore e a tabela têm preferência:
+elas se leem no terminal, na forge e no editor sem instalar nada.
 
-Embaixo do desenho vai só o que ele não mostra, que é por que essa forma e não
-outra. Não descreva o desenho em prosa.
+Embaixo do desenho vai só o que ele não mostra: por que essa forma e não outra.
+O desenho não é redescrito em prosa.
 
 Se nada estrutural se move, não tem desenho. E provavelmente não precisava de
 pacote.
-
-Durante a rodada, o diff de cada grupo é comparado com esse desenho. Quando os
-dois discordam, uma linha entra em Surprises.
 
 ## As decisões
 
 Uma decisão em aberto entra em Open decisions: a pergunta em negrito, as
 alternativas e seus custos numa tabela, e a recomendação em prosa embaixo. Se
-nenhuma task começa sem a resposta, diga que ela é bloqueante, e marque os
-grupos que ela segura.
+nenhuma task começa sem a resposta, ela é marcada como bloqueante, e os grupos
+que ela segura também. Você responde; quem marca é o agente.
 
 Decisão respondida vai para Decided, e não é apagada. Fica registrado o que foi
 escolhido e o que a outra opção teria custado, para ninguém precisar
 reconstruir isso depois.
+
+## Surprises
+
+O desenho diz no que a mudança ia mexer. Enquanto os grupos aterrissam, o diff
+de cada um é comparado com ele, e quando os dois discordam uma linha entra em
+Surprises, na hora.
+
+Não é lista de bug nem desculpa. É o registro de onde o plano e a realidade se
+afastaram, escrito enquanto está fresco em vez de reconstruído no fechamento.
+Um grupo que bateu com o desenho não escreve nada, e silêncio é o resultado
+comum.
+
+No fechamento, a seção some se ninguém escreveu nada nela. Se tem linhas, elas
+ficam no pacote arquivado, que é onde alguém procura quando o código não se
+parece com o plano.
 
 ## No fechamento
 
 O Outcome é escrito ali: o que saiu, o que mudou no caminho e o que ficou para
 depois. Se o pacote foi abandonado, é aqui que isso é dito, junto com o que foi
 construído e o que precisaria ser verdade para o trabalho voltar.
-
-O Surprises é apagado se ninguém escreveu nada nele. Se tem linhas, elas ficam.

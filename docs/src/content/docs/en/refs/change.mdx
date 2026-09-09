@@ -11,10 +11,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 `change.md` answers two questions: why this change exists, and what will be
 true when it is done.
 
-You write it when the package opens, read it again before each group, and
-finish it at closure. Because the reasoning lives here, the commit message
-does not repeat it: anyone who wants to know why something was done this way
-opens the archived package.
+The agent writes it while it plans. You read it, correct it and approve it
+before any implementation. The file starts when the package opens, is read
+again before each group, and is finished at closure.
+
+Because the reasoning lives here, the commit message does not repeat it:
+anyone who wants to know why something was done this way opens the archived
+package.
 
 ## The frontmatter
 
@@ -45,18 +48,21 @@ The body has ten sections, and not every change uses all of them.
 | Cost | what keeps working, and what a revert does not undo |
 | Success criteria | what closure can check by looking at behavior |
 | Outcome | what shipped, what changed on the way, what was left |
-| Surprises | a line per group whose diff did not match the drawing |
+| [Surprises](#surprises) | a line per group whose diff did not match the drawing |
 
-The template is a floor. Add a section when the work has something to say in
-it, not to fill the page.
+The template is a floor. A section is there because the work has something to
+say in it, never to fill the page.
 
 ## The drawing
 
-This is the Changes section. You write it last, once you understand the
-change, and whoever reads the package reads it first.
+This is the Changes section, and it is written for you. The drawing takes
+shape as the agent plans, and it is the last thing the agent writes, once it
+understands the change. On your side it is the first thing you read: you
+validate the reasoning by looking, instead of reading paragraphs.
 
-Draw only what moves. The notation depends on what is changing. The four below
-draw the same change: the users table starts requiring email confirmation.
+The drawing shows only what moves. The notation depends on what is changing.
+The four below draw the same change: the users table starts requiring email
+confirmation.
 
 <Tabs>
 <TabItem label="Tree">
@@ -77,13 +83,11 @@ comment where the name is not enough.
 For a collection, a table, a field, a state. One row per thing that moves, and
 what it becomes.
 
-```markdown
 | Column | Today | After |
 |---|---|---|
 | `email` | text, unique | unchanged |
 | `verified_at` | does not exist | a date, null until confirmed |
 | `status` | `active` or `blocked` | gains `pending`, the new default |
-```
 
 </TabItem>
 <TabItem label="Sequence">
@@ -121,34 +125,43 @@ session created
 </TabItem>
 </Tabs>
 
-Most changes use two of these. Prefer the tree and the table: they read in a
-terminal, on a forge and in an editor with nothing installed.
+Most changes use two of these. The tree and the table come first: they read in
+a terminal, on a forge and in an editor with nothing installed.
 
-Under the drawing goes only what it does not show, which is why this shape and
-not another one. Do not describe the drawing in prose.
+Under the drawing goes only what it does not show: why this shape and not
+another one. The drawing is never described again in prose.
 
 If nothing structural moves, there is no drawing. And there probably did not
 need to be a package.
-
-While the package runs, each group's diff is compared to this drawing. When the
-two disagree, a line goes under Surprises.
 
 ## The decisions
 
 An open decision goes under Open decisions: the question in bold, the
 alternatives and their costs in a table, and the recommendation in prose below
-it. If no task can start without the answer, say it is blocking, and mark the
-groups it holds.
+it. If no task can start without the answer, it is marked as blocking, and so
+are the groups it holds. You answer; the agent marks.
 
 An answered decision moves to Decided, and is not deleted. What was chosen and
 what the other option would have cost stay on the record, so nobody has to
 reconstruct it later.
+
+## Surprises
+
+The drawing says what the change was going to move. As the groups land, each
+one's diff is compared to it, and when the two disagree a line goes under
+Surprises right then.
+
+It is not a bug list and not an excuse. It is the record of where the plan and
+reality parted, written while it is fresh instead of reconstructed at closure.
+A group that matched the drawing writes nothing, and silence is the ordinary
+outcome.
+
+At closure the section is deleted if nobody wrote anything under it. If there
+are lines, they stay in the archived package, which is where someone looks
+when the code does not resemble the plan.
 
 ## At closure
 
 Outcome is written then: what shipped, what changed on the way, and what was
 left for later. If the package was dropped, that is said here too, with what
 was built and what would have to be true for the work to come back.
-
-Surprises is deleted if nobody wrote anything under it. If there are lines,
-they stay.
