@@ -16,16 +16,14 @@ The numbers are read against the procedure, not against an API. **Major**: your
 route or capability, and the configuration you have stays valid. **Patch**:
 wording and fixes that leave the resulting procedure the same.
 
-## 1.1.0
+## 1.0.1
 
-A package is bracketed by two commits that move nothing, and a report says
-nothing where there is nothing to say.
+Three rules the procedure already stated, and did not hold to.
 
-**The archive move is always its own commit.** It used to fold into the last
-task group's commit when closure followed it in the same run, which put a
-directory rename inside a commit about behavior and left the package with no
-visible end. The opening and the closure now bracket everything the package
-produced, and the log shows the boundary without anyone reading a trailer.
+**The archive move is always its own commit.** `commit.md` said the three
+moments each commit alone, and `close.md` folded the closure into the last task
+group, which put a directory rename inside a commit about behavior and left the
+package with no visible end. The opening and the closure bracket it again.
 
 **The type says what the commit did to the product.** The opening and archive
 commits move nothing, so they take whatever the convention reserves for that.
@@ -33,9 +31,10 @@ Everywhere else, what shipped wrong is corrected rather than added, and what
 broke on the way here is the feature still landing. The names stay the
 project's: this skill sets no types.
 
-**A report leaves out what it has nothing to say about.** No risk, a clean
-tree and a command that printed nothing were being written down as findings.
-An absent line is now silence, never "none".
+**A report leaves out what it has nothing to say about.** `close.md` said a
+silent version check leaves no trace, the report list asked for every command
+that ran, and the silence got written down anyway. No risk and a clean tree
+were being reported the same way. An absent line is silence, never "none".
 
 Updating: nothing. Your commits change shape from the session after you
 update.
