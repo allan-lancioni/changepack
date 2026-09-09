@@ -10,7 +10,7 @@ head:
       // theirs so the tree is honest about what is in them, and start closed
       // so the page is not a wall of filenames.
       addEventListener('DOMContentLoaded', function () {
-        var shut = ['changepack/', 'refatorar-tela-de-configuracoes/', 'archive/'];
+        var shut = ['changepack/', 'references/', 'refatorar-tela-de-configuracoes/', 'archive/'];
         var all = document.querySelectorAll('starlight-file-tree summary');
         for (var i = 0; i < all.length; i++) {
           // The name only, never the comment beside it.
@@ -24,8 +24,8 @@ head:
       });
 template: splash
 hero:
-  tagline: Change packages para agentes de código. Spec-driven development,
-    sem taxa de entrada.
+  tagline: Change packages para agentes de código.<br />Spec-driven
+    development, sem taxa de entrada.
   actions:
     - text: Instalar
       link: /changepack/pt/start/install/
@@ -45,32 +45,37 @@ import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/c
 ## O que é uma change
 
 Uma pasta no seu repositório, ao lado do código que ela muda. O resto da
-árvore é o changepack inteiro: uma pasta de markdown em `.claude/skills/` e um
-arquivo na raiz que é seu.
+árvore é o changepack inteiro: uma pasta em `.claude/skills/` e um arquivo na
+raiz que é seu.
 
 <FileTree>
 
-- .claude/
-  - skills/
-    - changepack/ a única coisa instalada, e é markdown
-      - SKILL.md o gate, as rotas e o trabalho direto
-      - references/ um arquivo por rota
-      - templates/ de onde uma change nova é copiada
-      - check-update.mjs pergunta ao registro se existe versão nova
-    - … suas outras skills
+- .claude/skills/changepack/ Todo o procedimento, versionado junto com o projeto
+  - SKILL.md O gate, as rotas e o trabalho direto
+  - references/ Um arquivo por rota
+    - init.md
+    - plan.md
+    - work.md
+    - run.md
+    - commit.md
+    - review.md
+    - close.md
+    - update.md
+  - templates/ De onde uma change nova é copiada
+  - check-update.mjs Pergunta ao registro se existe versão nova
 - changes/
   - active/
     - stripe-integration/
-      - change.md o problema, o objetivo, as decisões e o estado desejado
-      - tasks.md os grupos de tasks e suas validações, em tempo real
-      - spec-delta.md as regras que essa change altera, quando altera
+      - change.md O problema, o objetivo, as decisões e o estado desejado
+      - tasks.md Os grupos de tasks e suas validações, em tempo real
+      - spec-delta.md As regras que essa change altera, quando altera
     - refatorar-tela-de-configuracoes/
       - change.md
       - tasks.md
       - spec-delta.md
   - archive/
     - 2026-08-14-retry-de-pagamento/
-- CHANGEPACK.md o único arquivo seu: onde as changes moram, o que valida
+- CHANGEPACK.md Como o changepack funciona
 
 </FileTree>
 
@@ -84,8 +89,9 @@ repositório.
 npx changepack
 ```
 
-Markdown copiado para `.claude/skills/`, mais um arquivo que é seu. Nada entra
-nas suas dependências, e nada fica rodando depois.
+O npx copia markdown e um script de update para `.claude/skills/`, e escreve um
+arquivo que é seu. Nada entra nas suas dependências, e nada fica rodando
+depois.
 
 Hoje ele chega como uma skill do Claude Code. O procedimento é markdown e a
 unidade é uma pasta, então nenhum dos dois está preso a um agente só.

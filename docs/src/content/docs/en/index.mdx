@@ -9,7 +9,7 @@ head:
       // theirs so the tree is honest about what is in them, and start closed
       // so the page is not a wall of filenames.
       addEventListener('DOMContentLoaded', function () {
-        var shut = ['changepack/', 'settings-screen-refactor/', 'archive/'];
+        var shut = ['changepack/', 'references/', 'settings-screen-refactor/', 'archive/'];
         var all = document.querySelectorAll('starlight-file-tree summary');
         for (var i = 0; i < all.length; i++) {
           // The name only, never the comment beside it.
@@ -23,8 +23,8 @@ head:
       });
 template: splash
 hero:
-  tagline: Change packages for coding agents. Spec-driven development, without
-    the entry fee.
+  tagline: Change packages for coding agents.<br />Spec-driven development,
+    without the entry fee.
   actions:
     - text: Install it
       link: /changepack/en/start/install/
@@ -44,32 +44,37 @@ import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/c
 ## What a change is
 
 A folder in your repository, next to the code it changes. The rest of the
-tree is all of changepack: a folder of markdown under `.claude/skills/`, and
-one file at the root that is yours.
+tree is all of changepack: one folder under `.claude/skills/`, and one file at
+the root that is yours.
 
 <FileTree>
 
-- .claude/
-  - skills/
-    - changepack/ the only thing installed, and it is markdown
-      - SKILL.md the gate, the routes, and direct work
-      - references/ one file per route
-      - templates/ what a new change is copied from
-      - check-update.mjs asks the registry for a newer version
-    - … your other skills
+- .claude/skills/changepack/ The whole procedure, versioned with the project
+  - SKILL.md The gate, the routes, and direct work
+  - references/ One file per route
+    - init.md
+    - plan.md
+    - work.md
+    - run.md
+    - commit.md
+    - review.md
+    - close.md
+    - update.md
+  - templates/ What a new change is copied from
+  - check-update.mjs Asks the registry for a newer version
 - changes/
   - active/
     - stripe-integration/
-      - change.md the problem, the goal, the decisions, the state you want
-      - tasks.md the task groups and their validations, filled in as you go
-      - spec-delta.md the rules this change alters, when it alters any
+      - change.md The problem, the goal, the decisions, the state you want
+      - tasks.md The task groups and their validations, filled in as you go
+      - spec-delta.md The rules this change alters, when it alters any
     - settings-screen-refactor/
       - change.md
       - tasks.md
       - spec-delta.md
   - archive/
     - 2026-08-14-payment-retries/
-- CHANGEPACK.md the one file you own: where changes live, what validates
+- CHANGEPACK.md How changepack works
 
 </FileTree>
 
@@ -83,8 +88,9 @@ repository.
 npx changepack
 ```
 
-Markdown copied into `.claude/skills/`, plus one file that is yours. Nothing is
-added to your dependencies, and nothing keeps running afterwards.
+npx copies markdown and one update script into `.claude/skills/`, and writes
+one file that is yours. Nothing is added to your dependencies, and nothing
+keeps running afterwards.
 
 Today it ships as a Claude Code skill. The procedure is markdown and the unit
 is a folder, so neither one is tied to a single agent.
