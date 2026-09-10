@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import mermaid from 'astro-mermaid';
 
 // The documentation site. It describes skill/ and is never held to it:
 // `normative:` in CHANGEPACK.md names skill/ alone, so no page here is a spec.
@@ -12,6 +13,10 @@ export default defineConfig({
   site: 'https://allan-lancioni.github.io/changepack',
   base: '/changepack',
   integrations: [
+    // Diagrams are written as ```mermaid fences and rendered in the browser,
+    // so the theme switcher reaches them. It lives in this manifest alone: a
+    // changepack install never sees it.
+    mermaid({ theme: 'neutral', autoTheme: true }),
     starlight({
       title: 'changepack',
       // One stylesheet, for layouts the built in components do not cover.
