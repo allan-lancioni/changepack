@@ -17,6 +17,40 @@ compatibility breaks, and what you already have has to become something else.
 adapt, and nothing is broken. **Patch**: the procedure that results is the
 same. Almost every release is one of the last two.
 
+## 1.0.1
+
+Closure commits the archive alone, a report leaves out what is absent, and a
+version field that does not parse says so instead of going quiet.
+
+**The archive move is its own commit.** It used to fold into the last task
+group's commit where closure followed that group in the same run, and a closure
+that did will now land two commits where it landed one. The package opened on a
+commit of its own and closes on one, and the two bracket everything it
+produced.
+
+**A report line with nothing under it is left out.** No risk, a clean tree and a
+command that printed nothing are silence, not an answer of "none". The update
+check that found nothing to say leaves no trace at all, not even as a command
+that ran.
+
+**Every commit type but the bookkeeping two speaks to the product.** The
+opening and archive commits name the package and the moment, carry no body, and
+take the type the convention reserves for work that moves nothing, and the
+archive subject names the shipped version where there is one. The rest say what
+the commit did to the product rather than which package it came from: what
+shipped wrong is corrected, and what broke on the way here is the feature still
+landing. The names are still the project's, which the skill never sets.
+
+**A `changepack:` field that does not parse now prints.** Silence is how the
+update check reports success, so an unreadable version wore that face forever
+and the repository would never hear about another release. The check now says
+what the field reads and that no check ran, closure carries that line into the
+report, and nothing else happens.
+
+Updating: nothing. No configuration field changed, and a package already open
+is unaffected: the closure it has not reached yet commits the archive on its
+own, which is the only thing that reaches an open package at all.
+
 ## 1.0.0
 
 A package is one change, one delta and the tasks, and the change draws what it

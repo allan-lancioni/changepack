@@ -2,7 +2,7 @@
 
 How change packages work in this repository.
 
-- **changepack:** 1.0.0
+- **changepack:** 1.0.1
 - **changes:** changes/
 - **normative:** `skill/` and `CLAUDE.md`. The procedure is the product here,
   so a change that alters what a route obliges carries a spec delta, and so
