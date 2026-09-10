@@ -1,0 +1,252 @@
+---
+title: changepack
+description: Uma pasta que o seu agente escreve, você aprova e ele roda.
+  Spec-driven development, sem escrever spec para um sistema que você já
+  construiu.
+head:
+  - tag: script
+    content: |
+      // Starlight opens every directory that has contents. These three carry
+      // theirs so the tree is honest about what is in them, and start closed
+      // so the page is not a wall of filenames.
+      addEventListener('DOMContentLoaded', function () {
+        var shut = ['changepack/', 'references/', 'refatorar-tela-de-configuracoes/', 'archive/'];
+        var all = document.querySelectorAll('starlight-file-tree summary');
+        for (var i = 0; i < all.length; i++) {
+          // The name only, never the comment beside it.
+          var label = all[i].querySelector('.tree-entry > span');
+          var name = label ? label.textContent.trim() : '';
+          for (var j = 0; j < shut.length; j++) {
+            var s = shut[j];
+            if (name.slice(-s.length) === s) all[i].parentElement.open = false;
+          }
+        }
+      });
+template: splash
+hero:
+  tagline: Change packages para agentes de código.<br />Spec-driven
+    development, sem taxa de entrada.
+  actions:
+    - text: Instalar
+      link: /changepack/pt/start/install/
+      icon: right-arrow
+    - text: Ler o procedimento
+      link: /changepack/pt/refs/
+      icon: document
+      variant: secondary
+    - text: GitHub
+      link: https://github.com/allan-lancioni/changepack
+      icon: external
+      variant: minimal
+---
+
+import { Aside, CardGrid, FileTree, LinkCard, Steps } from '@astrojs/starlight/components';
+
+## O que é uma change
+
+Uma pasta no seu repositório, ao lado do código que ela muda. O resto da
+árvore é o changepack inteiro: uma pasta em `.claude/skills/` e um arquivo na
+raiz que é seu.
+
+<FileTree>
+
+- .claude/skills/changepack/ Todo o procedimento, versionado junto com o projeto
+  - SKILL.md O gate, as rotas e o trabalho direto
+  - references/ Um arquivo por rota
+    - init.md
+    - plan.md
+    - work.md
+    - run.md
+    - commit.md
+    - review.md
+    - close.md
+    - update.md
+  - templates/ De onde uma change nova é copiada
+  - check-update.mjs Pergunta ao registro se existe versão nova
+- changes/
+  - active/
+    - stripe-integration/
+      - change.md O problema, o objetivo, as decisões e o estado desejado
+      - tasks.md Os grupos de tasks e suas validações, em tempo real
+      - spec-delta.md As regras que essa change altera, quando altera
+    - refatorar-tela-de-configuracoes/
+      - change.md
+      - tasks.md
+      - spec-delta.md
+  - archive/
+    - 2026-08-14-retry-de-pagamento/
+- CHANGEPACK.md Como o changepack funciona nesse repositório
+
+</FileTree>
+
+Ela abre quando o trabalho começa. É arquivada, com a data, quando o trabalho
+termina. É só isso: nenhuma dependência, nenhum binário, nenhum estado fora do
+repositório.
+
+## Instalação
+
+```bash
+npx changepack
+```
+
+O npx copia markdown e um script de update para `.claude/skills/`, e escreve um
+arquivo que é seu. Nada entra nas suas dependências, e nada fica rodando
+depois.
+
+Hoje ele chega como uma skill do Claude Code. O procedimento é markdown e a
+unidade é uma pasta, então nenhum dos dois está preso a um agente só.
+
+## Como você usa
+
+<Steps>
+
+1. Abra uma sessão do Claude Code, como sempre.
+
+2. Discuta a mudança com o agente, refinando pelo tempo que precisar.
+
+3. Quando estiver definido, diga "abra uma change".
+
+4. O agente monta os arquivos. Você revisa.
+
+5. Diga "pode começar". Ou abra uma sessão nova e diga "pega a change X".
+
+6. O agente despacha um subagente por grupo de tasks, valida cada um e
+   commita conforme anda. Ele para quando precisa de uma decisão sua.
+
+7. Você aprova o que foi feito. A change fecha e vai para o arquivo.
+
+</Steps>
+
+Você não escreve esses arquivos nem decora nenhum comando. Só linguagem
+natural. Seu trabalho é decidir e planejar. O agente executa.
+
+Sem framework. Ele pluga em repositório que já existe, e sai com a mesma
+facilidade.
+
+## O gate
+
+O changepack nunca abre uma change porque o trabalho mexe em comportamento.
+Ele abre uma change porque uma passada só não dá conta.
+
+Cabe numa passada? Ele faz, e te conta o que fez.
+
+Não cabe? Ele propõe uma change.
+
+Não cabe nem em uma change? Ele propõe várias.
+
+<Aside>
+O changepack nunca abre uma change porque o trabalho mexe em comportamento.
+Ele abre uma change porque uma passada só não dá conta.
+</Aside>
+
+## Você fala, ele faz
+
+| Você fala | Ele faz |
+|---|---|
+| "implementa a integração com a Stripe" | Grande demais para uma passada. Ele pergunta, escreve a change, comita e para antes de implementar |
+| "vamos refatorar a tela de configurações em outra branch" | O mesmo, na branch que você disse. Uma change é uma pasta, então acompanha a branch |
+| "vamos migrar o sistema" | Divide. Várias changes abertas ao mesmo tempo, cada uma rodada, revisada e fechada sozinha |
+| "pega a change de pagamentos e vai até o fim" | Um agente novo por grupo de tasks. Ele valida cada um e comita conforme anda |
+| "pega o grupo 3" | Roda aquele grupo, marcando cada item conforme a validação passa |
+| "centraliza essa div" | Diz que não precisa de change, e centraliza a div |
+
+## Seus tokens duram
+
+Isso existe porque os meus não duravam. Uma sessão longa paga pelo histórico
+inteiro a cada turno.
+
+O changepack é uma skill só. Ela decide sozinha quando é invocada e busca o
+resto das regras sob demanda, uma rota por vez. Cada peça tem um teto de
+caracteres, segurado por um check em todo commit, então um turno custa alguns
+milhares de caracteres em vez do procedimento inteiro.
+
+Rodar uma change inteira dá um subagente novo para cada grupo de tasks, e cada
+um responde em quatro linhas:
+
+```text
+FILES:              o que ele tocou
+VALIDATION:         o comando, e passou ou falhou
+FOR NEXT GROUP:     no máximo duas frases
+BLOCKED:            não, ou a decisão que trava
+```
+
+A conversa que conduz a change não cresce com o número de grupos. O que cada
+grupo gasta implementando continua sendo o que ele gasta.
+
+## A implementação deixa de ser o trabalho
+
+Mande rodar uma change até o fim e a implementação costuma levar ~15
+minutos. Um grupo de tasks sozinho leva minutos.
+
+O planejamento não, e nem deveria. Pode levar um dia, ou vários. Você decide, a
+change registra o que você decidiu, e o agente para no instante em que esbarra
+numa decisão que você ainda não tomou.
+
+Essa é a troca. A digitação encolhe, e o que sobra é a decisão.
+
+## Um harness para o seu harness
+
+Os mesmos três arquivos funcionam em prosa. A reescrita do seu `AGENTS.md`, do
+seu diretório `.claude/`, ou de uma spec espalhada por quarenta arquivos
+markdown que se referenciam.
+
+O `spec-delta.md` é o como. Ele lista o que a change faz com cada documento:
+
+```text
++ uma regra que essa change adiciona
+~ uma regra que essa change altera
+- uma regra que essa change remove
+```
+
+No fechamento essas regras entram nos documentos a que pertencem. Nada é
+escrito lá antes de o comportamento existir.
+
+Este repositório é a prova. O changepack é planejado, rodado e fechado pelo
+changepack.
+
+## Por onde ir
+
+<CardGrid>
+  <LinkCard
+    title="Começo"
+    href="/changepack/pt/start/install/"
+    description="Instale, rode uma vez e acompanhe uma change da abertura ao
+      arquivo."
+  />
+  <LinkCard
+    title="Refs"
+    href="/changepack/pt/refs/"
+    description="Uma página para o procedimento inteiro: quando cada rota é
+      tomada, o que ela escreve e onde ela para."
+  />
+  <LinkCard
+    title="A change"
+    href="/changepack/pt/refs/change/"
+    description="Os três arquivos que uma change carrega, e para que cada um é
+      lido de volta."
+  />
+  <LinkCard
+    title="Fundamentos"
+    href="/changepack/pt/foundations/what-it-is/"
+    description="Opinião, marcada como opinião. Por que é assim, e o que foi
+      recusado de propósito."
+  />
+</CardGrid>
+
+## O que não tem aqui
+
+**Não é uma máquina de vibe coding.** Foi feito para ser acompanhado de perto.
+Você aprova a change antes de uma linha ser escrita. Todo grupo de tasks
+commita sozinho. Ele para sempre que a decisão é sua. O agente faz o trabalho.
+Você decide.
+
+**Nada nas suas dependências.** `npx` é como ele chega, não onde ele roda. Um
+projeto Python, Rust ou Go não ganha manifesto, nem lockfile, nem árvore
+instalada.
+
+**Nenhuma CLI, nenhum serviço, nenhum daemon.** Uma requisição ao registro do
+npm, uma vez, para perguntar se existe versão nova. É tudo que toca a rede.
+
+**Um working tree só, por padrão.** É no tree que você revisa, então uma change
+não abre branch por conta própria. Peça uma branch ou uma worktree e ele
+trabalha lá.

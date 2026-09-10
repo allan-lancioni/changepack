@@ -49,8 +49,9 @@ write what happened under Outcome, and archive it at the same dated path. Say
 what was built and left behind, and what would have to be true for the work to
 come back.
 
-Load `commit.md`. When closure follows the last task group in the same run,
-the archive move goes in that same commit, not a second one.
+Load `commit.md`. The archive move is its own commit even where the last task
+group landed a moment before it. The package opened on a commit of its own and
+closes on one, and the two bracket everything it produced.
 
 ## Check for a newer changepack
 
@@ -58,6 +59,8 @@ After the archive commit, and never before it, from the repository root:
 
     node .claude/skills/changepack/check-update.mjs
 
-Silence is the ordinary outcome: it leaves no trace in the report, and nothing
-here holds up a closure that already landed. Where it prints, load `update.md`
-and carry its output there.
+Silence is the ordinary outcome. It leaves no trace in the report, not even as
+a command that ran, and nothing here holds up a closure that already landed.
+Where it names a newer version, load `update.md` and carry its output there.
+Where it says it could not read which version runs here, that line goes in the
+report and nothing else happens.

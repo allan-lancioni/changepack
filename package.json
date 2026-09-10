@@ -1,13 +1,15 @@
 {
   "name": "changepack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Change packages for Claude Code. A skill you copy into your repo, not a framework you install.",
   "license": "MIT",
   "author": "Allan Lancioni",
   "type": "module",
   "scripts": {
     "check": "node scripts/check.mjs",
-    "lint": "markdownlint-cli2"
+    "lint": "npx --yes markdownlint-cli2",
+    "format": "npx --yes prettier --write \"**/*.mjs\"",
+    "format:check": "npx --yes prettier --check \"**/*.mjs\""
   },
   "bin": {
     "changepack": "bin/install.mjs"
@@ -30,6 +32,6 @@
     "spec-driven"
   ],
   "changepack": {
-    "updating": "Updating: `npx changepack --force`, then by hand. Rename `CHANGEKIT.md` to `CHANGEPACK.md` and its `changekit:` field to `changepack:`, rename the `specs:` field in it to `normative:` and give it the documents a change is held to, or `none`, and delete `.claude/skills/changekit/`. An open package: rename `proposal.md` to `change.md`, merge `design.md` into it under `Changes` and `Cost`, and delete `design.md`. The installer neither renames the file nor deletes the old skill directory: it writes the directory it owns and never the file you own, so a repository that installed changekit carries two skill directories until you remove one. Nothing else. Archived packages are history and are not migrated. The check costs you nothing beyond this, because the script arrives with the skill directory on this install."
+    "updating": "Updating: nothing. No configuration field changed, and a package already open is unaffected: the closure it has not reached yet commits the archive on its own, which is the only thing that reaches an open package at all."
   }
 }

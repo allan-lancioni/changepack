@@ -29,7 +29,6 @@ A check behaves three ways, and only one of them stops the run:
 - there is none, or it could not run: one line saying which check and why, and
   the run continues.
 
-An empty `validate:` is a project with no command, not a project that failed.
 Never present a check that did not run as a check that passed.
 
 ## Report
@@ -45,6 +44,9 @@ Present, covering the whole run:
 - risks and anything still open;
 - unrelated work still sitting in the tree;
 - why the run stopped here.
+
+A line with nothing under it is left out, never answered with "none": no risk,
+a clean tree and a command that printed nothing are silence.
 
 ## The message
 
@@ -66,9 +68,15 @@ Both or neither, on all three of the package's moments. At closure
 `Changepack:` still names the old version where the package is what ships the
 new one: that is what ran. Direct work carries no trailers.
 
-The opening and archive commits name the package in the subject and say which
-moment it is. The type follows the project's convention, which this skill
-never sets.
+The opening and archive commits are bookkeeping: each names the package and
+the moment, carries no body, and takes the type the convention reserves for
+work that moves nothing. The archive subject names the shipped version where
+there is one.
+
+Every other type says what the commit did to the product, not which package it
+came from: what shipped wrong is corrected, and what broke on the way here is
+the feature still landing. The names are the project's, which this skill never
+sets.
 
 No agent is credited as co-author. A project that must disclose machine
 assistance says so in `commit:`, and only then is the trailer added.

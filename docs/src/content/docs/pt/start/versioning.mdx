@@ -1,0 +1,126 @@
+---
+title: Versionamento
+description: >-
+  O que os números significam, quando a checagem roda e quanto custa atualizar.
+sidebar:
+  order: 2
+---
+
+import { Aside, FileTree } from '@astrojs/starlight/components';
+
+A versão que um repositório roda é a que está carimbada no `CHANGEPACK.md`
+dele. Ela anda quando você decide que anda, e nunca sozinha.
+
+## O time roda um procedimento só
+
+A skill é commitada, em `.claude/skills/changepack/`, junto do código que ela
+rege. Ninguém instala e ninguém escolhe versão: um clone já chega com o
+procedimento dentro, e todo agente aberto naquele repositório lê o mesmo.
+
+É para isso que a versão existe. Ela não registra quanto texto se moveu, ela
+responde qual procedimento este repositório roda, preso a um valor só para
+todo mundo que trabalha ali. Uma pessoa atualiza, comita, e no próximo pull o
+time inteiro está na nova, tendo lido a mesma entrada do changelog.
+
+Então não existe adoção para conduzir. Nada para alguém novo instalar, e nada
+para ler antes: a pessoa clona, pede alguma coisa em linguagem natural, e o
+procedimento já está lá.
+
+## O que os números significam
+
+A regra é o procedimento, e nada mais. Uma release é nomeada pelo que ela faz
+com o jeito que seu trabalho corre, nunca por quanto texto se moveu.
+
+| | O que significa |
+|---|---|
+| **Major** | quebra compatibilidade. O que você já tem para de funcionar e precisa virar outra coisa |
+| **Minor** | o procedimento muda de verdade e o que você tem continua funcionando. Uma rota que passa a obrigar algo novo, um formato novo para um arquivo: você se adapta, e nada quebrou |
+| **Patch** | o procedimento resultante é o mesmo. Texto, e correções |
+
+Quase toda release é uma das duas últimas. O 1.0.0 é o que a outra parece: a
+skill e o repositório mudaram de nome, o `CHANGEKIT.md` teve que virar
+`CHANGEPACK.md`, e um campo dentro dele teve que ser renomeado junto. Nada
+menos que isso ganha o número.
+
+Toda entrada do changelog diz o que muda para um repositório que já instalou a
+skill, e termina com quanto custa atualizar.
+
+## Quando a checagem roda
+
+Quando uma change fecha, e só então. Uma change planejada sob um procedimento
+fica com ele até fechar, então nada é checado enquanto uma está aberta e
+nenhuma atualização é instalada por cima de uma. Uma change aberta nunca é
+reescrita para um procedimento sob o qual ela não foi planejada.
+
+A checagem é uma requisição ao registro do npm, e é tudo do changepack que toca
+a rede. Ela não imprime nada quando não há novidade, que é o resultado comum, e
+nunca falha: offline, inacessível e atualizado se parecem. Você pode rodar na
+mão, da raiz do repositório:
+
+```bash
+node .claude/skills/changepack/check-update.mjs
+```
+
+<Aside type="tip" title="Desligando a checagem">
+`updates: off` no `CHANGEPACK.md` encerra a checagem de vez, e a chamada de
+rede junto. Você perde a oferta, não a rota: pedir a atualização com todas as
+letras continua funcionando, e o changelog continua dizendo quanto ela custa.
+</Aside>
+
+## Ela pergunta uma vez
+
+Três respostas, no fim do relatório de fechamento:
+
+- **Atualizar agora.** Ela diz quanto custam as versões entre a sua e a última
+  antes de escrever qualquer coisa.
+- **Agora não.** `updates:` vira `hold <versão>`, commitado sozinho. A pergunta
+  volta quando sair algo mais novo, e aquela versão nunca pergunta de novo.
+- **Nunca.** `updates:` vira `off`.
+
+O que fica registrado é a decisão, não a data. Um repositório nunca é
+perguntado duas vezes sobre a mesma versão, e a resposta é commitada, porque a
+versão que um projeto roda pertence ao projeto e não a quem por acaso fechou a
+change.
+
+## A atualização automática
+
+Você não migra nada. O changelog é a entrada: as entradas entre a sua versão e
+a última dizem o que muda e quanto cada uma custa, o agente lê e te conta,
+espera, e então faz o trabalho. Instalar a release, carimbar o `changepack:` e
+aplicar o que a entrada pedir são uma rota só, e você aprova em vez de
+executar.
+
+<FileTree>
+
+- **.claude/skills/changepack/** substituído por inteiro, nunca mesclado
+- **CHANGEPACK.md** a linha `changepack:` carimbada, e o que a entrada tiver
+  pedido
+- changes/ intocado, arquivo incluído
+- src/ seu código não faz parte disso
+
+</FileTree>
+
+Nada é escrito antes de você confirmar. O procedimento que chega vale a partir
+da próxima sessão: a que o instalou carregou o antigo e termina nele.
+
+<Aside type="caution" title="O diretório é substituído, não mesclado">
+Qualquer arquivo que você tenha mudado dentro de `.claude/skills/changepack/`
+é descartado em vez de mantido, e um arquivo que saiu da release sai da sua
+instalação junto. Um repositório que pretende editar o próprio procedimento
+põe `updates: off` antes: isso encerra a oferta, e depois disso a única coisa
+capaz de substituir o diretório é você digitando o comando abaixo. Editar ali
+dentro também significa que você não está mais numa versão publicada, e que o
+changelog não descreve mais o que você roda.
+</Aside>
+
+## O comando, se você quiser
+
+```bash
+npx changepack --force
+```
+
+Isso é só a cópia, e `npx changepack@1.2.0 --force` é a cópia de uma versão que
+você nomeia. A release chega e nada mais acontece: a linha `changepack:` no seu
+`CHANGEPACK.md` continua dizendo a versão em que você estava, e o que a entrada
+pedir não é aplicado. É a metade da rota que um gerenciador de pacotes
+consegue fazer.

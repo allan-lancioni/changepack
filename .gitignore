@@ -1,2 +1,8 @@
 .DS_Store
 eval/
+
+# Installed and built by the documentation site, which carries its own
+# manifest so that a changepack install never downloads Astro.
+docs/node_modules/
+docs/dist/
+docs/.astro/

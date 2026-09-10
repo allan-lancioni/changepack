@@ -22,12 +22,6 @@ Copy it into the repository it will govern:
 npx changepack
 ```
 
-Or, without running any code of mine:
-
-```bash
-npx degit allan-lancioni/changepack/skill .claude/skills/changepack
-```
-
 Then open Claude Code in that repository and run `/changepack`. It reads the
 repo, proposes a configuration, and writes one file. That is the whole setup.
 

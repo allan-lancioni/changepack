@@ -3,7 +3,10 @@
 // reaches the network on each one would be a worse trade than the lint is a
 // gain. Run it with `npm run lint`.
 {
-  "globs": ["**/*.md"],
+  // `.mdx` too, so the site's pages are held to the same wrapping and the same
+  // heading rules as the prose at the root. The component tags in them are why
+  // MD033 is off below.
+  "globs": ["**/*.md", "**/*.mdx"],
   "ignores": [
     "node_modules",
     "eval",
@@ -11,7 +14,11 @@
     // finding here is a finding in skill/ and is fixed there.
     ".claude/skills/changepack",
     // Archived packages are history and are not edited.
-    "changes/archive"
+    "changes/archive",
+    // Installed and built by the documentation site, not written by hand.
+    "docs/node_modules",
+    "docs/dist",
+    "docs/.astro"
   ],
   "config": {
     // Templates are written to be filled in: `<Title>`, `<rule>`, `<one>`.

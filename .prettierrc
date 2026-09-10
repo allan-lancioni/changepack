@@ -1,0 +1,8 @@
+# Formatting for the three .mjs files this repository ships. Read as YAML, so
+# the knobs can say why they are set.
+
+# What was already written by hand in all three files. Prettier's own defaults
+# are double quotes at 80, which would rewrite 21 lines of check-update.mjs to
+# no gain and against the house style.
+singleQuote: true
+printWidth: 100

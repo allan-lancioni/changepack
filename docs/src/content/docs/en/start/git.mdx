@@ -1,0 +1,224 @@
+---
+title: Git
+description: >-
+  The three commits a change makes, the convention they follow, and how to
+  take one back.
+sidebar:
+  order: 3
+---
+
+import { Badge } from '@astrojs/starlight/components';
+
+changepack writes documents. Git is where they become a record. A change is
+a folder, and a folder can be copied anywhere; what turns it into history is
+that three moments in its life are commits, and that every one of those
+commits says which change produced it.
+
+## The convention
+
+Conventional commits are the default, and the recommendation. They are not a
+requirement: the skill never sets the type names, it follows the ones the
+project already uses.
+
+`init` reads `git log --oneline -20` and proposes what it finds there, so a
+repository that has been writing `feat:` and `fix:` for two years gets
+`conventional` without being asked, and one writing something else gets that
+instead. The answer lands in one field of
+[CHANGEPACK.md](/changepack/en/refs/changepack/), which is where you change
+it:
+
+```markdown
+- **commit:** conventional, no agent co-author, one per commit point, without
+  asking.
+```
+
+That line is the default, and it carries three separate decisions:
+
+| In `commit:` | What it does |
+|---|---|
+| `conventional` | what the messages look like. Another convention's name puts the three roles below onto that convention's names |
+| `ask first` | every commit point asks before landing, instead of committing and reporting |
+| `co-author` | the agent is credited as co-author, for a project that has to disclose machine assistance. Absent, no agent is ever credited |
+
+The three roles a convention has to provide are the same everywhere: one type
+for work that moves nothing, one for behavior arriving, one for behavior
+corrected. Under conventional commits those are `chore`, `feat` and `fix`.
+
+## What a change looks like in the log
+
+Three commit points, and each one commits alone: the change when it opens, a
+task group as it lands, the archive move at closure. One real change from
+this repository:
+
+```text
+0dd9279 chore: open a-package-reads-like-a-document
+3339557 feat: a change file opens with what the change is
+856d69d feat: the other two templates carry their metadata
+605ac21 feat: planning stamps the frontmatter and counts the gates
+4496bda feat: two routes follow the frontmatter
+ec3f73d chore: close a-package-reads-like-a-document
+```
+
+Two `chore` messages with the work between them. That is the shape of every
+change, and the reason you can find one in a log you have never read.
+
+**The opening** commits the three files and nothing else. No code moved, so
+it takes the type reserved for work that moves nothing. It is the boundary:
+everything after it belongs to the change.
+
+**Each group** commits as it lands, after its own validation passed, and
+before the next group starts. Four groups, four commits.
+
+**The archive move** is its own commit even when the last group landed a
+moment earlier, and it names the shipped version where the project has one:
+
+```text
+2b0971b chore: close it-ships-as-changepack at 1.0.0
+```
+
+### Why it commits along the way
+
+A group is one verifiable outcome, and it commits at the moment that outcome
+is proved. Four reasons, all of them the same reason:
+
+- What passed validation is separated from what has not started yet.
+- Running a change to the end dispatches a fresh subagent per group, and
+  each one begins on a clean tree.
+- One group reverts without touching the others.
+- The log says where the run stopped, which is what the next session reads
+  before it picks the work up.
+
+### The type is about the product, not the change it came from
+
+Between the two `chore` messages, the type says what the commit did to the
+product. `fix:` is for what shipped wrong, in a release someone already has.
+Something that broke on the way to closure and was repaired before it ever
+shipped is still the feature landing, so it stays `feat:`. The change is
+named by [the trailer](#the-trailers), never by the type.
+
+## The message
+
+The subject says what is true now, in 72 characters or fewer, concrete rather
+than evocative. Someone scanning the log decides from the subject alone
+whether the commit concerns them.
+
+The body is optional and never longer than 300 characters. It carries what
+behaves differently, never the reasoning: the reasoning is in
+[change.md](/changepack/en/refs/change/), and that file is archived rather
+than deleted. A body that will not fit is telling you the work needed a
+change.
+
+## The trailers
+
+Under the body, on every commit a change produces, two lines:
+
+```text
+Change: the-site-stands-up
+Changepack: 1.0.0
+```
+
+`Change:` is the change's slug, the name of its folder. `Changepack:` is the
+version of the procedure that produced the commit, so a message from a year
+ago says which rules it was written under.
+
+Both or neither, on all three moments. Direct work, the pass that lands
+without a change, carries neither: nothing produced it but the request.
+
+## Reading a change back
+
+The trailer is an index nobody had to build:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --reverse --oneline
+```
+
+That returns the whole change, in order, from the opening to the last group
+that landed. Closure ends its report with exactly that line, with the archive
+commit missing from it, being the one about to be made.
+
+Because a change is a folder in the tree, it travels with the branch it was
+opened on. It merges, rebases, and is thrown away like anything else you have
+in there.
+
+## Three ways back
+
+Three different operations, and the difference between them is what survives.
+
+### Abandoning
+
+A change that will not run to the end is abandoned, and abandoning it is
+closing it. Say it is not going to happen and it closes on the spot: no
+audit, and the Outcome says what happened, what was built and left behind,
+and what would have to be true for the work to come back. It archives at the
+same dated path as any other closure, on a commit of its own.
+
+Nothing is reverted. Whatever its groups already landed is still in the tree,
+and it stays there until you ask for the next operation. An attempt that was
+abandoned is worth more in the archive than a clean tree is worth anywhere.
+
+### Reverting
+
+Taking the code back out. No route of its own, nothing to it but git, and the
+log hands you the commits:
+
+```bash
+git log --grep='Change: a-package-reads-like-a-document' --format=%H
+```
+
+Revert them in the order that prints, newest first, which is the order they
+undo in. Because every group committed alone, one group comes back out
+without touching the rest.
+
+Ask for it in plain language and it is an ordinary pass: the agent reverts,
+validates and commits, carrying no [trailers](#the-trailers), because a
+revert is not the change.
+
+Reverting is not abandoning. A change still open is still open afterwards,
+now with nothing behind it, so an abandoned experiment usually wants both:
+revert the code, then close the change saying why.
+
+### Purging
+
+Deleting the archived folder. Nothing in the procedure asks for this and
+nothing forbids it: the archive is only ever written to, never pruned, and
+`changes/archive/` is the one directory that grows forever by design. Ask for
+it, or `rm -rf` the folder and commit it yourself. It is a delete like any
+other.
+
+There is little to gain. The folder is still in git, one `git show` away, so
+purging does not shrink history, it only stops the reasoning being found by
+anyone who lists the directory. That reasoning is the whole reason the folder
+was archived instead of thrown away.
+
+The case where it is right is a change that holds something that should
+never have been in the tree: a secret, real user data. Delete it, and
+remember that git kept it anyway. A leaked credential needs rotating, not
+purging.
+
+## Without git <Badge text="Not recommended" variant="caution" />
+
+changepack is meant to be used with git. It does not check for a repository
+and it does not refuse to run, which makes running without one a quiet
+degradation rather than a supported mode: nothing fails, and half the
+procedure is simply not there. The installer says one line and carries on:
+
+```text
+  This is not a git repository. changepack expects to be committed
+  alongside the project it governs.
+```
+
+What you keep is the planning. What you lose is the trail:
+
+| | Without git |
+|---|---|
+| The gate, the decisions, the task groups | unchanged. They are a conversation and a folder |
+| `change.md`, `tasks.md`, `spec-delta.md` | unchanged. Markdown, readable by anyone |
+| The archive move | still happens, as a rename nothing recorded |
+| The three commit points | nothing lands, so nothing marks where a group ended |
+| `opened-by` | no identity to read, so the key is omitted |
+| [The trailers](#the-trailers) | nowhere to go, and the change's own history with them |
+| The convention `init` proposes | nothing to read it from, so it asks |
+
+Every route ends at a commit, and a run that cannot commit ends by reporting
+and stopping there. Nothing warns you a second time. If the repository is not
+under version control, put it under version control first.

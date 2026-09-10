@@ -1,0 +1,129 @@
+---
+title: Versioning
+description: >-
+  What the numbers mean, when the check runs, and what an update costs.
+sidebar:
+  order: 2
+---
+
+import { Aside, FileTree } from '@astrojs/starlight/components';
+
+The version a repository runs is the one stamped in its `CHANGEPACK.md`. It
+moves when you decide it moves, and never on its own.
+
+## The team runs one procedure
+
+The skill is committed, at `.claude/skills/changepack/`, next to the code it
+governs. Nobody installs it and nobody picks a version: a clone arrives with
+the procedure already in it, and every agent opened in that repository reads
+the same one.
+
+That is what the version is for. It is not a record of how much text moved,
+it is the answer to which procedure this repository runs, held to one value
+across everyone working in it. One person updates, commits, and at the next
+pull the whole team is on the new one, having read the same changelog entry.
+
+So there is no adoption to run. Nothing for a new person to install, and
+nothing for them to read first: they clone, they ask for something in plain
+language, and the procedure is already there.
+
+## What the numbers mean
+
+The rule is the procedure, and nothing else. A release is named for what it
+does to the way your work runs, never for how much of the text moved.
+
+| | What it means |
+|---|---|
+| **Major** | compatibility breaks. What you already have stops working and has to become something else |
+| **Minor** | the procedure really changes and what you have keeps working. A route that obliges something new, a new shape for a file: you adapt, and nothing is broken |
+| **Patch** | the procedure that results is the same. Wording, and fixes |
+
+Almost every release is one of the last two. 1.0.0 is what the other one looks
+like: the skill and the repository were renamed, `CHANGEKIT.md` had to become
+`CHANGEPACK.md`, and a field inside it had to be renamed with it. Nothing
+short of that earns the number.
+
+Every changelog entry says what changes for a repository that already
+installed the skill, and ends with what updating costs.
+
+## When the check runs
+
+When a change closes, and only then. A change planned under one procedure
+keeps it until it closes, so nothing is checked while one is open and no
+update is installed over one. An open change is never rewritten into a
+procedure it was not planned under.
+
+The check is one request to the npm registry, and it is everything about
+changepack that touches the network. It prints nothing when there is no news,
+which is the ordinary outcome, and it never fails: offline, unreachable and up
+to date all look the same. You can run it yourself from the repository root:
+
+```bash
+node .claude/skills/changepack/check-update.mjs
+```
+
+<Aside type="tip" title="Turning the check off">
+`updates: off` in `CHANGEPACK.md` ends the check for good, and the network
+call with it. You lose the offer, not the route: asking for an update in so
+many words still runs, and the changelog still says what one costs.
+</Aside>
+
+## It asks once
+
+Three answers, at the end of the closure report:
+
+- **Update now.** It says what the versions between yours and the latest cost
+  before writing anything.
+- **Not now.** `updates:` becomes `hold <version>`, committed on its own. The
+  question returns when something newer ships, and that version never asks
+  again.
+- **Never.** `updates:` becomes `off`.
+
+What is recorded is the decision, not the date. A repository is never asked
+twice about the same version, and the answer is committed, because the version
+a project runs belongs to the project and not to whoever happened to close the
+change.
+
+## The automatic update
+
+You migrate nothing. The changelog is the input: the entries between your
+version and the latest say what changes and what each one costs, the agent
+reads them and tells you, waits, and then does the work. Installing the
+release, stamping `changepack:` and applying whatever an entry asks for are one
+route, and you approve it rather than perform it.
+
+<FileTree>
+
+- **.claude/skills/changepack/** replaced wholesale, never merged
+- **CHANGEPACK.md** the `changepack:` line stamped, and anything the entry
+  named
+- changes/ untouched, archive included
+- src/ your code is not part of this
+
+</FileTree>
+
+Nothing is written before you confirm. The procedure that lands applies from
+the next session: the one that installed it loaded the old one and finishes on
+it.
+
+<Aside type="caution" title="The directory is replaced, not merged">
+Any file you changed under `.claude/skills/changepack/` is discarded rather
+than kept, and a file that left the release leaves your installation with it.
+A repository that means to edit the procedure itself sets `updates: off`
+first: that ends the offer, and after it the only thing that can replace the
+directory is you typing the command below. Editing in place also means you
+are no longer on a released version, and the changelog no longer describes
+what you run.
+</Aside>
+
+## The command, if you want it
+
+```bash
+npx changepack --force
+```
+
+That is the copy alone, and `npx changepack@1.2.0 --force` is the copy of a
+version you name. The release lands and nothing else happens: the
+`changepack:` line in your `CHANGEPACK.md` still reads the version you were on,
+and whatever an entry asked for is not applied. It is the half of the route a
+package manager can do.
