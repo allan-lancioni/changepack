@@ -30,7 +30,8 @@ saying so is the whole answer.
 Never read this from `changes/archive/`. A package is archived when it closes,
 which can be long after the release its work went out in, and direct work
 produces no package at all. Both errors point the same way: the archive is not
-the record of what ships.
+the record of what ships. It is not this skill's business either, and nothing
+here writes into it.
 
 The commits behind the diff, and where each one's reasoning lives:
 
@@ -87,14 +88,9 @@ Then one commit, in this order:
 4. `node bin/install.mjs --force`. Step 3 edited `skill/`, so without this the
    loaded copy differs with no package open to explain it, which is the first
    invariant failing.
-5. `shipped: <version>` in the frontmatter of the packages this release carries,
-   which are the ones the `Change:` trailers named and not the ones archived
-   since the tag. This corrects what closure guessed, since closure fills that
-   field from `package.json` and `package.json` here still holds the previous
-   release. That line is the only thing in an archived package that may change.
-6. `npm run check` and `npm run lint`, both passing before anything is
+5. `npm run check` and `npm run lint`, both passing before anything is
    committed.
-7. One commit, carrying all of the above and nothing else.
+6. One commit, carrying all of the above and nothing else.
 
 **Stop at the commit.** Merging to `main` tags and publishes, and the registry
 does not take it back. Say what the merge will do, and leave it to the user.
@@ -103,5 +99,5 @@ does not take it back. Say what the merge will do, and leave it to the user.
 
 - Never invent the number.
 - Never cut with a package open.
-- Never change anything in an archived package but its `shipped:` line.
+- Never write into `changes/`. Closure owns what a package records.
 - Never push, never merge, never tag by hand.
