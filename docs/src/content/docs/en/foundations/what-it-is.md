@@ -80,6 +80,14 @@ belongs in. A repository that starts with nothing normative accumulates it
 change by change, and only where a change paid for it. The specification is the
 residue, not the entry fee.
 
+Which is also why it can be trusted. No normative rule here exists that was not
+folded in by a closure that checked the behavior it describes, so there is no
+accumulated surface waiting to be audited against the code. A specification
+written ahead of the behavior never had that check, and afterwards it has
+nothing left to be checked against: the intent, the design and the work that
+produced it are gone. What changepack inherits is another matter. A document
+that was already there when it arrived is history, and nothing validates it.
+
 So changepack is not the opposite of spec driven tooling. It is the way in that
 spec driven tooling does not have. Said as three positions:
 
@@ -115,6 +123,7 @@ Which is why the range is as wide as it is:
 | Any ecosystem | nothing enters your dependencies. A Python, Rust or Go project acquires no manifest, no lockfile and no installed tree |
 | A repository that is only prose | a specification spread over forty files that reference each other is a change like any other |
 | Your harness | the agent's own configuration, governed by the same three files |
+| A repository another tool governs | its specifications are a large normative surface, and changing them is a change like any other |
 
 The last row is the one worth saying out loud. changepack is built to be used
 on the harness: your `AGENTS.md`, your `.claude/` directory, the skills and the

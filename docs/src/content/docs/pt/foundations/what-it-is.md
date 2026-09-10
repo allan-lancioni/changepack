@@ -80,6 +80,14 @@ ele pertence. Um repositório que começa sem nada normativo acumula normativo
 change a change, e só onde uma change pagou por aquilo. A especificação é o
 resíduo, não a taxa de entrada.
 
+E é também por isso que dá para confiar nela. Não existe aqui regra normativa
+que não tenha sido dobrada por um fechamento que conferiu o comportamento que
+ela descreve, então não há superfície acumulada esperando ser auditada contra o
+código. Uma especificação escrita antes do comportamento nunca teve essa
+conferência, e depois não sobra contra o que conferir: a intenção, o design e o
+trabalho que a produziram já foram. O que o changepack herda é outra história.
+Documento que já estava lá quando ele chegou é histórico, e nada o valida.
+
 Então o changepack não é o oposto de uma ferramenta spec driven. Ele é a porta
 de entrada que ferramenta spec driven não tem. Ditas como três posições:
 
@@ -113,6 +121,7 @@ todos os outros.
 | Qualquer ecossistema | nada entra nas suas dependências. Um projeto Python, Rust ou Go não ganha manifesto, nem lockfile, nem árvore instalada |
 | Um repositório que é só prosa | uma especificação espalhada por quarenta arquivos que se referenciam é uma change como outra qualquer |
 | O seu harness | a configuração do próprio agente, regida pelos mesmos três arquivos |
+| Um repositório regido por outra ferramenta | as especificações dela são uma superfície normativa grande, e mudá-las é uma change como outra qualquer |
 
 A última linha é a que vale dizer em voz alta. O changepack é feito para ser
 usado no harness: o seu `AGENTS.md`, o seu diretório `.claude/`, as skills e os
