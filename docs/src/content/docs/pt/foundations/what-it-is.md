@@ -24,7 +24,8 @@ inteiro a cada turno, então o custo de uma feature cresce com a conversa que a
 produziu em vez de crescer com a feature. O changepack é pequeno porque ser
 pequeno é o ponto, não porque está inacabado. A promessa que ele foi construído
 para cumprir é que rodar uma change por ele custa menos do que implementar a
-mesma coisa na mão.
+mesma coisa na mão. [O orçamento de contexto](/changepack/pt/foundations/context/)
+é como essa promessa fica presa a um número em vez de a uma intenção.
 
 **Ninguém deveria ter que aprender uma ferramenta para conseguir isso.** Todo
 procedimento que melhora o jeito de trabalhar com um agente cobra adiantado, em
@@ -59,23 +60,6 @@ Também não existe onboarding. A skill é commitada, então o repositório a
 entrega para todo mundo que clona e ninguém é treinado:
 [o time roda um procedimento só](/changepack/pt/start/versioning/) e o adquiriu
 clonando.
-
-## Pequeno de propósito
-
-O changepack é uma skill só, e ela busca as regras uma rota por vez. Cada peça
-tem um teto de caracteres, segurado por um check em todo commit, então um turno
-custa alguns milhares de caracteres em vez do procedimento inteiro.
-
-Rodar uma change até o fim dá um subagente novo para cada grupo de tasks, e
-cada um responde em quatro linhas. A conversa que conduz a change não cresce
-com o número de grupos: o que um grupo gasta implementando continua sendo o que
-ele gasta, e nada mais se acumula.
-
-Os tetos são calibragem, não lei. Eles vieram de medir o que um turno de fato
-carrega, contra partidas frias e quentes e contra formas diferentes de cortar
-uma change em grupos, e a expectativa é que se mexam conforme o procedimento
-cresce. O que importa é que o que entra em contexto seja medido, não que fique
-abaixo de um número escolhido uma vez.
 
 ## Change driven, não spec primeiro
 

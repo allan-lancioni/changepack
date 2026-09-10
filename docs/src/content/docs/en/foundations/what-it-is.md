@@ -24,7 +24,8 @@ every turn, so the cost of a feature grows with the conversation that produced
 it rather than with the feature. changepack is small because being small is the
 point, not because it is unfinished. The claim it was built to make good on is
 that running a change through it costs less than implementing the same thing by
-hand.
+hand. [The context budget](/changepack/en/foundations/context/) is how that
+claim is held to a number instead of to an intention.
 
 **Nobody should have to learn a tool to get that.** Every procedure that
 improves how an agent works charges for itself up front, in vocabulary,
@@ -59,23 +60,6 @@ It also means there is no onboarding. The skill is committed, so a repository
 hands it to everyone who clones it and nobody is trained:
 [the team runs one procedure](/changepack/en/start/versioning/) and acquired it
 by cloning.
-
-## Small on purpose
-
-changepack is one skill, and it pulls its rules in one route at a time. Every
-piece carries a character ceiling, held by a check on every commit, so a turn
-costs a few thousand characters instead of the whole procedure.
-
-Running a change to the end gives each task group a fresh subagent, and each
-one answers in four lines. The conversation driving the change does not grow
-with the number of groups: what a group spends implementing is still what it
-spends, and nothing else accumulates.
-
-The ceilings are calibration rather than law. They came from measuring what a
-turn actually loads, against cold and warm starts and against different ways of
-cutting a change into groups, and they are expected to move as the procedure
-grows. What matters is that what enters context is measured, not that it stays
-under a number chosen once.
 
 ## Change driven, not spec first
 
